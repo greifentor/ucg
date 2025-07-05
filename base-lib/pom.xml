@@ -13,7 +13,7 @@
 	<artifactId>ucg-base-lib</artifactId>
 	<packaging>jar</packaging>
 
-	<name>Health-Tracker (Base-Lib)</name>
+	<name>UCG (Base-Lib)</name>
 	<description>The base library of the application.</description>
 
 	<properties>
