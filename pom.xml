@@ -76,6 +76,7 @@
 	</build>
 	<modules>
 		<module>base-lib</module>
+		<module>cli</module>
 		<module>service</module>
 		<module>service-interface</module>
 		<module>velocity-template-processing-adapter</module>

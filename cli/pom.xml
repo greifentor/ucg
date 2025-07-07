@@ -10,11 +10,11 @@
 		<version>0.0.1</version>
 	</parent>
 
-	<artifactId>ucg-velocity-template-processing-adapter</artifactId>
+	<artifactId>ucg-cli</artifactId>
 	<packaging>jar</packaging>
 
-	<name>UCG (Velocity-Template-Processor)</name>
-	<description>A template processor based on Apache Velocity.</description>
+	<name>UCG (CLI)</name>
+	<description>A CLI for the application.</description>
 
 	<properties>
 		<plugin.prettier.goal>write</plugin.prettier.goal>
@@ -32,7 +32,24 @@
 			<artifactId>ucg-service-interface</artifactId>
 			<version>0.0.1</version>
 		</dependency>
+		<dependency>
+			<groupId>de.ollie</groupId>
+			<artifactId>ucg-service</artifactId>
+			<version>0.0.1</version>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>de.ollie</groupId>
+			<artifactId>ucg-velocity-template-processing-adapter</artifactId>
+			<version>0.0.1</version>
+			<scope>runtime</scope>
+		</dependency>
 		<!-- Spring -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter</artifactId>
+			<version>3.3.3</version>
+		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-context</artifactId>
@@ -44,12 +61,6 @@
 		<dependency>
 			<groupId>jakarta.annotation</groupId>
 			<artifactId>jakarta.annotation-api</artifactId>
-		</dependency>
-		<!-- Apache -->
-		<dependency>
-			<groupId>org.apache.velocity</groupId>
-			<artifactId>velocity-engine-core</artifactId>
-			<version>2.4.1</version>
 		</dependency>
 		<!-- Testing -->
 		<dependency>
@@ -122,6 +133,10 @@
 						</goals>
 					</execution>
 				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
 			<plugin>
 				<groupId>com.hubspot.maven.plugins</groupId>
