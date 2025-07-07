@@ -12,7 +12,7 @@ import de.ollie.ucg.core.model.GeneratorConfiguration.GeneratorType;
 import de.ollie.ucg.core.model.Model;
 import de.ollie.ucg.core.model.Report;
 import de.ollie.ucg.core.service.CodeGeneratorService.CodeGeneratorServiceObserver;
-import de.ollie.ucg.core.service.port.TemplateProcessingPort;
+import de.ollie.ucg.core.service.port.TemplateProcessorPort;
 import java.util.List;
 import java.util.Map;
 import org.junit.jupiter.api.Nested;
@@ -47,7 +47,7 @@ class CodeGeneratorServiceImplTest {
 	private ReportFactory reportFactory;
 
 	@Mock
-	private TemplateProcessingPort templateProcessingPort;
+	private TemplateProcessorPort templateProcessingPort;
 
 	@InjectMocks
 	private CodeGeneratorServiceImpl unitUnderTest;

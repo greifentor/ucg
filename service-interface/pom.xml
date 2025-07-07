@@ -6,7 +6,7 @@
 
 	<parent>
 		<groupId>de.ollie</groupId>
-		<artifactId>health-tracker</artifactId>
+		<artifactId>ucg</artifactId>
 		<version>0.0.1</version>
 	</parent>
 

@@ -10,11 +10,11 @@
 		<version>0.0.1</version>
 	</parent>
 
-	<artifactId>ucg-service</artifactId>
+	<artifactId>ucg-velocity-template-processing-adapter</artifactId>
 	<packaging>jar</packaging>
 
-	<name>UCG (Service)</name>
-	<description>The implementation of the service and core module of the application.</description>
+	<name>UCG (Velocity-Template-Processor)</name>
+	<description>A template processor based on Apache Velocity.</description>
 
 	<properties>
 		<plugin.prettier.goal>write</plugin.prettier.goal>

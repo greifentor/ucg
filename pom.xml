@@ -78,6 +78,7 @@
 		<module>base-lib</module>
 		<module>service</module>
 		<module>service-interface</module>
+		<module>velocity-template-processing-adapter</module>
 	</modules>
 	<dependencies>
 		<dependency>

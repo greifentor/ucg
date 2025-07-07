@@ -8,7 +8,7 @@ import de.ollie.ucg.core.model.GeneratorConfiguration.GeneratorType;
 import de.ollie.ucg.core.model.Model;
 import de.ollie.ucg.core.model.Report;
 import de.ollie.ucg.core.service.CodeGeneratorService;
-import de.ollie.ucg.core.service.port.TemplateProcessingPort;
+import de.ollie.ucg.core.service.port.TemplateProcessorPort;
 import jakarta.inject.Named;
 import java.util.Map.Entry;
 import lombok.RequiredArgsConstructor;
@@ -18,7 +18,7 @@ import lombok.RequiredArgsConstructor;
 public class CodeGeneratorServiceImpl implements CodeGeneratorService {
 
 	private final ReportFactory reportFactory;
-	private final TemplateProcessingPort templateProcessingPort;
+	private final TemplateProcessorPort templateProcessorPort;
 
 	@Override
 	public Report generate(Model model, CodeGeneratorServiceObserver observer) {
@@ -28,7 +28,7 @@ public class CodeGeneratorServiceImpl implements CodeGeneratorService {
 		for (GeneratorConfiguration cg : model.getGeneratorConfigurations()) {
 			if (cg.getGeneratorType() == GeneratorType.CLASS) {
 				for (Entry<String, ClassModel> entry : model.getClasses().entrySet()) {
-					String classCode = templateProcessingPort.process(cg, entry.getValue());
+					String classCode = templateProcessorPort.process(cg, entry.getValue());
 					observer.classCodeGenerated(classCode);
 				}
 			}
