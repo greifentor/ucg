@@ -11,7 +11,7 @@ import de.ollie.ucg.core.model.GeneratorConfiguration;
 import de.ollie.ucg.core.model.GeneratorConfiguration.GeneratorType;
 import de.ollie.ucg.core.model.Model;
 import de.ollie.ucg.core.model.Report;
-import de.ollie.ucg.core.service.port.FileSystemPort;
+import de.ollie.ucg.core.service.CodeGeneratorService.CodeGeneratorServiceObserver;
 import de.ollie.ucg.core.service.port.TemplateProcessingPort;
 import java.util.List;
 import java.util.Map;
@@ -26,13 +26,13 @@ import org.mockito.junit.jupiter.MockitoExtension;
 class CodeGeneratorServiceImplTest {
 
 	private static final String CLASS_NAME = "class-name";
-	private static final String CLASS_TEXT = "class-text";
+	private static final String CLASS_CODE = "class-text";
 
 	@Mock
 	private ClassModel classModel;
 
 	@Mock
-	private FileSystemPort fileSystemPort;
+	private CodeGeneratorServiceObserver observer;
 
 	@Mock
 	private GeneratorConfiguration generatorConfiguration;
@@ -57,7 +57,12 @@ class CodeGeneratorServiceImplTest {
 
 		@Test
 		void throwsAnException_passingANullValueAsModel() {
-			assertThrows(IllegalArgumentException.class, () -> unitUnderTest.generate(null));
+			assertThrows(IllegalArgumentException.class, () -> unitUnderTest.generate(null, observer));
+		}
+
+		@Test
+		void throwsAnException_passingANullValueAsObserver() {
+			assertThrows(IllegalArgumentException.class, () -> unitUnderTest.generate(model, null));
 		}
 
 		@Test
@@ -67,11 +72,11 @@ class CodeGeneratorServiceImplTest {
 			when(model.getClasses()).thenReturn(Map.of(CLASS_NAME, classModel));
 			when(model.getGeneratorConfigurations()).thenReturn(List.of(generatorConfiguration));
 			when(reportFactory.create()).thenReturn(report);
-			when(templateProcessingPort.process(generatorConfiguration, classModel)).thenReturn(CLASS_TEXT);
+			when(templateProcessingPort.process(generatorConfiguration, classModel)).thenReturn(CLASS_CODE);
 			// Run
-			unitUnderTest.generate(model);
+			unitUnderTest.generate(model, observer);
 			// Check
-			assertEquals(report, unitUnderTest.generate(model));
+			assertEquals(report, unitUnderTest.generate(model, observer));
 		}
 
 		@Test
@@ -81,11 +86,11 @@ class CodeGeneratorServiceImplTest {
 			when(model.getClasses()).thenReturn(Map.of(CLASS_NAME, classModel));
 			when(model.getGeneratorConfigurations()).thenReturn(List.of(generatorConfiguration));
 			when(reportFactory.create()).thenReturn(report);
-			when(templateProcessingPort.process(generatorConfiguration, classModel)).thenReturn(CLASS_TEXT);
+			when(templateProcessingPort.process(generatorConfiguration, classModel)).thenReturn(CLASS_CODE);
 			// Run
-			unitUnderTest.generate(model);
+			unitUnderTest.generate(model, observer);
 			// Check
-			verify(fileSystemPort, times(1)).storeClassFile(generatorConfiguration, CLASS_TEXT);
+			verify(observer, times(1)).classCodeGenerated(CLASS_CODE);
 		}
 	}
 }
