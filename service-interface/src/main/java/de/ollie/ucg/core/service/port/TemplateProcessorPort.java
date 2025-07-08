@@ -1,8 +1,8 @@
 package de.ollie.ucg.core.service.port;
 
 import de.ollie.ucg.core.model.ClassModel;
-import de.ollie.ucg.core.model.GeneratorConfiguration;
+import de.ollie.ucg.core.model.GeneratorSetting;
 
 public interface TemplateProcessorPort {
-	String process(GeneratorConfiguration generatorConfiguration, ClassModel classModel);
+	String process(GeneratorSetting generatorSetting, ClassModel classModel);
 }

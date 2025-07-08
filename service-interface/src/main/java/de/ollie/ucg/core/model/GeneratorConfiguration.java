@@ -1,5 +1,6 @@
 package de.ollie.ucg.core.model;
 
+import java.util.List;
 import lombok.Data;
 import lombok.Generated;
 import lombok.experimental.Accessors;
@@ -9,13 +10,5 @@ import lombok.experimental.Accessors;
 @Generated
 public class GeneratorConfiguration {
 
-	public enum GeneratorType {
-		CLASS,
-		MODEL,
-	}
-
-	private String templateFileName;
-	private String subProjectName;
-	private String packageName;
-	private GeneratorType generatorType;
+	private List<GeneratorSetting> generatorSettings;
 }

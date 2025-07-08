@@ -8,7 +8,8 @@ import static org.mockito.Mockito.when;
 
 import de.ollie.ucg.core.model.ClassModel;
 import de.ollie.ucg.core.model.GeneratorConfiguration;
-import de.ollie.ucg.core.model.GeneratorConfiguration.GeneratorType;
+import de.ollie.ucg.core.model.GeneratorSetting;
+import de.ollie.ucg.core.model.GeneratorSetting.GeneratorType;
 import de.ollie.ucg.core.model.Model;
 import de.ollie.ucg.core.model.Report;
 import de.ollie.ucg.core.service.CodeGeneratorService.CodeGeneratorServiceObserver;
@@ -38,6 +39,9 @@ class CodeGeneratorServiceImplTest {
 	private GeneratorConfiguration generatorConfiguration;
 
 	@Mock
+	private GeneratorSetting generatorSetting;
+
+	@Mock
 	private Model model;
 
 	@Mock
@@ -57,38 +61,39 @@ class CodeGeneratorServiceImplTest {
 
 		@Test
 		void throwsAnException_passingANullValueAsModel() {
-			assertThrows(IllegalArgumentException.class, () -> unitUnderTest.generate(null, observer));
+			assertThrows(
+				IllegalArgumentException.class,
+				() -> unitUnderTest.generate(null, generatorConfiguration, observer)
+			);
 		}
 
 		@Test
 		void throwsAnException_passingANullValueAsObserver() {
-			assertThrows(IllegalArgumentException.class, () -> unitUnderTest.generate(model, null));
+			assertThrows(IllegalArgumentException.class, () -> unitUnderTest.generate(model, generatorConfiguration, null));
 		}
 
 		@Test
 		void callsTheTemplateProcessingPortCorrectly() {
 			// Prepare
-			when(generatorConfiguration.getGeneratorType()).thenReturn(GeneratorType.CLASS);
+			when(generatorSetting.getGeneratorType()).thenReturn(GeneratorType.CLASS);
 			when(model.getClasses()).thenReturn(Map.of(CLASS_NAME, classModel));
-			when(model.getGeneratorConfigurations()).thenReturn(List.of(generatorConfiguration));
+			when(generatorConfiguration.getGeneratorSettings()).thenReturn(List.of(generatorSetting));
 			when(reportFactory.create()).thenReturn(report);
-			when(templateProcessingPort.process(generatorConfiguration, classModel)).thenReturn(CLASS_CODE);
-			// Run
-			unitUnderTest.generate(model, observer);
-			// Check
-			assertEquals(report, unitUnderTest.generate(model, observer));
+			when(templateProcessingPort.process(generatorSetting, classModel)).thenReturn(CLASS_CODE);
+			// Run & Check
+			assertEquals(report, unitUnderTest.generate(model, generatorConfiguration, observer));
 		}
 
 		@Test
 		void callsTheFileSystemPortCorrectly() {
 			// Prepare
-			when(generatorConfiguration.getGeneratorType()).thenReturn(GeneratorType.CLASS);
+			when(generatorSetting.getGeneratorType()).thenReturn(GeneratorType.CLASS);
 			when(model.getClasses()).thenReturn(Map.of(CLASS_NAME, classModel));
-			when(model.getGeneratorConfigurations()).thenReturn(List.of(generatorConfiguration));
+			when(generatorConfiguration.getGeneratorSettings()).thenReturn(List.of(generatorSetting));
 			when(reportFactory.create()).thenReturn(report);
-			when(templateProcessingPort.process(generatorConfiguration, classModel)).thenReturn(CLASS_CODE);
+			when(templateProcessingPort.process(generatorSetting, classModel)).thenReturn(CLASS_CODE);
 			// Run
-			unitUnderTest.generate(model, observer);
+			unitUnderTest.generate(model, generatorConfiguration, observer);
 			// Check
 			verify(observer, times(1)).classCodeGenerated(CLASS_CODE);
 		}
