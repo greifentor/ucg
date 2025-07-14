@@ -1,16 +1,14 @@
 package de.ollie.ucg.core.model;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Generated;
 import lombok.experimental.Accessors;
 
 @Accessors(chain = true)
-@AllArgsConstructor
 @Data
 @Generated
-public class Property {
+public class ImportModel {
 
-	private String name;
-	private Object value;
+	private String content;
+	private boolean staticImport;
 }

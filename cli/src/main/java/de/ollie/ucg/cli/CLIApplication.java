@@ -11,7 +11,6 @@ import de.ollie.ucg.core.service.CodeGeneratorService;
 import de.ollie.ucg.core.service.CodeGeneratorService.CodeGeneratorServiceObserver;
 import jakarta.inject.Inject;
 import java.util.List;
-import java.util.Map;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.SpringApplication;
@@ -34,19 +33,26 @@ public class CLIApplication implements ApplicationRunner, CodeGeneratorServiceOb
 		GeneratorConfiguration configuration = new GeneratorConfiguration()
 			.setGeneratorSettings(
 				List.of(
-					new GeneratorSetting().setGeneratorType(GeneratorType.CLASS),
 					new GeneratorSetting()
-						.setTemplatePath("velocity-template-processing-adapter/src/test/resources/templates")
-						.setTemplateFileName("TestTemplate.vc")
+						.setGeneratorType(GeneratorType.CLASS)
+						.setPackageName("de.ollie.healthtracker.coder.service.model")
+						.setTemplatePath("velocity-template-processing-adapter/src/main/resources")
+						.setTemplateFileName("templates/Model.vc")
 				)
 			);
 		Model model = new Model()
 			.setClasses(
-				Map.of(
-					"Test",
+				List.of(
 					new ClassModel()
-						.setName("Test")
-						.setAttributes(Map.of("id", new AttributeModel().setName("id").setType(new TypeModel().setName("long"))))
+						.setName("DoctorType")
+						.setAttributes(
+							List.of(
+								new AttributeModel()
+									.setName("id")
+									.setType(new TypeModel().setName("UUID").addProperty("import", "java.util.UUID")),
+								new AttributeModel().setName("name").setType(new TypeModel().setName("String"))
+							)
+						)
 				)
 			);
 		codeGeneratorService.generate(model, configuration, this);

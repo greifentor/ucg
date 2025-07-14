@@ -15,7 +15,6 @@ import de.ollie.ucg.core.model.Report;
 import de.ollie.ucg.core.service.CodeGeneratorService.CodeGeneratorServiceObserver;
 import de.ollie.ucg.core.service.port.TemplateProcessorPort;
 import java.util.List;
-import java.util.Map;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -76,7 +75,7 @@ class CodeGeneratorServiceImplTest {
 		void callsTheTemplateProcessingPortCorrectly() {
 			// Prepare
 			when(generatorSetting.getGeneratorType()).thenReturn(GeneratorType.CLASS);
-			when(model.getClasses()).thenReturn(Map.of(CLASS_NAME, classModel));
+			when(model.getClasses()).thenReturn(List.of(classModel));
 			when(generatorConfiguration.getGeneratorSettings()).thenReturn(List.of(generatorSetting));
 			when(reportFactory.create()).thenReturn(report);
 			when(templateProcessingPort.process(generatorSetting, classModel)).thenReturn(CLASS_CODE);
@@ -88,7 +87,7 @@ class CodeGeneratorServiceImplTest {
 		void callsTheFileSystemPortCorrectly() {
 			// Prepare
 			when(generatorSetting.getGeneratorType()).thenReturn(GeneratorType.CLASS);
-			when(model.getClasses()).thenReturn(Map.of(CLASS_NAME, classModel));
+			when(model.getClasses()).thenReturn(List.of(classModel));
 			when(generatorConfiguration.getGeneratorSettings()).thenReturn(List.of(generatorSetting));
 			when(reportFactory.create()).thenReturn(report);
 			when(templateProcessingPort.process(generatorSetting, classModel)).thenReturn(CLASS_CODE);

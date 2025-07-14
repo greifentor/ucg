@@ -1,0 +1,16 @@
+classes:
+  - class:
+      name: Book
+      attributes:
+        - attribute:
+            name: id
+            type:
+              name: UUID
+              properties:
+                - property:
+                    name: import
+                    value: java.util.UUID
+        - attribute:
+            name: title
+            type:
+              name: String

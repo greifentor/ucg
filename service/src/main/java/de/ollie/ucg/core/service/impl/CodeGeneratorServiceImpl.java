@@ -11,7 +11,6 @@ import de.ollie.ucg.core.model.Report;
 import de.ollie.ucg.core.service.CodeGeneratorService;
 import de.ollie.ucg.core.service.port.TemplateProcessorPort;
 import jakarta.inject.Named;
-import java.util.Map.Entry;
 import lombok.RequiredArgsConstructor;
 
 @Named
@@ -28,8 +27,8 @@ public class CodeGeneratorServiceImpl implements CodeGeneratorService {
 		Report report = reportFactory.create();
 		for (GeneratorSetting cs : configuration.getGeneratorSettings()) {
 			if (cs.getGeneratorType() == GeneratorType.CLASS) {
-				for (Entry<String, ClassModel> entry : model.getClasses().entrySet()) {
-					String classCode = templateProcessorPort.process(cs, entry.getValue());
+				for (ClassModel classModel : model.getClasses()) {
+					String classCode = templateProcessorPort.process(cs, classModel);
 					observer.classCodeGenerated(classCode);
 				}
 			}

@@ -21,7 +21,7 @@
 	</properties>
 
 	<dependencies>
-		<!-- bptracker-->
+		<!-- ucg-->
 		<dependency>
 			<groupId>de.ollie</groupId>
 			<artifactId>ucg-base-lib</artifactId>
@@ -61,6 +61,12 @@
 		<dependency>
 			<groupId>jakarta.annotation</groupId>
 			<artifactId>jakarta.annotation-api</artifactId>
+		</dependency>
+		<!-- Others -->
+		<dependency>
+			<groupId>com.fasterxml.jackson.dataformat</groupId>
+			<artifactId>jackson-dataformat-yaml</artifactId>
+			<version>2.15.0</version>
 		</dependency>
 		<!-- Testing -->
 		<dependency>

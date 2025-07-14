@@ -14,9 +14,9 @@ public class GeneratorSetting {
 		MODEL,
 	}
 
+	private GeneratorType generatorType;
+	private String packageName;
+	private String subProjectName;
 	private String templateFileName;
 	private String templatePath;
-	private String subProjectName;
-	private String packageName;
-	private GeneratorType generatorType;
 }
