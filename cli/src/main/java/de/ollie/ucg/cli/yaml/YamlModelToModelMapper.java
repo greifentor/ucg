@@ -12,8 +12,10 @@ import de.ollie.ucg.core.model.ClassModel;
 import de.ollie.ucg.core.model.Model;
 import de.ollie.ucg.core.model.Property;
 import de.ollie.ucg.core.model.TypeModel;
+import jakarta.inject.Named;
 import java.util.List;
 
+@Named
 public class YamlModelToModelMapper {
 
 	Model map(YamlModel yamlModel) {

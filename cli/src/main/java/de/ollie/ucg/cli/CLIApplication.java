@@ -1,12 +1,10 @@
 package de.ollie.ucg.cli;
 
-import de.ollie.ucg.core.model.AttributeModel;
-import de.ollie.ucg.core.model.ClassModel;
+import de.ollie.ucg.cli.yaml.YamlModelReader;
 import de.ollie.ucg.core.model.GeneratorConfiguration;
 import de.ollie.ucg.core.model.GeneratorSetting;
 import de.ollie.ucg.core.model.GeneratorSetting.GeneratorType;
 import de.ollie.ucg.core.model.Model;
-import de.ollie.ucg.core.model.TypeModel;
 import de.ollie.ucg.core.service.CodeGeneratorService;
 import de.ollie.ucg.core.service.CodeGeneratorService.CodeGeneratorServiceObserver;
 import jakarta.inject.Inject;
@@ -24,6 +22,9 @@ public class CLIApplication implements ApplicationRunner, CodeGeneratorServiceOb
 	@Inject
 	private CodeGeneratorService codeGeneratorService;
 
+	@Inject
+	private YamlModelReader yamlModelReader;
+
 	public static void main(String[] args) {
 		SpringApplication.run(CLIApplication.class, args);
 	}
@@ -36,26 +37,16 @@ public class CLIApplication implements ApplicationRunner, CodeGeneratorServiceOb
 					new GeneratorSetting()
 						.setGeneratorType(GeneratorType.CLASS)
 						.setPackageName("de.ollie.healthtracker.coder.service.model")
-						.setTemplatePath("velocity-template-processing-adapter/src/main/resources")
+						.setTemplatePath("../velocity-template-processing-adapter/src/main/resources")
 						.setTemplateFileName("templates/Model.vc")
 				)
 			);
-		Model model = new Model()
-			.setClasses(
-				List.of(
-					new ClassModel()
-						.setName("DoctorType")
-						.setAttributes(
-							List.of(
-								new AttributeModel()
-									.setName("id")
-									.setType(new TypeModel().setName("UUID").addProperty("import", "java.util.UUID")),
-								new AttributeModel().setName("name").setType(new TypeModel().setName("String"))
-							)
-						)
-				)
-			);
-		codeGeneratorService.generate(model, configuration, this);
+		if (!args.getOptionValues("cm").isEmpty()) {
+			Model model = yamlModelReader.read(args.getOptionValues("cm").get(0));
+			codeGeneratorService.generate(model, configuration, this);
+		} else {
+			throw new IllegalStateException("No class model defined!");
+		}
 	}
 
 	@Override
