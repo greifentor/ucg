@@ -2,7 +2,9 @@ package de.ollie.ucg.cli;
 
 import de.ollie.ucg.cli.yaml.YamlGeneratorConfigurationReader;
 import de.ollie.ucg.cli.yaml.YamlModelReader;
+import de.ollie.ucg.core.model.GenerationResult;
 import de.ollie.ucg.core.model.GeneratorConfiguration;
+import de.ollie.ucg.core.model.GeneratorSetting;
 import de.ollie.ucg.core.model.Model;
 import de.ollie.ucg.core.service.CodeGeneratorService;
 import de.ollie.ucg.core.service.CodeGeneratorService.CodeGeneratorServiceObserver;
@@ -47,7 +49,23 @@ public class CLIApplication implements ApplicationRunner, CodeGeneratorServiceOb
 	}
 
 	@Override
-	public void classCodeGenerated(String classCode) {
-		System.out.println(classCode);
+	public void classCodeGenerated(
+		GenerationResult generationResult,
+		GeneratorSetting generatorSetting,
+		GeneratorConfiguration configuration
+	) {
+		System.out.println(
+			getTargetPath(configuration, generatorSetting) +
+			"/" +
+			generatorSetting.getPackageName().replace(".", "/") +
+			"/" +
+			generationResult.getUnitName() +
+			".java"
+		);
+		System.out.println(generationResult.getCode());
+	}
+
+	private String getTargetPath(GeneratorConfiguration configuration, GeneratorSetting setting) {
+		return setting.getPropertyByName("target-path").orElseGet(configuration::getDefaultTargetPath);
 	}
 }

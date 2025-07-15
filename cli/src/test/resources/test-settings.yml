@@ -1,8 +1,12 @@
+default-target-path: tmp
 generators:
   - type: CLASS
     package: de.library.core.service.model
     path: velocity-template-processing-adapter/src/main/resources/templates
     template: Model.vc
+    properties:
+      - name: target-path
+        value: tmp0
 # Settings to read from class path
 #    resource-class-loader: org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader
 #    template: templates/Model.vc

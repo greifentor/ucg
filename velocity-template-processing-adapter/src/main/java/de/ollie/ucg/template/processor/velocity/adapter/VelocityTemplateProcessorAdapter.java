@@ -1,6 +1,7 @@
 package de.ollie.ucg.template.processor.velocity.adapter;
 
 import de.ollie.ucg.core.model.ClassModel;
+import de.ollie.ucg.core.model.GenerationResult;
 import de.ollie.ucg.core.model.GeneratorSetting;
 import de.ollie.ucg.core.model.Property;
 import de.ollie.ucg.core.service.port.TemplateProcessorPort;
@@ -29,7 +30,7 @@ public class VelocityTemplateProcessorAdapter implements TemplateProcessorPort {
 	}
 
 	@Override
-	public String process(GeneratorSetting generatorSetting, ClassModel classModel) {
+	public GenerationResult process(GeneratorSetting generatorSetting, ClassModel classModel) {
 		VelocityContext context = new VelocityContext();
 		context.put(
 			"Attributes",
@@ -50,7 +51,7 @@ public class VelocityTemplateProcessorAdapter implements TemplateProcessorPort {
 		Template t = velocityEngine.getTemplate(generatorSetting.getTemplateFileName());
 		StringWriter writer = new StringWriter();
 		t.merge(context, writer);
-		return writer.toString();
+		return new GenerationResult().setCode(writer.toString()).setUnitName(classModel.getName());
 	}
 
 	private List<String> getImports(ClassModel classModel) {

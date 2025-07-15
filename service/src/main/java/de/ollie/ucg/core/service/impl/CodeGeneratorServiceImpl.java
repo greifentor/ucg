@@ -3,6 +3,7 @@ package de.ollie.ucg.core.service.impl;
 import static de.ollie.baselib.util.Check.ensure;
 
 import de.ollie.ucg.core.model.ClassModel;
+import de.ollie.ucg.core.model.GenerationResult;
 import de.ollie.ucg.core.model.GeneratorConfiguration;
 import de.ollie.ucg.core.model.GeneratorSetting;
 import de.ollie.ucg.core.model.GeneratorSetting.GeneratorType;
@@ -28,8 +29,8 @@ public class CodeGeneratorServiceImpl implements CodeGeneratorService {
 		for (GeneratorSetting cs : configuration.getGeneratorSettings()) {
 			if (cs.getGeneratorType() == GeneratorType.CLASS) {
 				for (ClassModel classModel : model.getClasses()) {
-					String classCode = templateProcessorPort.process(cs, classModel);
-					observer.classCodeGenerated(classCode);
+					GenerationResult generationResult = templateProcessorPort.process(cs, classModel);
+					observer.classCodeGenerated(generationResult, cs, configuration);
 				}
 			}
 		}

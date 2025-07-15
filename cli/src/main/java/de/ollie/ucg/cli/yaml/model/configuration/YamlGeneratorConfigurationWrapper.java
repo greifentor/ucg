@@ -17,6 +17,9 @@ import lombok.experimental.Accessors;
 @NoArgsConstructor
 public class YamlGeneratorConfigurationWrapper {
 
+	@JsonProperty("default-target-path")
+	private String defaultTargetPath;
+
 	@JsonProperty("generators")
 	private List<YamlGeneratorSetting> generators;
 }

@@ -7,6 +7,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import de.ollie.ucg.core.model.ClassModel;
+import de.ollie.ucg.core.model.GenerationResult;
 import de.ollie.ucg.core.model.GeneratorConfiguration;
 import de.ollie.ucg.core.model.GeneratorSetting;
 import de.ollie.ucg.core.model.GeneratorSetting.GeneratorType;
@@ -25,9 +26,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 @ExtendWith(MockitoExtension.class)
 class CodeGeneratorServiceImplTest {
 
-	private static final String CLASS_NAME = "class-name";
-	private static final String CLASS_CODE = "class-text";
-
 	@Mock
 	private ClassModel classModel;
 
@@ -36,6 +34,9 @@ class CodeGeneratorServiceImplTest {
 
 	@Mock
 	private GeneratorConfiguration generatorConfiguration;
+
+	@Mock
+	private GenerationResult generationResult;
 
 	@Mock
 	private GeneratorSetting generatorSetting;
@@ -78,7 +79,7 @@ class CodeGeneratorServiceImplTest {
 			when(model.getClasses()).thenReturn(List.of(classModel));
 			when(generatorConfiguration.getGeneratorSettings()).thenReturn(List.of(generatorSetting));
 			when(reportFactory.create()).thenReturn(report);
-			when(templateProcessingPort.process(generatorSetting, classModel)).thenReturn(CLASS_CODE);
+			when(templateProcessingPort.process(generatorSetting, classModel)).thenReturn(generationResult);
 			// Run & Check
 			assertEquals(report, unitUnderTest.generate(model, generatorConfiguration, observer));
 		}
@@ -90,11 +91,11 @@ class CodeGeneratorServiceImplTest {
 			when(model.getClasses()).thenReturn(List.of(classModel));
 			when(generatorConfiguration.getGeneratorSettings()).thenReturn(List.of(generatorSetting));
 			when(reportFactory.create()).thenReturn(report);
-			when(templateProcessingPort.process(generatorSetting, classModel)).thenReturn(CLASS_CODE);
+			when(templateProcessingPort.process(generatorSetting, classModel)).thenReturn(generationResult);
 			// Run
 			unitUnderTest.generate(model, generatorConfiguration, observer);
 			// Check
-			verify(observer, times(1)).classCodeGenerated(CLASS_CODE);
+			verify(observer, times(1)).classCodeGenerated(generationResult, generatorSetting, generatorConfiguration);
 		}
 	}
 }
