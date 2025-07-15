@@ -9,6 +9,10 @@ import de.ollie.ucg.core.model.Model;
 import de.ollie.ucg.core.service.CodeGeneratorService;
 import de.ollie.ucg.core.service.CodeGeneratorService.CodeGeneratorServiceObserver;
 import jakarta.inject.Inject;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardOpenOption;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.SpringApplication;
@@ -54,15 +58,21 @@ public class CLIApplication implements ApplicationRunner, CodeGeneratorServiceOb
 		GeneratorSetting generatorSetting,
 		GeneratorConfiguration configuration
 	) {
-		System.out.println(
-			getTargetPath(configuration, generatorSetting) +
-			"/" +
-			generatorSetting.getPackageName().replace(".", "/") +
-			"/" +
-			generationResult.getUnitName() +
-			".java"
-		);
-		System.out.println(generationResult.getCode());
+		String path =
+			getTargetPath(configuration, generatorSetting) + "/" + generatorSetting.getPackageName().replace(".", "/");
+		String fileName = path + "/" + generationResult.getUnitName() + ".java";
+		try {
+			Files.createDirectories(Path.of(path));
+			Files.writeString(
+				Path.of(fileName),
+				generationResult.getCode(),
+				StandardOpenOption.CREATE,
+				StandardOpenOption.TRUNCATE_EXISTING
+			);
+		} catch (IOException ioe) {
+			System.out.println("\n\nError while writing file: " + fileName);
+			System.out.println("\n\nMessage: " + ioe.getMessage());
+		}
 	}
 
 	private String getTargetPath(GeneratorConfiguration configuration, GeneratorSetting setting) {
