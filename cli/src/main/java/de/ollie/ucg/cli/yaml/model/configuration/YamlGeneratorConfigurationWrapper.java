@@ -1,0 +1,20 @@
+package de.ollie.ucg.cli.yaml.model.configuration;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import java.util.List;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@AllArgsConstructor
+@Data
+@JsonIgnoreProperties(ignoreUnknown = true)
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@NoArgsConstructor
+public class YamlGeneratorConfigurationWrapper {
+
+	@JsonProperty("generators")
+	private List<YamlGeneratorSetting> generators;
+}
