@@ -1,14 +1,12 @@
 package de.ollie.ucg.cli;
 
+import de.ollie.ucg.cli.yaml.YamlGeneratorConfigurationReader;
 import de.ollie.ucg.cli.yaml.YamlModelReader;
 import de.ollie.ucg.core.model.GeneratorConfiguration;
-import de.ollie.ucg.core.model.GeneratorSetting;
-import de.ollie.ucg.core.model.GeneratorSetting.GeneratorType;
 import de.ollie.ucg.core.model.Model;
 import de.ollie.ucg.core.service.CodeGeneratorService;
 import de.ollie.ucg.core.service.CodeGeneratorService.CodeGeneratorServiceObserver;
 import jakarta.inject.Inject;
-import java.util.List;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.SpringApplication;
@@ -23,6 +21,9 @@ public class CLIApplication implements ApplicationRunner, CodeGeneratorServiceOb
 	private CodeGeneratorService codeGeneratorService;
 
 	@Inject
+	private YamlGeneratorConfigurationReader yamlGeneratorConfigurationReader;
+
+	@Inject
 	private YamlModelReader yamlModelReader;
 
 	public static void main(String[] args) {
@@ -31,18 +32,14 @@ public class CLIApplication implements ApplicationRunner, CodeGeneratorServiceOb
 
 	@Override
 	public void run(ApplicationArguments args) throws Exception {
-		GeneratorConfiguration configuration = new GeneratorConfiguration()
-			.setGeneratorSettings(
-				List.of(
-					new GeneratorSetting()
-						.setGeneratorType(GeneratorType.CLASS)
-						.setPackageName("de.ollie.healthtracker.coder.service.model")
-						.setTemplatePath("../velocity-template-processing-adapter/src/main/resources")
-						.setTemplateFileName("templates/Model.vc")
-				)
-			);
-		if (!args.getOptionValues("cm").isEmpty()) {
-			Model model = yamlModelReader.read(args.getOptionValues("cm").get(0));
+		GeneratorConfiguration configuration = null;
+		if (!args.getOptionValues("config").isEmpty()) {
+			configuration = yamlGeneratorConfigurationReader.read(args.getOptionValues("config").get(0));
+		} else {
+			throw new IllegalStateException("No generator configuration defined!");
+		}
+		if (!args.getOptionValues("model").isEmpty()) {
+			Model model = yamlModelReader.read(args.getOptionValues("model").get(0));
 			codeGeneratorService.generate(model, configuration, this);
 		} else {
 			throw new IllegalStateException("No class model defined!");

@@ -1,5 +1,7 @@
 package de.ollie.ucg.cli.yaml;
 
+import static de.ollie.baselib.util.Check.ensure;
+
 import de.ollie.ucg.cli.yaml.model.YamlAttribute;
 import de.ollie.ucg.cli.yaml.model.YamlAttributeWrapper;
 import de.ollie.ucg.cli.yaml.model.YamlClassWrapper;
@@ -16,9 +18,10 @@ import jakarta.inject.Named;
 import java.util.List;
 
 @Named
-public class YamlModelToModelMapper {
+class YamlModelToModelMapper {
 
 	Model map(YamlModel yamlModel) {
+		ensure(yamlModel != null, "YAML model cannot be null!");
 		return new Model().setClasses(getClasses(yamlModel));
 	}
 

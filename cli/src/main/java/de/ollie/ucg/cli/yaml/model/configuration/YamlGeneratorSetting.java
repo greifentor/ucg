@@ -6,7 +6,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.experimental.Accessors;
 
+@Accessors(chain = true)
 @AllArgsConstructor
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -22,6 +24,9 @@ public class YamlGeneratorSetting {
 
 	@JsonProperty("path")
 	private String path;
+
+	@JsonProperty("resource-class-loader")
+	private String resourceClassLoader = "org.apache.velocity.runtime.resource.loader.FileResourceLoader";
 
 	@JsonProperty("template")
 	private String template;

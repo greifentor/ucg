@@ -15,11 +15,11 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class YamlModelReader {
 
-	private final YamlModelToModelMapper yamlModelToModelMapper;
+	private final YamlModelToModelMapper modelMapper;
 
 	public Model read(String fileName) throws StreamReadException, DatabindException, IOException {
 		ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
 		YamlModel yamlModel = mapper.readValue(new File(fileName), YamlModel.class);
-		return yamlModelToModelMapper.map(yamlModel);
+		return modelMapper.map(yamlModel);
 	}
 }

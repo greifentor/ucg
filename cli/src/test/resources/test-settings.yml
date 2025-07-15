@@ -1,5 +1,8 @@
 generators:
   - type: CLASS
     package: de.library.core.service.model
-    path: ../velocity-template-processing-adapter/src/main/resources
-    template: templates/Model.vc
+    path: velocity-template-processing-adapter/src/main/resources/templates
+    template: Model.vc
+# Settings to read from class path
+#    resource-class-loader: org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader
+#    template: templates/Model.vc

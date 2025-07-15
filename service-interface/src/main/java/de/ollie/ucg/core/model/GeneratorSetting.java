@@ -16,6 +16,7 @@ public class GeneratorSetting {
 
 	private GeneratorType generatorType;
 	private String packageName;
+	private String resourceLoaderClass;
 	private String subProjectName;
 	private String templateFileName;
 	private String templatePath;

@@ -15,7 +15,6 @@ import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.Velocity;
 import org.apache.velocity.app.VelocityEngine;
-import org.apache.velocity.runtime.resource.loader.FileResourceLoader;
 
 @Named
 public class VelocityTemplateProcessorAdapter implements TemplateProcessorPort {
@@ -43,8 +42,10 @@ public class VelocityTemplateProcessorAdapter implements TemplateProcessorPort {
 		Velocity.init();
 		VelocityEngine velocityEngine = new VelocityEngine();
 		velocityEngine.setProperty("resource.loaders", "file");
-		velocityEngine.setProperty("resource.loader.file.class", FileResourceLoader.class.getName());
-		velocityEngine.setProperty("resource.loader.file.path", Paths.get(templatePathName).toAbsolutePath().toString());
+		velocityEngine.setProperty("resource.loader.file.class", generatorSetting.getResourceLoaderClass());
+		if (templatePathName != null) {
+			velocityEngine.setProperty("resource.loader.file.path", Paths.get(templatePathName).toAbsolutePath().toString());
+		}
 		velocityEngine.init();
 		Template t = velocityEngine.getTemplate(generatorSetting.getTemplateFileName());
 		StringWriter writer = new StringWriter();
