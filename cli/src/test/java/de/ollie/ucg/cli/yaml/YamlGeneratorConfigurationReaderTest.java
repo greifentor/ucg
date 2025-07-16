@@ -39,6 +39,7 @@ class YamlGeneratorConfigurationReaderTest {
 							.setPackageName("de.library.core.service.model")
 							.setProperties(List.of(new Property().setName("target-path").setValue("tmp0")))
 							.setResourceLoaderClass("org.apache.velocity.runtime.resource.loader.FileResourceLoader")
+							.setTargetFileName("${UnitName}Dbo")
 							.setTemplateFileName("Model.vc")
 							.setTemplatePath("velocity-template-processing-adapter/src/main/resources/templates")
 					)

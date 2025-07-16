@@ -34,6 +34,9 @@ public class YamlGeneratorSetting {
 	@JsonProperty("resource-class-loader")
 	private String resourceClassLoader = "org.apache.velocity.runtime.resource.loader.FileResourceLoader";
 
+	@JsonProperty("target-file-name")
+	private String targetFileName = "${UnitName}";
+
 	@JsonProperty("template")
 	private String template;
 }

@@ -1,0 +1,32 @@
+package ${PackageName};
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+#if (${Attribute.hasPropertyWithValue("id", "true")})
+import jakarta.persistence.Id;
+#end
+import jakarta.persistence.Table;
+import lombok.Data;
+import lombok.Generated;
+import lombok.experimental.Accessors;
+
+#foreach($Import in $Imports)
+import ${Import};
+#end
+
+@Accessors(chain = true)
+@Data
+@Generated
+@Entity(name = "${ClassName}Dbo")
+@Table(name = "${ClassName.toUpperCase()}")
+public class ${ClassName}Dbo {
+
+#foreach($Attribute in $Attributes)
+	#if (${Attribute.hasPropertyWithValue("id", "true")})
+	@Id
+	#end
+	@Column(name = "${Attribute.getName().toUpperCase()}", nullable =#if (${Attribute.hasPropertyWithValue("nullable", "false")}) false#else true#end)
+	private ${Attribute.getType().getName()} ${Attribute.getName()};
+#end
+
+}

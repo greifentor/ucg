@@ -13,7 +13,7 @@ import ${Import};
 public class ${ClassName} {
 
 #foreach($Attribute in $Attributes)
-	private ${Attribute.getType()} ${Attribute.getName()};
+	private ${Attribute.getType().getName()} ${Attribute.getName()};
 #end
 
 }

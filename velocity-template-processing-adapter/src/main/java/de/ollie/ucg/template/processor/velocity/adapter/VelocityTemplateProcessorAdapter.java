@@ -32,10 +32,7 @@ public class VelocityTemplateProcessorAdapter implements TemplateProcessorPort {
 	@Override
 	public GenerationResult process(GeneratorSetting generatorSetting, ClassModel classModel) {
 		VelocityContext context = new VelocityContext();
-		context.put(
-			"Attributes",
-			classModel.getAttributes().stream().map(am -> new Attribute(am.getName(), am.getType().getName())).toList()
-		);
+		context.put("Attributes", classModel.getAttributes());
 		context.put("ClassName", classModel.getName());
 		context.put("Imports", getImports(classModel));
 		context.put("PackageName", generatorSetting.getPackageName());

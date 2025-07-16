@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import de.ollie.ucg.core.model.AttributeModel;
 import de.ollie.ucg.core.model.ClassModel;
 import de.ollie.ucg.core.model.Model;
+import de.ollie.ucg.core.model.Property;
 import de.ollie.ucg.core.model.TypeModel;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
@@ -38,6 +39,7 @@ class YamlModelReaderTest {
 								List.of(
 									new AttributeModel()
 										.setName("id")
+										.setProperties(List.of(new Property().setName("nullable").setValue("false")))
 										.setType(new TypeModel().setName("UUID").addProperty("import", "java.util.UUID")),
 									new AttributeModel().setName("title").setType(new TypeModel().setName("String"))
 								)

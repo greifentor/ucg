@@ -4,6 +4,7 @@ generators:
     package: de.library.core.service.model
     path: velocity-template-processing-adapter/src/main/resources/templates
     template: Model.vc
+    target-file-name: ${UnitName}Dbo
     properties:
       - name: target-path
         value: tmp0

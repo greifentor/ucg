@@ -60,7 +60,11 @@ public class CLIApplication implements ApplicationRunner, CodeGeneratorServiceOb
 	) {
 		String path =
 			getTargetPath(configuration, generatorSetting) + "/" + generatorSetting.getPackageName().replace(".", "/");
-		String fileName = path + "/" + generationResult.getUnitName() + ".java";
+		String fileName =
+			path +
+			"/" +
+			generatorSetting.getTargetFileName().replace("${UnitName}", generationResult.getUnitName()) +
+			".java";
 		try {
 			Files.createDirectories(Path.of(path));
 			Files.writeString(
@@ -69,6 +73,7 @@ public class CLIApplication implements ApplicationRunner, CodeGeneratorServiceOb
 				StandardOpenOption.CREATE,
 				StandardOpenOption.TRUNCATE_EXISTING
 			);
+			System.out.println("wrote: " + fileName);
 		} catch (IOException ioe) {
 			System.out.println("\n\nError while writing file: " + fileName);
 			System.out.println("\n\nMessage: " + ioe.getMessage());

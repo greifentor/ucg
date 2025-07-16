@@ -4,6 +4,10 @@ classes:
       attributes:
         - attribute:
             name: id
+            properties:
+              - property:
+                  name: nullable
+                  value: false
             type:
               name: UUID
               properties:
