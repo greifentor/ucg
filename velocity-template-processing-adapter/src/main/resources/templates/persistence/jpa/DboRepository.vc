@@ -8,6 +8,11 @@ import org.springframework.stereotype.Repository;
 import ${Import};
 #end
 
+/**
+ * ${GeneratedCodeMarker}
+ *
+ * Remove this comment to suspend class from generation process.
+ */
 @Repository
 public interface ${ClassName}DboRepository extends JpaRepository<${ClassName}Dbo, ${Class.getAttributeTypeNameByPropertyName("id")}> {
 }

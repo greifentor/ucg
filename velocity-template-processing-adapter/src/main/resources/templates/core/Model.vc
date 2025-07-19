@@ -8,6 +8,11 @@ import lombok.experimental.Accessors;
 import ${Import};
 #end
 
+/**
+ * ${GeneratedCodeMarker}
+ *
+ * Remove this comment to suspend class from generation process.
+ */
 @Accessors(chain = true)
 @Data
 public class ${ClassName} {

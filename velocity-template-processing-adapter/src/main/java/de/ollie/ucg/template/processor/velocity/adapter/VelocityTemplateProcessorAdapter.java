@@ -5,6 +5,7 @@ import de.ollie.ucg.core.model.GenerationResult;
 import de.ollie.ucg.core.model.GeneratorConfiguration;
 import de.ollie.ucg.core.model.GeneratorSetting;
 import de.ollie.ucg.core.model.Property;
+import de.ollie.ucg.core.service.CodeGeneratorService;
 import de.ollie.ucg.core.service.port.TemplateProcessorPort;
 import de.ollie.ucg.template.processor.velocity.adapter.wrapper.AttributeModelWrapper;
 import de.ollie.ucg.template.processor.velocity.adapter.wrapper.ClassModelWrapper;
@@ -42,6 +43,7 @@ public class VelocityTemplateProcessorAdapter implements TemplateProcessorPort {
 		context.put("Attributes", getAttributeWrappers(classModel));
 		context.put("Class", new ClassModelWrapper(classModel));
 		context.put("ClassName", classModel.getName());
+		context.put("GeneratedCodeMarker", CodeGeneratorService.GENERATED_CODE_MARKER);
 		context.put("Imports", getImports(classModel));
 		context.put("PackageName", generatorSetting.getPackageName());
 		context.put("Properties", generatorConfiguration.getPropertiesByNames());

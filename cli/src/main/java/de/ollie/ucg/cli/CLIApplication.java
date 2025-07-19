@@ -9,6 +9,7 @@ import de.ollie.ucg.core.model.Model;
 import de.ollie.ucg.core.service.CodeGeneratorService;
 import de.ollie.ucg.core.service.CodeGeneratorService.CodeGeneratorServiceObserver;
 import jakarta.inject.Inject;
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -66,14 +67,22 @@ public class CLIApplication implements ApplicationRunner, CodeGeneratorServiceOb
 			generatorSetting.getTargetFileName().replace("${UnitName}", generationResult.getUnitName()) +
 			".java";
 		try {
-			Files.createDirectories(Path.of(path));
-			Files.writeString(
-				Path.of(fileName),
-				generationResult.getCode(),
-				StandardOpenOption.CREATE,
-				StandardOpenOption.TRUNCATE_EXISTING
-			);
-			System.out.println("wrote: " + fileName);
+			boolean write = true;
+			if (new File(fileName).exists()) {
+				write = Files.readString(Path.of(fileName)).contains(CodeGeneratorService.GENERATED_CODE_MARKER);
+			}
+			if (write) {
+				Files.createDirectories(Path.of(path));
+				Files.writeString(
+					Path.of(fileName),
+					generationResult.getCode(),
+					StandardOpenOption.CREATE,
+					StandardOpenOption.TRUNCATE_EXISTING
+				);
+				System.out.println("wrote: " + fileName);
+			} else {
+				System.out.println("suppressed: " + fileName);
+			}
 		} catch (IOException ioe) {
 			System.out.println("\n\nError while writing file: " + fileName);
 			System.out.println("\n\nMessage: " + ioe.getMessage());

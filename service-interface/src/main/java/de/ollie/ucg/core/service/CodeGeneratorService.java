@@ -7,6 +7,8 @@ import de.ollie.ucg.core.model.Model;
 import de.ollie.ucg.core.model.Report;
 
 public interface CodeGeneratorService {
+	public static final String GENERATED_CODE_MARKER = "GENERATED CODE - DO NOT TOUCH";
+
 	public interface CodeGeneratorServiceObserver {
 		void classCodeGenerated(
 			GenerationResult generationResult,

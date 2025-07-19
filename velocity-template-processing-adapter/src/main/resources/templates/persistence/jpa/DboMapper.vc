@@ -1,9 +1,14 @@
 package ${PackageName};
 
-import ${Properties.get("model-package")}.${ClassName};
+import ${Properties.get("core-model-package")}.${ClassName};
 import ${Properties.get("jpa-entity-package")}.${ClassName}Dbo;
 import org.mapstruct.Mapper;
 
+/**
+ * ${GeneratedCodeMarker}
+ *
+ * Remove this comment to suspend class from generation process.
+ */
 @Mapper(componentModel = "spring")
 public interface ${ClassName}DboMapper {
 	${ClassName} toModel(${ClassName}Dbo dbo);
