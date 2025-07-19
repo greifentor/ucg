@@ -1,0 +1,10 @@
+package ${PackageName};
+
+import ${Properties.get("model-package")}.${ClassName};
+import ${Properties.get("jpa-entity-package")}.${ClassName}Dbo;
+import org.mapstruct.Mapper;
+
+@Mapper(componentModel = "spring")
+public interface ${ClassName}DboMapper {
+	${ClassName} toModel(${ClassName}Dbo dbo);
+}

@@ -1,4 +1,7 @@
 default-target-path: tmp
+properties:
+  - name: general-property-name
+    value: general-property-value
 generators:
   - type: CLASS
     package: de.library.core.service.model

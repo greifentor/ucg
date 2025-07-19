@@ -1,0 +1,13 @@
+package ${PackageName};
+
+import ${Properties.get("jpa-entity-package")}.${ClassName}Dbo;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+#foreach($Import in $Imports)
+import ${Import};
+#end
+
+@Repository
+public interface ${ClassName}DboRepository extends JpaRepository<${ClassName}Dbo, ${Class.getAttributeTypeNameByPropertyName("id")}> {
+}

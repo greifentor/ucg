@@ -3,6 +3,8 @@ package de.ollie.ucg.cli.yaml.model.configuration;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import de.ollie.ucg.cli.yaml.model.YamlProperty;
+import java.util.ArrayList;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -22,4 +24,7 @@ public class YamlGeneratorConfigurationWrapper {
 
 	@JsonProperty("generators")
 	private List<YamlGeneratorSetting> generators;
+
+	@JsonProperty("properties")
+	private List<YamlProperty> properties = new ArrayList<>();
 }

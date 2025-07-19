@@ -19,7 +19,8 @@ class YamlGeneratorConfigurationToGeneratorConfigurationMapper {
 		ensure(yamlGeneratorConfigurationWrapper != null, "YAML generator configuration wrapper cannot be null!");
 		return new GeneratorConfiguration()
 			.setDefaultTargetPath(yamlGeneratorConfigurationWrapper.getDefaultTargetPath())
-			.setGeneratorSettings(getGeneratorSettings(yamlGeneratorConfigurationWrapper.getGenerators()));
+			.setGeneratorSettings(getGeneratorSettings(yamlGeneratorConfigurationWrapper.getGenerators()))
+			.setProperties(getProperties(yamlGeneratorConfigurationWrapper.getProperties()));
 	}
 
 	private List<GeneratorSetting> getGeneratorSettings(List<YamlGeneratorSetting> yamlSettings) {

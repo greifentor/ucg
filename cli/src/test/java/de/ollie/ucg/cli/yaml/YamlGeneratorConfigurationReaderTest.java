@@ -43,7 +43,8 @@ class YamlGeneratorConfigurationReaderTest {
 							.setTemplateFileName("Model.vc")
 							.setTemplatePath("velocity-template-processing-adapter/src/main/resources/templates")
 					)
-				);
+				)
+				.setProperties(List.of(new Property().setName("general-property-name").setValue("general-property-value")));
 			// Run
 			GeneratorConfiguration returned = unitUnderTest.read("src/test/resources/test-settings.yml");
 			// Check

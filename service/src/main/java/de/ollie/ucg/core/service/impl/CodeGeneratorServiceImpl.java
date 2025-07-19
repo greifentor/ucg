@@ -29,7 +29,7 @@ public class CodeGeneratorServiceImpl implements CodeGeneratorService {
 		for (GeneratorSetting cs : configuration.getGeneratorSettings()) {
 			if (cs.getGeneratorType() == GeneratorType.CLASS) {
 				for (ClassModel classModel : model.getClasses()) {
-					GenerationResult generationResult = templateProcessorPort.process(cs, classModel);
+					GenerationResult generationResult = templateProcessorPort.process(configuration, cs, classModel);
 					observer.classCodeGenerated(generationResult, cs, configuration);
 				}
 			}
