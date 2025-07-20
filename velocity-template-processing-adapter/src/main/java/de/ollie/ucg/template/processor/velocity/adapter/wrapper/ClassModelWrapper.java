@@ -15,6 +15,8 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class ClassModelWrapper {
 
+	private static final String MSG_NAME_IS_NULL = "name cannot be null!";
+
 	@NonNull
 	private final ClassModel model;
 
@@ -27,7 +29,7 @@ public class ClassModelWrapper {
 	}
 
 	public String getAttributeTypeNameByPropertyName(String name) {
-		ensure(name != null, "name cannot be null!");
+		ensure(name != null, MSG_NAME_IS_NULL);
 		return findAttributeWithProperty(name)
 			.map(a -> a.getType().getName())
 			.orElseThrow(() ->
@@ -44,8 +46,23 @@ public class ClassModelWrapper {
 		return model.getAttributes().stream().filter(a -> a.hasProperty(name)).findFirst();
 	}
 
+	public List<AttributeModelWrapper> getAttributesWithPropertyNotSet(String name) {
+		ensure(name != null, MSG_NAME_IS_NULL);
+		return model
+			.getAttributes()
+			.stream()
+			.filter(a -> !a.getProperties().isEmpty())
+			.filter(a -> !a.hasProperty(name))
+			.map(AttributeModelWrapper::new)
+			.toList();
+	}
+
+	public String getNameSeparated(String separator) {
+		return NameSeparator.INSTANCE.getNameSeparated(model.getName(), separator);
+	}
+
 	public boolean isPropertyWithNameInAttributesPresent(String name) {
-		ensure(name != null, "name cannot be null!");
+		ensure(name != null, MSG_NAME_IS_NULL);
 		return model.getAttributes().isEmpty()
 			? false
 			: getAllProperties().stream().anyMatch(p -> name.equals(p.getName()));

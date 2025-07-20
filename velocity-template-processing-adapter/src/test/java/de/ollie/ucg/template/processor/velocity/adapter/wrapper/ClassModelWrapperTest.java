@@ -92,6 +92,88 @@ class ClassModelWrapperTest {
 	}
 
 	@Nested
+	class getAttributesWithPropertyNotSet_String {
+
+		@Test
+		void throwsAnException_passingANullValue_asName() {
+			assertThrows(IllegalArgumentException.class, () -> unitUnderTest.getAttributesWithPropertyNotSet(null));
+		}
+
+		@Test
+		void returnsAnEmptyList_whenClassHasNoAttributes() {
+			// Prepare
+			when(classModel.getAttributes()).thenReturn(List.of());
+			// Run & Check
+			assertTrue(unitUnderTest.getAttributesWithPropertyNotSet(PROPERTY_NAME).isEmpty());
+		}
+
+		@Test
+		void returnsAnEmptyList_whenClassHasAttributeWithNoProperties() {
+			// Prepare
+			when(classModel.getAttributes()).thenReturn(List.of(new AttributeModel()));
+			// Run & Check
+			assertEquals(List.of(), unitUnderTest.getAttributesWithPropertyNotSet(PROPERTY_NAME));
+		}
+
+		@Test
+		void returnsAnEmptyList_whenClassModelHasAttributesWithMatchingPropertySetOnly() {
+			// Prepare
+			when(classModel.getAttributes())
+				.thenReturn(List.of(new AttributeModel().setProperties(List.of(new Property().setName(PROPERTY_NAME)))));
+			// Run & Check
+			assertEquals(List.of(), unitUnderTest.getAttributesWithPropertyNotSet(PROPERTY_NAME));
+		}
+
+		@Test
+		void returnsAListWithAttributeWrapper_whenClassModelHasAttributesWithNotMatchingPropertySet() {
+			// Prepare
+			AttributeModel attribute0 = new AttributeModel().setProperties(List.of(new Property().setName(PROPERTY_NAME)));
+			AttributeModel attribute1 = new AttributeModel()
+				.setProperties(List.of(new Property().setName(PROPERTY_NAME + 1)));
+			List<AttributeModelWrapper> expected = List.of(new AttributeModelWrapper(attribute1));
+			when(classModel.getAttributes()).thenReturn(List.of(attribute0, attribute1));
+			// Run & Check
+			assertEquals(expected, unitUnderTest.getAttributesWithPropertyNotSet(PROPERTY_NAME));
+		}
+	}
+
+	@Nested
+	class getNameSeparated_String {
+
+		@Test
+		void throwsAnException_passingANullValue_asSeparator() {
+			assertThrows(IllegalArgumentException.class, () -> unitUnderTest.getNameSeparated(null));
+		}
+
+		@Test
+		void returnsAnUnchangedNameString_whenNameContainsLowerCaseLetterOnly() {
+			// Prepare
+			String expected = "lowercaseonly";
+			when(classModel.getName()).thenReturn(expected);
+			// Run & Check
+			assertEquals(expected, unitUnderTest.getNameSeparated("_"));
+		}
+
+		@Test
+		void returnsAnUnchangedNameString_whenNameContainsLowerCaseLetterOnly_exceptFirstLetter() {
+			// Prepare
+			String expected = "Leadinguppercaseonly";
+			when(classModel.getName()).thenReturn(expected);
+			// Run & Check
+			assertEquals(expected, unitUnderTest.getNameSeparated("_"));
+		}
+
+		@Test
+		void returnsAnNameString_withASeparator_beforeEachUpperCaseLetter_exceptFirstLetter() {
+			// Prepare
+			String expected = "A_Camel_Case_Name";
+			when(classModel.getName()).thenReturn("ACamelCaseName");
+			// Run & Check
+			assertEquals(expected, unitUnderTest.getNameSeparated("_"));
+		}
+	}
+
+	@Nested
 	class isPropertyWithNameInAttributesPresent_String {
 
 		@Test

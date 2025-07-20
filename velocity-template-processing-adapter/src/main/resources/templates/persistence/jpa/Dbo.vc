@@ -23,14 +23,14 @@ import ${Import};
 @Data
 @Generated
 @Entity(name = "${ClassName}Dbo")
-@Table(name = "${ClassName.toUpperCase()}")
+@Table(name = "${Class.getNameSeparated("_").toUpperCase()}")
 public class ${ClassName}Dbo {
 
 #foreach($Attribute in $Attributes)
 	#if (${Attribute.hasPropertyWithValue("id", "true")})
 	@Id
 	#end
-	@Column(name = "${Attribute.getName().toUpperCase()}", nullable =#if (${Attribute.hasPropertyWithValue("nullable", "false")}) false#else true#end)
+	@Column(name = "${Attribute.getNameSeparated("_").toUpperCase()}", nullable =#if (${Attribute.hasPropertyWithValue("nullable", "false")}) false#else true#end)
 	private ${Attribute.getTypeName()} ${Attribute.getName()};
 #end
 
