@@ -15,6 +15,7 @@ import ${Import};
  */
 @Accessors(chain = true)
 @Data
+@Generated
 public class ${ClassName} {
 
 #foreach($Attribute in $Attributes)

@@ -2,8 +2,15 @@ package ${PackageName};
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+#if (${Class.isPropertyWithNameInAttributesPresent("reference")})
+import jakarta.persistence.FetchType;
+#end
 #if (${Class.isPropertyWithNameInAttributesPresent("id")})
 import jakarta.persistence.Id;
+#end
+#if (${Class.isPropertyWithNameInAttributesPresent("reference")})
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 #end
 import jakarta.persistence.Table;
 import lombok.Data;
@@ -30,8 +37,14 @@ public class ${ClassName}Dbo {
 	#if (${Attribute.hasPropertyWithValue("id", "true")})
 	@Id
 	#end
+	#if (${Attribute.hasPropertyWithValue("reference", "true")})
+	@JoinColumn(name = "${Attribute.getNameSeparated("_").toUpperCase()}", referencedColumnName = "ID", nullable =#if (${Attribute.hasPropertyWithValue("nullable", "false")}) false#else true#end)
+	@ManyToOne(fetch = FetchType.EAGER)
+	private ${Attribute.getTypeName()}Dbo ${Attribute.getName()};
+	#else
 	@Column(name = "${Attribute.getNameSeparated("_").toUpperCase()}", nullable =#if (${Attribute.hasPropertyWithValue("nullable", "false")}) false#else true#end)
 	private ${Attribute.getTypeName()} ${Attribute.getName()};
+	#end
 #end
 
 }
