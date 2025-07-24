@@ -57,6 +57,7 @@ class YamlModelToModelMapperTest {
 									new AttributeModel()
 										.setName(ATTRIBUTE_NAME_0)
 										.setProperties(List.of(new Property().setName("nullable").setValue("false")))
+										.setReference(true)
 										.setType(new TypeModel().setName(ATTRIBUTE_TYPE_0).addProperty("import", IMPORT)),
 									new AttributeModel().setName(ATTRIBUTE_NAME_1).setType(new TypeModel().setName(ATTRIBUTE_TYPE_1))
 								)
