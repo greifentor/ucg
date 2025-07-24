@@ -76,11 +76,12 @@ class YamlModelToModelMapperTest {
 											ATTRIBUTE_TYPE_0,
 											List.of(new YamlPropertyWrapper(new YamlProperty("import", IMPORT)))
 										),
-										List.of(new YamlPropertyWrapper(new YamlProperty("nullable", "false")))
+										List.of(new YamlPropertyWrapper(new YamlProperty("nullable", "false"))),
+										true
 									)
 								),
 								new YamlAttributeWrapper(
-									new YamlAttribute(ATTRIBUTE_NAME_1, new YamlType(ATTRIBUTE_TYPE_1, List.of()), List.of())
+									new YamlAttribute(ATTRIBUTE_NAME_1, new YamlType(ATTRIBUTE_TYPE_1, List.of()), List.of(), false)
 								)
 							)
 						)

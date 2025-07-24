@@ -16,4 +16,7 @@ public class YamlAttribute {
 
 	@JsonProperty("properties")
 	private List<YamlPropertyWrapper> properties;
+
+	@JsonProperty("reference")
+	private boolean reference;
 }

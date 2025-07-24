@@ -6,6 +6,7 @@ import de.ollie.ucg.core.exception.GenerationFailedException;
 import de.ollie.ucg.core.exception.GenerationFailedException.Type;
 import de.ollie.ucg.core.model.AttributeModel;
 import de.ollie.ucg.core.model.ClassModel;
+import de.ollie.ucg.core.model.Model;
 import de.ollie.ucg.core.model.Property;
 import java.util.List;
 import java.util.Optional;
@@ -18,14 +19,17 @@ public class ClassModelWrapper {
 	private static final String MSG_NAME_IS_NULL = "name cannot be null!";
 
 	@NonNull
-	private final ClassModel model;
+	private final ClassModel classModel;
+
+	@NonNull
+	private final Model model;
 
 	public String getName() {
-		return model.getName();
+		return classModel.getName();
 	}
 
 	public List<AttributeModelWrapper> getAttributes() {
-		return model.getAttributes().stream().map(a -> new AttributeModelWrapper(a)).toList();
+		return classModel.getAttributes().stream().map(a -> new AttributeModelWrapper(a, model)).toList();
 	}
 
 	public String getAttributeTypeNameByPropertyName(String name) {
@@ -43,32 +47,32 @@ public class ClassModelWrapper {
 	}
 
 	private Optional<AttributeModel> findAttributeWithProperty(String name) {
-		return model.getAttributes().stream().filter(a -> a.hasProperty(name)).findFirst();
+		return classModel.getAttributes().stream().filter(a -> a.hasProperty(name)).findFirst();
 	}
 
 	public List<AttributeModelWrapper> getAttributesWithPropertyNotSet(String name) {
 		ensure(name != null, MSG_NAME_IS_NULL);
-		return model
+		return classModel
 			.getAttributes()
 			.stream()
 			.filter(a -> !a.getProperties().isEmpty())
 			.filter(a -> !a.hasProperty(name))
-			.map(AttributeModelWrapper::new)
+			.map(a -> new AttributeModelWrapper(a, model))
 			.toList();
 	}
 
 	public String getNameSeparated(String separator) {
-		return NameSeparator.INSTANCE.getNameSeparated(model.getName(), separator);
+		return NameSeparator.INSTANCE.getNameSeparated(classModel.getName(), separator);
 	}
 
 	public boolean isPropertyWithNameInAttributesPresent(String name) {
 		ensure(name != null, MSG_NAME_IS_NULL);
-		return model.getAttributes().isEmpty()
+		return classModel.getAttributes().isEmpty()
 			? false
 			: getAllProperties().stream().anyMatch(p -> name.equals(p.getName()));
 	}
 
 	private List<Property> getAllProperties() {
-		return model.getAttributes().stream().flatMap(a -> a.getProperties().stream()).toList();
+		return classModel.getAttributes().stream().flatMap(a -> a.getProperties().stream()).toList();
 	}
 }

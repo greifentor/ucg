@@ -1,6 +1,7 @@
 package de.ollie.ucg.template.processor.velocity.adapter.wrapper;
 
 import de.ollie.ucg.core.model.AttributeModel;
+import de.ollie.ucg.core.model.Model;
 import lombok.EqualsAndHashCode;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -12,21 +13,24 @@ import lombok.ToString;
 public class AttributeModelWrapper {
 
 	@NonNull
-	private final AttributeModel model;
+	private final AttributeModel attributeModel;
+
+	@NonNull
+	private final Model model;
 
 	public String getName() {
-		return model.getName();
+		return attributeModel.getName();
 	}
 
 	public String getTypeName() {
-		return model.getType().getName();
+		return attributeModel.getType().getName();
 	}
 
 	public boolean hasPropertyWithValue(String name, String value) {
-		return model.hasPropertyWithValue(name, value);
+		return attributeModel.hasPropertyWithValue(name, value);
 	}
 
 	public String getNameSeparated(String separator) {
-		return NameSeparator.INSTANCE.getNameSeparated(model.getName(), separator);
+		return NameSeparator.INSTANCE.getNameSeparated(attributeModel.getName(), separator);
 	}
 }

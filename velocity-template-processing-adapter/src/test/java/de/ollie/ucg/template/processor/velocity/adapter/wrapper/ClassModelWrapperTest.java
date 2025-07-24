@@ -10,6 +10,7 @@ import de.ollie.ucg.core.exception.GenerationFailedException;
 import de.ollie.ucg.core.exception.GenerationFailedException.Type;
 import de.ollie.ucg.core.model.AttributeModel;
 import de.ollie.ucg.core.model.ClassModel;
+import de.ollie.ucg.core.model.Model;
 import de.ollie.ucg.core.model.Property;
 import de.ollie.ucg.core.model.TypeModel;
 import java.util.List;
@@ -38,6 +39,9 @@ class ClassModelWrapperTest {
 	private ClassModel classModel;
 
 	@Mock
+	private Model model;
+
+	@Mock
 	private TypeModel typeModel;
 
 	@InjectMocks
@@ -48,7 +52,12 @@ class ClassModelWrapperTest {
 
 		@Test
 		void throwsAnException_passingANullValue_asClassModel() {
-			assertThrows(NullPointerException.class, () -> new ClassModelWrapper(null));
+			assertThrows(NullPointerException.class, () -> new ClassModelWrapper(null, model));
+		}
+
+		@Test
+		void throwsAnException_passingANullValue_asModel() {
+			assertThrows(NullPointerException.class, () -> new ClassModelWrapper(classModel, null));
 		}
 	}
 
@@ -130,7 +139,7 @@ class ClassModelWrapperTest {
 			AttributeModel attribute0 = new AttributeModel().setProperties(List.of(new Property().setName(PROPERTY_NAME)));
 			AttributeModel attribute1 = new AttributeModel()
 				.setProperties(List.of(new Property().setName(PROPERTY_NAME + 1)));
-			List<AttributeModelWrapper> expected = List.of(new AttributeModelWrapper(attribute1));
+			List<AttributeModelWrapper> expected = List.of(new AttributeModelWrapper(attribute1, model));
 			when(classModel.getAttributes()).thenReturn(List.of(attribute0, attribute1));
 			// Run & Check
 			assertEquals(expected, unitUnderTest.getAttributesWithPropertyNotSet(PROPERTY_NAME));

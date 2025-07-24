@@ -79,7 +79,7 @@ class CodeGeneratorServiceImplTest {
 			when(model.getClasses()).thenReturn(List.of(classModel));
 			when(generatorConfiguration.getGeneratorSettings()).thenReturn(List.of(generatorSetting));
 			when(reportFactory.create()).thenReturn(report);
-			when(templateProcessingPort.process(generatorConfiguration, generatorSetting, classModel))
+			when(templateProcessingPort.process(generatorConfiguration, generatorSetting, model, classModel))
 				.thenReturn(generationResult);
 			// Run & Check
 			assertEquals(report, unitUnderTest.generate(model, generatorConfiguration, observer));
@@ -92,7 +92,7 @@ class CodeGeneratorServiceImplTest {
 			when(model.getClasses()).thenReturn(List.of(classModel));
 			when(generatorConfiguration.getGeneratorSettings()).thenReturn(List.of(generatorSetting));
 			when(reportFactory.create()).thenReturn(report);
-			when(templateProcessingPort.process(generatorConfiguration, generatorSetting, classModel))
+			when(templateProcessingPort.process(generatorConfiguration, generatorSetting, model, classModel))
 				.thenReturn(generationResult);
 			// Run
 			unitUnderTest.generate(model, generatorConfiguration, observer);

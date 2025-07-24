@@ -4,11 +4,13 @@ import de.ollie.ucg.core.model.ClassModel;
 import de.ollie.ucg.core.model.GenerationResult;
 import de.ollie.ucg.core.model.GeneratorConfiguration;
 import de.ollie.ucg.core.model.GeneratorSetting;
+import de.ollie.ucg.core.model.Model;
 import de.ollie.ucg.core.model.Property;
 import de.ollie.ucg.core.service.CodeGeneratorService;
 import de.ollie.ucg.core.service.port.TemplateProcessorPort;
 import de.ollie.ucg.template.processor.velocity.adapter.wrapper.AttributeModelWrapper;
 import de.ollie.ucg.template.processor.velocity.adapter.wrapper.ClassModelWrapper;
+import de.ollie.ucg.template.processor.velocity.adapter.wrapper.ModelWrapper;
 import jakarta.inject.Named;
 import java.io.StringWriter;
 import java.nio.file.Paths;
@@ -37,14 +39,16 @@ public class VelocityTemplateProcessorAdapter implements TemplateProcessorPort {
 	public GenerationResult process(
 		GeneratorConfiguration generatorConfiguration,
 		GeneratorSetting generatorSetting,
+		Model model,
 		ClassModel classModel
 	) {
 		VelocityContext context = new VelocityContext();
-		context.put("Attributes", getAttributeWrappers(classModel));
-		context.put("Class", new ClassModelWrapper(classModel));
+		context.put("Attributes", getAttributeWrappers(classModel, model));
+		context.put("Class", new ClassModelWrapper(classModel, model));
 		context.put("ClassName", classModel.getName());
 		context.put("GeneratedCodeMarker", CodeGeneratorService.GENERATED_CODE_MARKER);
 		context.put("Imports", getImports(classModel));
+		context.put("Model", new ModelWrapper(model));
 		context.put("PackageName", generatorSetting.getPackageName());
 		context.put("Properties", generatorConfiguration.getPropertiesByNames());
 		String templatePathName = generatorSetting.getTemplatePath();
@@ -62,8 +66,8 @@ public class VelocityTemplateProcessorAdapter implements TemplateProcessorPort {
 		return new GenerationResult().setCode(writer.toString()).setUnitName(classModel.getName());
 	}
 
-	private List<AttributeModelWrapper> getAttributeWrappers(ClassModel classModel) {
-		return classModel.getAttributes().stream().map(AttributeModelWrapper::new).toList();
+	private List<AttributeModelWrapper> getAttributeWrappers(ClassModel classModel, Model model) {
+		return classModel.getAttributes().stream().map(a -> new AttributeModelWrapper(a, model)).toList();
 	}
 
 	private List<String> getImports(ClassModel classModel) {

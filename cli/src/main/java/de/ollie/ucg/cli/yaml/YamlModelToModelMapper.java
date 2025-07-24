@@ -22,7 +22,7 @@ class YamlModelToModelMapper {
 
 	Model map(YamlModel yamlModel) {
 		ensure(yamlModel != null, "YAML model cannot be null!");
-		return new Model().setClasses(getClasses(yamlModel));
+		return new Model().setClasses(getClasses(yamlModel)).updateReferences();
 	}
 
 	private List<ClassModel> getClasses(YamlModel yamlModel) {
@@ -47,6 +47,7 @@ class YamlModelToModelMapper {
 		return new AttributeModel()
 			.setName(yamlAttribute.getName())
 			.setProperties(getProperties(yamlAttribute.getProperties()))
+			.setReference(yamlAttribute.isReference())
 			.setType(getTypeModel(yamlAttribute.getType()));
 	}
 

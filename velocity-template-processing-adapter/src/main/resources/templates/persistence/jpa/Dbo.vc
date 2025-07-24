@@ -38,7 +38,7 @@ public class ${ClassName}Dbo {
 	@Id
 	#end
 	#if (${Attribute.hasPropertyWithValue("reference", "true")})
-	@JoinColumn(name = "${Attribute.getNameSeparated("_").toUpperCase()}", referencedColumnName = "ID", nullable =#if (${Attribute.hasPropertyWithValue("nullable", "false")}) false#else true#end)
+	@JoinColumn(name = "${Attribute.getNameSeparated("_").toUpperCase()}", referencedColumnName = "${Attribute.getType().getClassType().getAttributeNameWithPropertySeparated("id").toUpperCase()}", nullable =#if (${Attribute.hasPropertyWithValue("nullable", "false")}) false#else true#end)
 	@ManyToOne(fetch = FetchType.EAGER)
 	private ${Attribute.getTypeName()}Dbo ${Attribute.getName()};
 	#else
