@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
 
 import de.ollie.ucg.core.model.AttributeModel;
+import de.ollie.ucg.core.model.Model;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -17,6 +18,9 @@ class AttributeModelWrapperTest {
 
 	@Mock
 	private AttributeModel attributeModel;
+
+	@Mock
+	private Model model;
 
 	@InjectMocks
 	private AttributeModelWrapper unitUnderTest;
