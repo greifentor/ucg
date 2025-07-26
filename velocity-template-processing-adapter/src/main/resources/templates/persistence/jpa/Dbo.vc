@@ -2,13 +2,13 @@ package ${PackageName};
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-#if (${Class.isPropertyWithNameInAttributesPresent("reference")})
+#if (${Class.hasAReferenceAttribute()})
 import jakarta.persistence.FetchType;
 #end
 #if (${Class.isPropertyWithNameInAttributesPresent("id")})
 import jakarta.persistence.Id;
 #end
-#if (${Class.isPropertyWithNameInAttributesPresent("reference")})
+#if (${Class.hasAReferenceAttribute()})
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 #end
@@ -37,8 +37,8 @@ public class ${ClassName}Dbo {
 	#if (${Attribute.hasPropertyWithValue("id", "true")})
 	@Id
 	#end
-	#if (${Attribute.hasPropertyWithValue("reference", "true")})
-	@JoinColumn(name = "${Attribute.getNameSeparated("_").toUpperCase()}", referencedColumnName = "${Attribute.getType().getClassType().getAttributeNameWithPropertySeparated("id").toUpperCase()}", nullable =#if (${Attribute.hasPropertyWithValue("nullable", "false")}) false#else true#end)
+	#if (${Attribute.isReference()})
+	@JoinColumn(name = "${Attribute.getNameSeparated("_").toUpperCase()}", referencedColumnName = "${Attribute.getTypeClassType().getAttributeNameByTypePropertyName("id").toUpperCase()}", nullable =#if (${Attribute.hasPropertyWithValue("nullable", "false")}) false#else true#end)
 	@ManyToOne(fetch = FetchType.EAGER)
 	private ${Attribute.getTypeName()}Dbo ${Attribute.getName()};
 	#else

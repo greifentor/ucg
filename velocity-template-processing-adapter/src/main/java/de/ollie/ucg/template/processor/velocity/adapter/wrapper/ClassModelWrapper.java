@@ -2,6 +2,7 @@ package de.ollie.ucg.template.processor.velocity.adapter.wrapper;
 
 import static de.ollie.baselib.util.Check.ensure;
 
+import de.ollie.baselib.util.NameSeparator;
 import de.ollie.ucg.core.exception.GenerationFailedException;
 import de.ollie.ucg.core.exception.GenerationFailedException.Type;
 import de.ollie.ucg.core.model.AttributeModel;
@@ -50,6 +51,20 @@ public class ClassModelWrapper {
 		return classModel.getAttributes().stream().filter(a -> a.hasProperty(name)).findFirst();
 	}
 
+	public String getAttributeNameByTypePropertyName(String name) {
+		ensure(name != null, MSG_NAME_IS_NULL);
+		return findAttributeWithProperty(name)
+			.map(a -> a.getName())
+			.orElseThrow(() ->
+				new GenerationFailedException(
+					getName(),
+					null,
+					Type.NO_ATTRIBUTE_WITH_PROPERTY,
+					List.of(new Property().setName("property").setValue("id"))
+				)
+			);
+	}
+
 	public List<AttributeModelWrapper> getAttributesWithPropertyNotSet(String name) {
 		ensure(name != null, MSG_NAME_IS_NULL);
 		return classModel
@@ -61,8 +76,16 @@ public class ClassModelWrapper {
 			.toList();
 	}
 
+	public String getAttributeNameWithPropertySeparated(String name) {
+		return NameSeparator.INSTANCE.getNameSeparated(getAttributeTypeNameByPropertyName(name), "_");
+	}
+
 	public String getNameSeparated(String separator) {
 		return NameSeparator.INSTANCE.getNameSeparated(classModel.getName(), separator);
+	}
+
+	public boolean hasAReferenceAttribute() {
+		return classModel.getAttributes().stream().anyMatch(AttributeModel::isReference);
 	}
 
 	public boolean isPropertyWithNameInAttributesPresent(String name) {

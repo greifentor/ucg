@@ -22,15 +22,25 @@ public class AttributeModelWrapper {
 		return attributeModel.getName();
 	}
 
+	public String getNameSeparated(String separator) {
+		return NameSeparator.INSTANCE.getNameSeparated(attributeModel.getName(), separator);
+	}
+
 	public String getTypeName() {
 		return attributeModel.getType().getName();
+	}
+
+	public ClassModelWrapper getTypeClassType() {
+		return attributeModel.getType().getClassType() != null
+			? new ClassModelWrapper(attributeModel.getType().getClassType(), model)
+			: null;
 	}
 
 	public boolean hasPropertyWithValue(String name, String value) {
 		return attributeModel.hasPropertyWithValue(name, value);
 	}
 
-	public String getNameSeparated(String separator) {
-		return NameSeparator.INSTANCE.getNameSeparated(attributeModel.getName(), separator);
+	public boolean isReference() {
+		return attributeModel.isReference();
 	}
 }
