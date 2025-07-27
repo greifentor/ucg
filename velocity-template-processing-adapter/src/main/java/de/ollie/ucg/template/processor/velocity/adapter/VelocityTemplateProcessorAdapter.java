@@ -46,6 +46,7 @@ public class VelocityTemplateProcessorAdapter implements TemplateProcessorPort {
 		context.put("Attributes", getAttributeWrappers(classModel, model));
 		context.put("Class", new ClassModelWrapper(classModel, model));
 		context.put("ClassName", classModel.getName());
+		context.put("ClassNameAsAttribute", toAttributeName(classModel.getName()));
 		context.put("GeneratedCodeMarker", CodeGeneratorService.GENERATED_CODE_MARKER);
 		context.put("Imports", getImports(classModel));
 		context.put("Model", new ModelWrapper(model));
@@ -64,6 +65,10 @@ public class VelocityTemplateProcessorAdapter implements TemplateProcessorPort {
 		StringWriter writer = new StringWriter();
 		t.merge(context, writer);
 		return new GenerationResult().setCode(writer.toString()).setUnitName(classModel.getName());
+	}
+
+	private String toAttributeName(String s) {
+		return s.length() < 2 ? s.toLowerCase() : s.substring(0, 1).toLowerCase() + s.substring(1);
 	}
 
 	private List<AttributeModelWrapper> getAttributeWrappers(ClassModel classModel, Model model) {
