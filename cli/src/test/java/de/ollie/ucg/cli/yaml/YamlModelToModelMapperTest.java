@@ -4,12 +4,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import de.ollie.ucg.cli.yaml.model.YamlAttribute;
-import de.ollie.ucg.cli.yaml.model.YamlAttributeWrapper;
 import de.ollie.ucg.cli.yaml.model.YamlClassDefinition;
-import de.ollie.ucg.cli.yaml.model.YamlClassWrapper;
 import de.ollie.ucg.cli.yaml.model.YamlModel;
 import de.ollie.ucg.cli.yaml.model.YamlProperty;
-import de.ollie.ucg.cli.yaml.model.YamlPropertyWrapper;
 import de.ollie.ucg.cli.yaml.model.YamlType;
 import de.ollie.ucg.core.model.AttributeModel;
 import de.ollie.ucg.core.model.ClassModel;
@@ -66,25 +63,16 @@ class YamlModelToModelMapperTest {
 				);
 			YamlModel passed = new YamlModel(
 				List.of(
-					new YamlClassWrapper(
-						new YamlClassDefinition(
-							CLASS_NAME,
-							List.of(
-								new YamlAttributeWrapper(
-									new YamlAttribute(
-										ATTRIBUTE_NAME_0,
-										new YamlType(
-											ATTRIBUTE_TYPE_0,
-											List.of(new YamlPropertyWrapper(new YamlProperty("import", IMPORT)))
-										),
-										List.of(new YamlPropertyWrapper(new YamlProperty("nullable", "false"))),
-										true
-									)
-								),
-								new YamlAttributeWrapper(
-									new YamlAttribute(ATTRIBUTE_NAME_1, new YamlType(ATTRIBUTE_TYPE_1, List.of()), List.of(), false)
-								)
-							)
+					new YamlClassDefinition(
+						CLASS_NAME,
+						List.of(
+							new YamlAttribute(
+								ATTRIBUTE_NAME_0,
+								new YamlType(ATTRIBUTE_TYPE_0, List.of(new YamlProperty("import", IMPORT))),
+								List.of(new YamlProperty("nullable", "false")),
+								true
+							),
+							new YamlAttribute(ATTRIBUTE_NAME_1, new YamlType(ATTRIBUTE_TYPE_1, List.of()), List.of(), false)
 						)
 					)
 				)

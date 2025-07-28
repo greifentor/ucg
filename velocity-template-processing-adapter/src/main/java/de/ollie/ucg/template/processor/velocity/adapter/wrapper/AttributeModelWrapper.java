@@ -43,4 +43,10 @@ public class AttributeModelWrapper {
 	public boolean isReference() {
 		return attributeModel.isReference();
 	}
+
+	public String getNameCamelCase() {
+		return getName().length() < 2
+			? getName().toUpperCase()
+			: getName().substring(0, 1).toUpperCase() + getName().substring(1);
+	}
 }

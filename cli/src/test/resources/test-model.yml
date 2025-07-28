@@ -1,20 +1,15 @@
 classes:
-  - class:
-      name: Book
-      attributes:
-        - attribute:
-            name: id
-            properties:
-              - property:
-                  name: nullable
-                  value: false
-            type:
-              name: UUID
-              properties:
-                - property:
-                    name: import
-                    value: java.util.UUID
-        - attribute:
-            name: title
-            type:
-              name: String
+  - name: Book
+    attributes:
+      - name: id
+        properties:
+          - name: nullable
+            value: false
+        type:
+          name: UUID
+          properties:
+            - name: import
+              value: java.util.UUID
+      - name: title
+        type:
+          name: String

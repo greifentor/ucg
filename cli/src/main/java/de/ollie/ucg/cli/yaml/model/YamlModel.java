@@ -14,5 +14,5 @@ import lombok.NoArgsConstructor;
 public class YamlModel {
 
 	@JsonProperty("classes")
-	private List<YamlClassWrapper> classes;
+	private List<YamlClassDefinition> classes;
 }

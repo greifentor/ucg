@@ -3,11 +3,9 @@ package de.ollie.ucg.cli.yaml;
 import static de.ollie.baselib.util.Check.ensure;
 
 import de.ollie.ucg.cli.yaml.model.YamlAttribute;
-import de.ollie.ucg.cli.yaml.model.YamlAttributeWrapper;
-import de.ollie.ucg.cli.yaml.model.YamlClassWrapper;
+import de.ollie.ucg.cli.yaml.model.YamlClassDefinition;
 import de.ollie.ucg.cli.yaml.model.YamlModel;
 import de.ollie.ucg.cli.yaml.model.YamlProperty;
-import de.ollie.ucg.cli.yaml.model.YamlPropertyWrapper;
 import de.ollie.ucg.cli.yaml.model.YamlType;
 import de.ollie.ucg.core.model.AttributeModel;
 import de.ollie.ucg.core.model.ClassModel;
@@ -31,16 +29,14 @@ class YamlModelToModelMapper {
 			: List.of();
 	}
 
-	private ClassModel getClassModel(YamlClassWrapper classWrapper) {
+	private ClassModel getClassModel(YamlClassDefinition classDefinition) {
 		return new ClassModel()
-			.setAttributes(getAttributes(classWrapper.getClassDefinition().getAttributes()))
-			.setName(classWrapper.getClassDefinition().getName());
+			.setAttributes(getAttributes(classDefinition.getAttributes()))
+			.setName(classDefinition.getName());
 	}
 
-	private List<AttributeModel> getAttributes(List<YamlAttributeWrapper> attributeWrapper) {
-		return attributeWrapper != null
-			? attributeWrapper.stream().map(YamlAttributeWrapper::getAttribute).map(this::getAttributeModel).toList()
-			: List.of();
+	private List<AttributeModel> getAttributes(List<YamlAttribute> attributes) {
+		return attributes != null ? attributes.stream().map(this::getAttributeModel).toList() : List.of();
 	}
 
 	private AttributeModel getAttributeModel(YamlAttribute yamlAttribute) {
@@ -55,10 +51,8 @@ class YamlModelToModelMapper {
 		return new TypeModel().setName(yamlType.getName()).setProperties(getProperties(yamlType.getProperties()));
 	}
 
-	private List<Property> getProperties(List<YamlPropertyWrapper> properties) {
-		return properties != null
-			? properties.stream().map(YamlPropertyWrapper::getProperty).map(this::getProperty).toList()
-			: List.of();
+	private List<Property> getProperties(List<YamlProperty> properties) {
+		return properties != null ? properties.stream().map(this::getProperty).toList() : List.of();
 	}
 
 	private Property getProperty(YamlProperty yamlProperty) {

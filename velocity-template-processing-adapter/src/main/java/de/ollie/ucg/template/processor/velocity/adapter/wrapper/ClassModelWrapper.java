@@ -51,10 +51,42 @@ public class ClassModelWrapper {
 		return classModel.getAttributes().stream().filter(a -> a.hasProperty(name)).findFirst();
 	}
 
+	public String getAttributeTypeNameByPropertyNameCamelCase(String name) {
+		ensure(name != null, MSG_NAME_IS_NULL);
+		return findAttributeWithProperty(name)
+			.map(a -> toCamelCase(a.getType().getName()))
+			.orElseThrow(() ->
+				new GenerationFailedException(
+					getName(),
+					null,
+					Type.NO_ATTRIBUTE_WITH_PROPERTY,
+					List.of(new Property().setName("property").setValue("id"))
+				)
+			);
+	}
+
+	public String toCamelCase(String s) {
+		return s.length() < 2 ? s.toUpperCase() : s.substring(0, 1).toUpperCase() + s.substring(1);
+	}
+
 	public String getAttributeNameByTypePropertyName(String name) {
 		ensure(name != null, MSG_NAME_IS_NULL);
 		return findAttributeWithProperty(name)
 			.map(a -> a.getName())
+			.orElseThrow(() ->
+				new GenerationFailedException(
+					getName(),
+					null,
+					Type.NO_ATTRIBUTE_WITH_PROPERTY,
+					List.of(new Property().setName("property").setValue("id"))
+				)
+			);
+	}
+
+	public String getAttributeNameByTypePropertyNameCamelCase(String name) {
+		ensure(name != null, MSG_NAME_IS_NULL);
+		return findAttributeWithProperty(name)
+			.map(a -> toCamelCase(a.getName()))
 			.orElseThrow(() ->
 				new GenerationFailedException(
 					getName(),
@@ -72,6 +104,17 @@ public class ClassModelWrapper {
 			.stream()
 			.filter(a -> !a.getProperties().isEmpty())
 			.filter(a -> !a.hasProperty(name))
+			.map(a -> new AttributeModelWrapper(a, model))
+			.toList();
+	}
+
+	public List<AttributeModelWrapper> getAttributesWithPropertySet(String name) {
+		ensure(name != null, MSG_NAME_IS_NULL);
+		return classModel
+			.getAttributes()
+			.stream()
+			.filter(a -> !a.getProperties().isEmpty())
+			.filter(a -> a.hasProperty(name))
 			.map(a -> new AttributeModelWrapper(a, model))
 			.toList();
 	}

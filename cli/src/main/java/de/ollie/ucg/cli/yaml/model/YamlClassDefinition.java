@@ -14,5 +14,5 @@ public class YamlClassDefinition {
 	private String name;
 
 	@JsonProperty("attributes")
-	private List<YamlAttributeWrapper> attributes;
+	private List<YamlAttribute> attributes;
 }
