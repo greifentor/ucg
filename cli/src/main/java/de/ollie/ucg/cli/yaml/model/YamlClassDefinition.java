@@ -15,4 +15,7 @@ public class YamlClassDefinition {
 
 	@JsonProperty("attributes")
 	private List<YamlAttribute> attributes;
+
+	@JsonProperty("properties")
+	private List<YamlProperty> properties;
 }

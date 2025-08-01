@@ -59,6 +59,7 @@ class YamlModelToModelMapperTest {
 									new AttributeModel().setName(ATTRIBUTE_NAME_1).setType(new TypeModel().setName(ATTRIBUTE_TYPE_1))
 								)
 							)
+							.setProperties(List.of())
 					)
 				);
 			YamlModel passed = new YamlModel(
@@ -73,7 +74,8 @@ class YamlModelToModelMapperTest {
 								true
 							),
 							new YamlAttribute(ATTRIBUTE_NAME_1, new YamlType(ATTRIBUTE_TYPE_1, List.of()), List.of(), false)
-						)
+						),
+						List.of()
 					)
 				)
 			);

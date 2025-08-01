@@ -44,6 +44,7 @@ class YamlModelReaderTest {
 									new AttributeModel().setName("title").setType(new TypeModel().setName("String"))
 								)
 							)
+							.setProperties(List.of())
 					)
 				);
 			// Run

@@ -119,6 +119,18 @@ public class ClassModelWrapper {
 			.toList();
 	}
 
+	public List<PropertyWrapper> getPropertiesWithName(String name) {
+		ensure(name != null, MSG_NAME_IS_NULL);
+		return classModel.getProperties() == null
+			? List.of()
+			: classModel
+				.getProperties()
+				.stream()
+				.filter(p -> name.equals(p.getName()))
+				.map(p -> new PropertyWrapper(p.getName(), "" + p.getValue()))
+				.toList();
+	}
+
 	public String getAttributeNameWithPropertySeparated(String name) {
 		return NameSeparator.INSTANCE.getNameSeparated(getAttributeTypeNameByPropertyName(name), "_");
 	}

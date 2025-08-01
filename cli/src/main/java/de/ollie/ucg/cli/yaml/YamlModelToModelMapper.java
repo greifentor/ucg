@@ -32,7 +32,8 @@ class YamlModelToModelMapper {
 	private ClassModel getClassModel(YamlClassDefinition classDefinition) {
 		return new ClassModel()
 			.setAttributes(getAttributes(classDefinition.getAttributes()))
-			.setName(classDefinition.getName());
+			.setName(classDefinition.getName())
+			.setProperties(getProperties(classDefinition.getProperties()));
 	}
 
 	private List<AttributeModel> getAttributes(List<YamlAttribute> attributes) {
