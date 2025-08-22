@@ -102,7 +102,7 @@ public class ClassModelWrapper {
 		return classModel
 			.getAttributes()
 			.stream()
-			.filter(a -> !a.getProperties().isEmpty())
+			// .filter(a -> !a.getProperties().isEmpty())
 			.filter(a -> !a.hasProperty(name))
 			.map(a -> new AttributeModelWrapper(a, model))
 			.toList();

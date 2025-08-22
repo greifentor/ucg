@@ -119,9 +119,13 @@ class ClassModelWrapperTest {
 		@Test
 		void returnsAnEmptyList_whenClassHasAttributeWithNoProperties() {
 			// Prepare
-			when(classModel.getAttributes()).thenReturn(List.of(new AttributeModel()));
+			AttributeModel a = new AttributeModel();
+			when(classModel.getAttributes()).thenReturn(List.of(a));
 			// Run & Check
-			assertEquals(List.of(), unitUnderTest.getAttributesWithPropertyNotSet(PROPERTY_NAME));
+			assertEquals(
+				List.of(new AttributeModelWrapper(a, model)),
+				unitUnderTest.getAttributesWithPropertyNotSet(PROPERTY_NAME)
+			);
 		}
 
 		@Test
