@@ -11,6 +11,8 @@ import de.ollie.ucg.core.service.port.TemplateProcessorPort;
 import de.ollie.ucg.template.processor.velocity.adapter.wrapper.AttributeModelWrapper;
 import de.ollie.ucg.template.processor.velocity.adapter.wrapper.ClassModelWrapper;
 import de.ollie.ucg.template.processor.velocity.adapter.wrapper.ModelWrapper;
+import de.ollie.ucg.template.processor.velocity.adapter.wrapper.PropertyWrapper;
+import de.ollie.ucg.template.processor.velocity.adapter.wrapper.ReferenceWrapper;
 import jakarta.inject.Named;
 import java.io.StringWriter;
 import java.nio.file.Paths;
@@ -49,6 +51,7 @@ public class VelocityTemplateProcessorAdapter implements TemplateProcessorPort {
 		context.put("ClassNameAsAttribute", toAttributeName(classModel.getName()));
 		context.put("GeneratedCodeMarker", CodeGeneratorService.GENERATED_CODE_MARKER);
 		context.put("Imports", getImports(classModel));
+		context.put("References", getReferences(classModel));
 		context.put("Model", new ModelWrapper(model));
 		context.put("PackageName", generatorSetting.getPackageName());
 		context.put("Properties", generatorConfiguration.getPropertiesByNames());
@@ -83,6 +86,22 @@ public class VelocityTemplateProcessorAdapter implements TemplateProcessorPort {
 			.filter(p -> "import".equalsIgnoreCase(p.getName()))
 			.map(Property::getValue)
 			.map(Object::toString)
+			.sorted()
+			.toList();
+	}
+
+	private List<ReferenceWrapper> getReferences(ClassModel classModel) {
+		return classModel
+			.getAttributes()
+			.stream()
+			.filter(a -> a.isReference())
+			.map(a -> a.getType())
+			.map(t ->
+				new ReferenceWrapper(
+					t.getName(),
+					t.getProperties().stream().map(p -> new PropertyWrapper(p.getName(), p.getValue())).toList()
+				)
+			)
 			.sorted()
 			.toList();
 	}

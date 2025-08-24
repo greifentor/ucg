@@ -30,6 +30,10 @@ public class AttributeModelWrapper {
 		return attributeModel.getType().getName();
 	}
 
+	public boolean isTypeEnum() {
+		return attributeModel.isEnumType();
+	}
+
 	public ClassModelWrapper getTypeClassType() {
 		return attributeModel.getType().getClassType() != null
 			? new ClassModelWrapper(attributeModel.getType().getClassType(), model)
@@ -38,6 +42,10 @@ public class AttributeModelWrapper {
 
 	public boolean hasPropertyWithValue(String name, String value) {
 		return attributeModel.hasPropertyWithValue(name, value);
+	}
+
+	public boolean hasTypePropertyWithValue(String name, String value) {
+		return attributeModel.getType().hasPropertyWithValue(name, value);
 	}
 
 	public boolean isReference() {

@@ -42,6 +42,7 @@ class YamlModelToModelMapper {
 
 	private AttributeModel getAttributeModel(YamlAttribute yamlAttribute) {
 		return new AttributeModel()
+			.setEnumType(yamlAttribute.isEnumType())
 			.setName(yamlAttribute.getName())
 			.setProperties(getProperties(yamlAttribute.getProperties()))
 			.setReference(yamlAttribute.isReference())

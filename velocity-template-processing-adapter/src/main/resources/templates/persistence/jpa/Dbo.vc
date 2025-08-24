@@ -17,6 +17,9 @@ import lombok.Data;
 import lombok.Generated;
 import lombok.experimental.Accessors;
 
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+
 #foreach($Import in $Imports)
 import ${Import};
 #end
@@ -42,8 +45,11 @@ public class ${ClassName}Dbo {
 	@ManyToOne(fetch = FetchType.EAGER)
 	private ${Attribute.getTypeName()}Dbo ${Attribute.getName()};
 	#else
+	#if (${Attribute.isTypeEnum()})
+	@Enumerated(EnumType.STRING)
+	#end
 	@Column(name = "${Attribute.getNameSeparated("_").toUpperCase()}", nullable =#if (${Attribute.hasPropertyWithValue("nullable", "false")}) false#else true#end)
-	private ${Attribute.getTypeName()} ${Attribute.getName()};
+	private ${Attribute.getTypeName()}#if (${Attribute.hasTypePropertyWithValue("project-type", "true")})Dbo#end ${Attribute.getName()};
 	#end
 #end
 

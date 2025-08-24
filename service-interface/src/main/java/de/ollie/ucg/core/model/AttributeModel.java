@@ -16,6 +16,7 @@ public class AttributeModel implements PropertyOwner {
 	private String name;
 	private TypeModel type;
 	private List<Property> properties = new ArrayList<>();
+	private boolean enumType;
 	private boolean reference;
 
 	public boolean hasProperty(String name) {

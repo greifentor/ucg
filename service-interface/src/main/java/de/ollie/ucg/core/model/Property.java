@@ -14,5 +14,5 @@ import lombok.experimental.Accessors;
 public class Property {
 
 	private String name;
-	private Object value;
+	private String value;
 }

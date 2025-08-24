@@ -14,6 +14,9 @@ public class YamlAttribute {
 	private String name;
 	private YamlType type;
 
+	@JsonProperty("enum")
+	private boolean enumType;
+
 	@JsonProperty("properties")
 	private List<YamlProperty> properties;
 

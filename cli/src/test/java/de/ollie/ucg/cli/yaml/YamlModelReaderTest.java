@@ -38,6 +38,7 @@ class YamlModelReaderTest {
 							.setAttributes(
 								List.of(
 									new AttributeModel()
+										.setEnumType(true)
 										.setName("id")
 										.setProperties(List.of(new Property().setName("nullable").setValue("false")))
 										.setType(new TypeModel().setName("UUID").addProperty("import", "java.util.UUID")),

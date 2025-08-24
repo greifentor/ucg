@@ -11,7 +11,7 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 @Data
 @Generated
-public class TypeModel {
+public class TypeModel implements PropertyOwner {
 
 	private String name;
 	private SimpleType simpleType;
@@ -21,7 +21,12 @@ public class TypeModel {
 	public TypeModel addProperty(String name, Object value) {
 		ensure(name != null, "name cannot be null!");
 		ensure(value != null, "value cannot be null!");
-		properties.add(new Property(name, value));
+		properties.add(new Property(name, "" + value));
 		return this;
+	}
+
+	public boolean hasProperty(String name) {
+		ensure(name != null, "name cannot be null!");
+		return properties.stream().anyMatch(a -> name.equals(a.getName()));
 	}
 }

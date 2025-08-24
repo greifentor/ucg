@@ -2,6 +2,7 @@ classes:
   - name: Book
     attributes:
       - name: id
+        enum: true
         properties:
           - name: nullable
             value: false
