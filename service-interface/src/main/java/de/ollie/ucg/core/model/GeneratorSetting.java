@@ -14,6 +14,7 @@ import lombok.experimental.Accessors;
 @Generated
 public class GeneratorSetting {
 
+	@Generated
 	public enum GeneratorType {
 		CLASS,
 		MODEL,

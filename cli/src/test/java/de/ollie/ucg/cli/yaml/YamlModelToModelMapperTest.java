@@ -42,6 +42,20 @@ class YamlModelToModelMapperTest {
 		}
 
 		@Test
+		void returnsAnEmptyClassList_whenYamlHasNoClassSection() {
+			assertEquals(List.of(), unitUnderTest.map(new YamlModel()).getClasses());
+		}
+
+		@Test
+		void returnsAnEmptyClassList_whenYamlClassHasNoAttributesSection() {
+			// Prepare
+			YamlModel model = new YamlModel();
+			model.setClasses(List.of(new YamlClassDefinition()));
+			// Run & Check
+			assertEquals(List.of(), unitUnderTest.map(model).getClasses().get(0).getAttributes());
+		}
+
+		@Test
 		void happyRun() {
 			// Prepare
 			Model expected = new Model()

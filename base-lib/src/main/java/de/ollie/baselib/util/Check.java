@@ -1,12 +1,10 @@
 package de.ollie.baselib.util;
 
 import java.util.function.Supplier;
-import lombok.Generated;
 
 /**
  * A utility class for checkers.
  */
-@Generated
 public class Check {
 
 	Check() {

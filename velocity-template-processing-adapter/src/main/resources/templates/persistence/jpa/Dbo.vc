@@ -2,6 +2,10 @@ package ${PackageName};
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+#if (${Class.hasAnEnumTypeAttribute()})
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+#end
 #if (${Class.hasAReferenceAttribute()})
 import jakarta.persistence.FetchType;
 #end
@@ -16,9 +20,6 @@ import jakarta.persistence.Table;
 import lombok.Data;
 import lombok.Generated;
 import lombok.experimental.Accessors;
-
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 
 #foreach($Import in $Imports)
 import ${Import};

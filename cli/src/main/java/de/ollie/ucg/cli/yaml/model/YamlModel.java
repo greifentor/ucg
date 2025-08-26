@@ -5,12 +5,14 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.Generated;
 import lombok.NoArgsConstructor;
 
-@Data
-@NoArgsConstructor
 @AllArgsConstructor
+@Data
+@Generated
 @JsonIgnoreProperties(ignoreUnknown = true)
+@NoArgsConstructor
 public class YamlModel {
 
 	@JsonProperty("classes")

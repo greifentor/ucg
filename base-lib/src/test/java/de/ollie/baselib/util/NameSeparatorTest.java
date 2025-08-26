@@ -1,4 +1,4 @@
-package de.ollie.ucg.template.processor.velocity.adapter.wrapper;
+package de.ollie.baselib.util;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;

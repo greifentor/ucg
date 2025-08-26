@@ -143,6 +143,10 @@ public class ClassModelWrapper {
 		return classModel.getAttributes().stream().anyMatch(AttributeModel::isReference);
 	}
 
+	public boolean hasAnEnumTypeAttribute() {
+		return classModel.getAttributes().stream().anyMatch(AttributeModel::isEnumType);
+	}
+
 	public boolean isPropertyWithNameInAttributesPresent(String name) {
 		ensure(name != null, MSG_NAME_IS_NULL);
 		return classModel.getAttributes().isEmpty()

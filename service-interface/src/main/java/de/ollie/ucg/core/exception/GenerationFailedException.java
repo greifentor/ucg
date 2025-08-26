@@ -3,12 +3,14 @@ package de.ollie.ucg.core.exception;
 import de.ollie.ucg.core.model.Property;
 import java.util.List;
 import lombok.EqualsAndHashCode;
+import lombok.Generated;
 import lombok.Getter;
 
 @Getter
 @EqualsAndHashCode(callSuper = false)
 public class GenerationFailedException extends RuntimeException {
 
+	@Generated
 	public enum Type {
 		NO_ATTRIBUTE_WITH_PROPERTY(),
 	}
