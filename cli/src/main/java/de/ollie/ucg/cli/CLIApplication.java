@@ -8,6 +8,7 @@ import de.ollie.ucg.core.model.GeneratorSetting;
 import de.ollie.ucg.core.model.Model;
 import de.ollie.ucg.core.service.CodeGeneratorService;
 import de.ollie.ucg.core.service.CodeGeneratorService.CodeGeneratorServiceObserver;
+import de.ollie.ucg.core.service.SettingMappingService;
 import jakarta.inject.Inject;
 import java.io.File;
 import java.io.IOException;
@@ -26,6 +27,9 @@ public class CLIApplication implements ApplicationRunner, CodeGeneratorServiceOb
 
 	@Inject
 	private CodeGeneratorService codeGeneratorService;
+
+	@Inject
+	private SettingMappingService settingMappingService;
 
 	@Inject
 	private YamlGeneratorConfigurationReader yamlGeneratorConfigurationReader;
@@ -60,11 +64,13 @@ public class CLIApplication implements ApplicationRunner, CodeGeneratorServiceOb
 		GeneratorConfiguration configuration
 	) {
 		String path =
-			getTargetPath(configuration, generatorSetting) + "/" + generatorSetting.getPackageName().replace(".", "/");
+			getTargetPath(configuration, generatorSetting) +
+			"/" +
+			settingMappingService.map(generatorSetting.getPackageName(), generationResult.getUnitName()).replace(".", "/");
 		String fileName =
 			path +
 			"/" +
-			generatorSetting.getTargetFileName().replace("${UnitName}", generationResult.getUnitName()) +
+			settingMappingService.map(generatorSetting.getTargetFileName(), generationResult.getUnitName()) +
 			".java";
 		try {
 			boolean write = true;

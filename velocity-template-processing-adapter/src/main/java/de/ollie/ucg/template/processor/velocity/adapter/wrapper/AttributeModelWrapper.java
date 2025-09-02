@@ -1,5 +1,6 @@
 package de.ollie.ucg.template.processor.velocity.adapter.wrapper;
 
+import de.ollie.baselib.util.NameSeparator;
 import de.ollie.ucg.core.model.AttributeModel;
 import de.ollie.ucg.core.model.Model;
 import lombok.EqualsAndHashCode;

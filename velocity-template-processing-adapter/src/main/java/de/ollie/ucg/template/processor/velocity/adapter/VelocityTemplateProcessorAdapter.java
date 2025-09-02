@@ -7,6 +7,7 @@ import de.ollie.ucg.core.model.GeneratorSetting;
 import de.ollie.ucg.core.model.Model;
 import de.ollie.ucg.core.model.Property;
 import de.ollie.ucg.core.service.CodeGeneratorService;
+import de.ollie.ucg.core.service.SettingMappingService;
 import de.ollie.ucg.core.service.port.TemplateProcessorPort;
 import de.ollie.ucg.template.processor.velocity.adapter.wrapper.AttributeModelWrapper;
 import de.ollie.ucg.template.processor.velocity.adapter.wrapper.ClassModelWrapper;
@@ -20,13 +21,17 @@ import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Generated;
+import lombok.RequiredArgsConstructor;
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.Velocity;
 import org.apache.velocity.app.VelocityEngine;
 
 @Named
+@RequiredArgsConstructor
 public class VelocityTemplateProcessorAdapter implements TemplateProcessorPort {
+
+	private final SettingMappingService settingMappingService;
 
 	@AllArgsConstructor
 	@Data
@@ -53,7 +58,7 @@ public class VelocityTemplateProcessorAdapter implements TemplateProcessorPort {
 		context.put("Imports", getImports(classModel));
 		context.put("References", getReferences(classModel));
 		context.put("Model", new ModelWrapper(model));
-		context.put("PackageName", generatorSetting.getPackageName());
+		context.put("PackageName", settingMappingService.map(generatorSetting.getPackageName(), classModel.getName()));
 		context.put("Properties", generatorConfiguration.getPropertiesByNames());
 		String templatePathName = generatorSetting.getTemplatePath();
 		Velocity.init();
