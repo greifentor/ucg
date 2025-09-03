@@ -23,4 +23,9 @@ public class AttributeModel implements PropertyOwner {
 		ensure(name != null, "name cannot be null!");
 		return properties.stream().anyMatch(a -> name.equals(a.getName()));
 	}
+
+	public String getPropertyValue(String name) {
+		ensure(name != null, "name cannot be null!");
+		return properties.stream().filter(p -> name.equals(p.getName())).map(Property::getValue).findFirst().orElse(null);
+	}
 }

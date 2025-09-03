@@ -119,6 +119,18 @@ public class ClassModelWrapper {
 			.toList();
 	}
 
+	public List<AttributeModelWrapper> getAttributesWithPropertySetSortedByPropertyValue(String name) {
+		ensure(name != null, MSG_NAME_IS_NULL);
+		return classModel
+			.getAttributes()
+			.stream()
+			.filter(a -> !a.getProperties().isEmpty())
+			.filter(a -> a.hasProperty(name))
+			.sorted((a0, a1) -> a0.getPropertyValue(name).compareTo(a1.getPropertyValue(name)))
+			.map(a -> new AttributeModelWrapper(a, model))
+			.toList();
+	}
+
 	public List<PropertyWrapper> getPropertiesWithName(String name) {
 		ensure(name != null, MSG_NAME_IS_NULL);
 		return classModel.getProperties() == null
@@ -156,5 +168,9 @@ public class ClassModelWrapper {
 
 	private List<Property> getAllProperties() {
 		return classModel.getAttributes().stream().flatMap(a -> a.getProperties().stream()).toList();
+	}
+
+	public List<Property> getAllPropertiesByName(String name) {
+		return classModel.getProperties().stream().filter(p -> p.getName().equals(name)).toList();
 	}
 }
