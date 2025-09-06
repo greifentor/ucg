@@ -5,6 +5,7 @@ properties:
 generators:
   - type: CLASS
     package: de.library.core.service.model
+    generate-when: an upn expression
     path: velocity-template-processing-adapter/src/main/resources/templates
     template: Model.vc
     target-file-name: ${UnitName}Dbo

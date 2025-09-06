@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoInteractions;
 import static org.mockito.Mockito.when;
 
 import de.ollie.ucg.core.model.ClassModel;
@@ -14,6 +15,7 @@ import de.ollie.ucg.core.model.GeneratorSetting.GeneratorType;
 import de.ollie.ucg.core.model.Model;
 import de.ollie.ucg.core.model.Report;
 import de.ollie.ucg.core.service.CodeGeneratorService.CodeGeneratorServiceObserver;
+import de.ollie.ucg.core.service.GeneratorExpressionEvaluationService;
 import de.ollie.ucg.core.service.port.TemplateProcessorPort;
 import java.util.List;
 import org.junit.jupiter.api.Nested;
@@ -34,6 +36,9 @@ class CodeGeneratorServiceImplTest {
 
 	@Mock
 	private GeneratorConfiguration generatorConfiguration;
+
+	@Mock
+	private GeneratorExpressionEvaluationService generatorExpressionEvaluationService;
 
 	@Mock
 	private GenerationResult generationResult;
@@ -98,6 +103,21 @@ class CodeGeneratorServiceImplTest {
 			unitUnderTest.generate(model, generatorConfiguration, observer);
 			// Check
 			verify(observer, times(1)).classCodeGenerated(generationResult, generatorSetting, generatorConfiguration);
+		}
+
+		@Test
+		void skipsGenerationWhen_GeneratorExpressionEvaluationService_isToGenerate_returnsFalse() {
+			// Prepare
+			when(generatorSetting.getGeneratorType()).thenReturn(GeneratorType.CLASS);
+			when(model.getClasses()).thenReturn(List.of(classModel));
+			when(generatorExpressionEvaluationService.suppressGeneratorForClassModel(classModel, generatorSetting))
+				.thenReturn(true);
+			when(generatorConfiguration.getGeneratorSettings()).thenReturn(List.of(generatorSetting));
+			when(reportFactory.create()).thenReturn(report);
+			// Run
+			unitUnderTest.generate(model, generatorConfiguration, observer);
+			// Check
+			verifyNoInteractions(observer, templateProcessingPort);
 		}
 	}
 }

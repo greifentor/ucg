@@ -36,6 +36,7 @@ class YamlGeneratorConfigurationReaderTest {
 					List.of(
 						new GeneratorSetting()
 							.setGeneratorType(GeneratorType.CLASS)
+							.setGenerateWhen("an upn expression")
 							.setPackageName("de.library.core.service.model")
 							.setProperties(List.of(new Property().setName("target-path").setValue("tmp0")))
 							.setResourceLoaderClass("org.apache.velocity.runtime.resource.loader.FileResourceLoader")

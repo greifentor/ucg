@@ -10,6 +10,7 @@ import de.ollie.ucg.core.model.GeneratorSetting.GeneratorType;
 import de.ollie.ucg.core.model.Model;
 import de.ollie.ucg.core.model.Report;
 import de.ollie.ucg.core.service.CodeGeneratorService;
+import de.ollie.ucg.core.service.GeneratorExpressionEvaluationService;
 import de.ollie.ucg.core.service.port.TemplateProcessorPort;
 import jakarta.inject.Named;
 import lombok.RequiredArgsConstructor;
@@ -18,6 +19,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class CodeGeneratorServiceImpl implements CodeGeneratorService {
 
+	private final GeneratorExpressionEvaluationService generatorExpressionEvaluationService;
 	private final ReportFactory reportFactory;
 	private final TemplateProcessorPort templateProcessorPort;
 
@@ -29,8 +31,10 @@ public class CodeGeneratorServiceImpl implements CodeGeneratorService {
 		for (GeneratorSetting cs : configuration.getGeneratorSettings()) {
 			if (cs.getGeneratorType() == GeneratorType.CLASS) {
 				for (ClassModel classModel : model.getClasses()) {
-					GenerationResult generationResult = templateProcessorPort.process(configuration, cs, model, classModel);
-					observer.classCodeGenerated(generationResult, cs, configuration);
+					if (!generatorExpressionEvaluationService.suppressGeneratorForClassModel(classModel, cs)) {
+						GenerationResult generationResult = templateProcessorPort.process(configuration, cs, model, classModel);
+						observer.classCodeGenerated(generationResult, cs, configuration);
+					}
 				}
 			}
 		}

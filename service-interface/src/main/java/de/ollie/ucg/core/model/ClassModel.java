@@ -16,7 +16,7 @@ import lombok.experimental.Accessors;
 @Data
 @Generated
 @ToString
-public class ClassModel {
+public class ClassModel implements PropertyOwner {
 
 	private static final String MSG_NAME_IS_NULL = "name cannot be null!";
 

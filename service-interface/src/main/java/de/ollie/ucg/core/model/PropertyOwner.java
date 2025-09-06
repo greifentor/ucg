@@ -16,4 +16,11 @@ public interface PropertyOwner {
 				.filter(p -> name.equals(p.getName()))
 				.anyMatch(p -> (value != null) && (value.equals(p.getValue())));
 	}
+
+	default boolean hasPropertyWithName(String name) {
+		ensure(name != null, "name cannot be null!");
+		return (getProperties() == null) || getProperties().isEmpty()
+			? false
+			: getProperties().stream().anyMatch(p -> name.equals(p.getName()));
+	}
 }
