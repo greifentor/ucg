@@ -1,4 +1,4 @@
-package de.ollie.ucg.cli.upn.command;
+package de.ollie.ucg.core.upn.command;
 
 import static de.ollie.baselib.util.Check.ensure;
 
@@ -11,13 +11,15 @@ import java.util.Stack;
 
 public class HasProperty extends Command {
 
+	public static final String TOKEN = "HasProperty";
+
 	public HasProperty() {
-		super("HasProperty");
+		super(TOKEN);
 	}
 
 	@Override
 	public Stack<Object> evaluate(Stack<Object> stack, Map<String, Object> valueStore) {
-		ensure(stack.size() < 2, new MissingArgumentExpressionEvaluationException(2, this));
+		ensure(stack.size() > 1, new MissingArgumentExpressionEvaluationException(2, this));
 		ensure(
 			stack.peek() instanceof String,
 			new WrongArgumentTypeExpressionEvaluationException(1, this, String.class, stack.peek().getClass())

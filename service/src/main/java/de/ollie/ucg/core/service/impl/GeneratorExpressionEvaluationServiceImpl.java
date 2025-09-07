@@ -7,6 +7,7 @@ import de.ollie.ucg.core.model.GeneratorSetting;
 import de.ollie.ucg.core.service.GeneratorExpressionEvaluationService;
 import de.ollie.ucg.core.service.port.UpnEvaluationPort;
 import jakarta.inject.Named;
+import java.util.Stack;
 import lombok.RequiredArgsConstructor;
 
 @Named
@@ -19,13 +20,9 @@ public class GeneratorExpressionEvaluationServiceImpl implements GeneratorExpres
 	public boolean suppressGeneratorForClassModel(ClassModel classModel, GeneratorSetting generatorSetting) {
 		ensure(classModel != null, "class model cannot be null!");
 		ensure(generatorSetting != null, "generator setting cannot be null!");
-		// Stack<Object> stack = new Stack<>();
-		// stack.push(classModel);
-		//
-		// stack = upnEvaluationPort.evaluate(stack,
-		// generatorSetting.getGenerateWhen());
 		if (generatorSetting.getGenerateWhen() != null) {
-			return false;
+			Stack<Object> stack = upnEvaluationPort.evaluate(generatorSetting.getGenerateWhen(), classModel);
+			return !stack.isEmpty() && Boolean.TRUE.equals(stack.pop());
 		}
 		return false;
 	}

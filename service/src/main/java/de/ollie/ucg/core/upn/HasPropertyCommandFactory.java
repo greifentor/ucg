@@ -1,7 +1,7 @@
-package de.ollie.ucg.cli.upn;
+package de.ollie.ucg.core.upn;
 
 import de.ollie.baselib.util.upn.CommandFactory;
-import de.ollie.ucg.cli.upn.command.HasProperty;
+import de.ollie.ucg.core.upn.command.HasProperty;
 import jakarta.inject.Named;
 
 @Named
