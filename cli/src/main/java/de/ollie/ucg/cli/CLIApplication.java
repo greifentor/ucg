@@ -20,9 +20,10 @@ import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.ComponentScans;
 
 @SpringBootApplication
-@ComponentScan("de.ollie.ucg")
+@ComponentScans({ @ComponentScan("de.ollie.ucg"), @ComponentScan("de.ollie.baselib") })
 public class CLIApplication implements ApplicationRunner, CodeGeneratorServiceObserver {
 
 	@Inject

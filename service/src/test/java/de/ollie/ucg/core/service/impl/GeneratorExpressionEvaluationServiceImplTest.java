@@ -78,29 +78,29 @@ class GeneratorExpressionEvaluationServiceImplTest {
 			when(generatorSetting.getGenerateWhen()).thenReturn(EXPRESSION);
 			when(upnEvaluationPort.evaluate(EXPRESSION, classModel)).thenReturn(stack);
 			// Run & Check
-			assertFalse(unitUnderTest.suppressGeneratorForClassModel(classModel, generatorSetting));
+			assertTrue(unitUnderTest.suppressGeneratorForClassModel(classModel, generatorSetting));
 		}
 
 		@Test
-		void returnsFalse_whenGeneratorSettting_generateWhen_isEvaluated_withResultFalse() {
+		void returnsTrue_whenGeneratorSettting_generateWhen_isEvaluated_withResultFalse() {
 			// Prepare
 			Stack<Object> stack = new Stack<>();
 			stack.push(Boolean.FALSE);
 			when(generatorSetting.getGenerateWhen()).thenReturn(EXPRESSION);
 			when(upnEvaluationPort.evaluate(EXPRESSION, classModel)).thenReturn(stack);
 			// Run & Check
-			assertFalse(unitUnderTest.suppressGeneratorForClassModel(classModel, generatorSetting));
+			assertTrue(unitUnderTest.suppressGeneratorForClassModel(classModel, generatorSetting));
 		}
 
 		@Test
-		void returnsTrue_whenGeneratorSettting_generateWhen_isEvaluated_withResultTrue() {
+		void returnsFalse_whenGeneratorSettting_generateWhen_isEvaluated_withResultTrue() {
 			// Prepare
 			Stack<Object> stack = new Stack<>();
 			stack.push(Boolean.TRUE);
 			when(generatorSetting.getGenerateWhen()).thenReturn(EXPRESSION);
 			when(upnEvaluationPort.evaluate(EXPRESSION, classModel)).thenReturn(stack);
 			// Run & Check
-			assertTrue(unitUnderTest.suppressGeneratorForClassModel(classModel, generatorSetting));
+			assertFalse(unitUnderTest.suppressGeneratorForClassModel(classModel, generatorSetting));
 		}
 	}
 }

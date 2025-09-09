@@ -1,6 +1,6 @@
 package de.ollie.ucg.core.service.impl;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import de.ollie.ucg.core.model.ClassModel;
 import de.ollie.ucg.core.model.GeneratorSetting;
@@ -26,6 +26,6 @@ public class GeneratorExpressionEvaluationServiceImplITest {
 		GeneratorSetting generatorSetting = new GeneratorSetting()
 			.setGenerateWhen("classModel Load " + PROPERTY_NAME + " " + HasProperty.TOKEN);
 		// Run & Check
-		assertFalse(unitUnderTest.suppressGeneratorForClassModel(classModel, generatorSetting));
+		assertTrue(unitUnderTest.suppressGeneratorForClassModel(classModel, generatorSetting));
 	}
 }

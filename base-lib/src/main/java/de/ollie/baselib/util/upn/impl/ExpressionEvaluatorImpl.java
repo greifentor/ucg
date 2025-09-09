@@ -9,7 +9,7 @@ import java.util.Map;
 import java.util.Stack;
 
 @Named
-public class ExpressionEvaluatorImpl implements ExpressionEvaluator {
+class ExpressionEvaluatorImpl implements ExpressionEvaluator {
 
 	public static final String MESSAGE_CONTAINS_CONTAINED_ARGUMENT_MISSED =
 		"missing argument to check for being contained";

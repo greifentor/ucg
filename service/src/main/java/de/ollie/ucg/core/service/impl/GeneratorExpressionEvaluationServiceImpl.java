@@ -22,7 +22,7 @@ public class GeneratorExpressionEvaluationServiceImpl implements GeneratorExpres
 		ensure(generatorSetting != null, "generator setting cannot be null!");
 		if (generatorSetting.getGenerateWhen() != null) {
 			Stack<Object> stack = upnEvaluationPort.evaluate(generatorSetting.getGenerateWhen(), classModel);
-			return !stack.isEmpty() && Boolean.TRUE.equals(stack.pop());
+			return !stack.isEmpty() && !Boolean.TRUE.equals(stack.pop());
 		}
 		return false;
 	}
