@@ -187,6 +187,35 @@ class ClassModelWrapperTest {
 	}
 
 	@Nested
+	class hasAnAttributeWithTypeName_String {
+
+		@Test
+		void throwsAnException_passingTypeNameAsANullValue() {
+			assertThrows(IllegalArgumentException.class, () -> unitUnderTest.hasAnAttributeWithTypeName(null));
+		}
+
+		@Test
+		void returnsFalse_whenClassHasNoAttributeWithPassedTypeName() {
+			// Prepare
+			when(attributeModel0.getType()).thenReturn(typeModel);
+			when(classModel.getAttributes()).thenReturn(List.of(attributeModel0));
+			when(typeModel.getName()).thenReturn(TYPE_NAME + 1);
+			// Run & Check
+			assertFalse(unitUnderTest.hasAnAttributeWithTypeName(TYPE_NAME));
+		}
+
+		@Test
+		void returnsTrue_whenClassHasAnAttributeWithPassedTypeName() {
+			// Prepare
+			when(attributeModel0.getType()).thenReturn(typeModel);
+			when(classModel.getAttributes()).thenReturn(List.of(attributeModel0));
+			when(typeModel.getName()).thenReturn(TYPE_NAME);
+			// Run & Check
+			assertTrue(unitUnderTest.hasAnAttributeWithTypeName(TYPE_NAME));
+		}
+	}
+
+	@Nested
 	class isPropertyWithNameInAttributesPresent_String {
 
 		@Test

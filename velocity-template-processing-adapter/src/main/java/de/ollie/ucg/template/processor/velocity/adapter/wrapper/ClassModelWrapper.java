@@ -159,6 +159,11 @@ public class ClassModelWrapper {
 		return classModel.getAttributes().stream().anyMatch(AttributeModel::isEnumType);
 	}
 
+	public boolean hasAnAttributeWithTypeName(String typeName) {
+		ensure(typeName != null, "type name cannot be null!");
+		return classModel.getAttributes().stream().anyMatch(a -> a.getType().getName().equals(typeName));
+	}
+
 	public boolean isPropertyWithNameInAttributesPresent(String name) {
 		ensure(name != null, MSG_NAME_IS_NULL);
 		return classModel.getAttributes().isEmpty()
