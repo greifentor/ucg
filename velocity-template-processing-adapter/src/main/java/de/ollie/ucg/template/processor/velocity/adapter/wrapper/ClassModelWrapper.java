@@ -33,6 +33,17 @@ public class ClassModelWrapper {
 		return classModel.getAttributes().stream().map(a -> new AttributeModelWrapper(a, model)).toList();
 	}
 
+	public AttributeModelWrapper getAttributeByName(String name) {
+		ensure(name != null, MSG_NAME_IS_NULL);
+		return classModel
+			.getAttributes()
+			.stream()
+			.filter(a -> name.equals(a.getName()))
+			.findFirst()
+			.map(a -> new AttributeModelWrapper(a, model))
+			.orElse(null);
+	}
+
 	public String getAttributeTypeNameByPropertyName(String name) {
 		ensure(name != null, MSG_NAME_IS_NULL);
 		return findAttributeWithProperty(name)

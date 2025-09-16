@@ -2,6 +2,7 @@ package de.ollie.ucg.template.processor.velocity.adapter.wrapper;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.when;
@@ -58,6 +59,38 @@ class ClassModelWrapperTest {
 		@Test
 		void throwsAnException_passingANullValue_asModel() {
 			assertThrows(NullPointerException.class, () -> new ClassModelWrapper(classModel, null));
+		}
+	}
+
+	@Nested
+	class getAttributeByName_String {
+
+		@Test
+		void throwsAnException_passingANullValue_asName() {
+			assertThrows(IllegalArgumentException.class, () -> unitUnderTest.getAttributeByName(null));
+		}
+
+		@Test
+		void returnsANullValue_whenClassHasNoAttributes() {
+			assertNull(unitUnderTest.getAttributeByName(ATTRIBUTE_NAME));
+		}
+
+		@Test
+		void returnsANullValue_passingANotExistingAttributeName() {
+			// Prepare
+			when(attributeModel0.getName()).thenReturn(ATTRIBUTE_NAME + 1);
+			when(classModel.getAttributes()).thenReturn(List.of(attributeModel0));
+			// Run & Check
+			assertNull(unitUnderTest.getAttributeByName(ATTRIBUTE_NAME));
+		}
+
+		@Test
+		void returnsTheCorrectAttribute_passingAnExistingAttributeName() {
+			// Prepare
+			when(attributeModel0.getName()).thenReturn(ATTRIBUTE_NAME);
+			when(classModel.getAttributes()).thenReturn(List.of(attributeModel0));
+			// Run & Check
+			assertEquals(new AttributeModelWrapper(attributeModel0, model), unitUnderTest.getAttributeByName(ATTRIBUTE_NAME));
 		}
 	}
 
