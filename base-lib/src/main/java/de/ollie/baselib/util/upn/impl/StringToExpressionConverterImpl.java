@@ -19,6 +19,7 @@ import org.apache.commons.text.matcher.StringMatcherFactory;
 @RequiredArgsConstructor
 public class StringToExpressionConverterImpl implements StringToExpressionConverter {
 
+	private final ValueConverter valueConverter;
 	private final WordFactory wordFactory;
 
 	@Override
@@ -29,25 +30,15 @@ public class StringToExpressionConverterImpl implements StringToExpressionConver
 		StringMatcher sm = StringMatcherFactory.INSTANCE.quoteMatcher();
 		tokenizer.setQuoteMatcher(sm);
 		while (tokenizer.hasNext()) {
-			String token = tokenizer.nextToken();
-			if (wordFactory.isCommand(token)) {
-				words.add(wordFactory.createCommand(token));
-			} else {
-				words.add(Value.of(getValue(token)));
-			}
+			words.add(getWord(tokenizer.nextToken()));
 		}
 		return Expression.of(words);
 	}
 
-	Object getValue(String token) {
-		if (token.toUpperCase().equals("FALSE") || token.toUpperCase().equals("TRUE")) {
-			return Boolean.valueOf(token.toUpperCase());
+	private Word getWord(String token) {
+		if (wordFactory.isCommand(token)) {
+			return wordFactory.createCommand(token);
 		}
-		try {
-			return Integer.valueOf(token);
-		} catch (NumberFormatException nfe) {
-			// NOP
-		}
-		return token;
+		return Value.of(valueConverter.getValue(token));
 	}
 }

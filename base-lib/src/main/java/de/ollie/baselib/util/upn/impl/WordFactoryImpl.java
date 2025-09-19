@@ -16,7 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 @Named
 public class WordFactoryImpl implements WordFactory {
 
-	@Autowired
+	@Autowired(required = false)
 	private List<CommandFactory<? extends Command>> commandFactories;
 
 	private Map<String, CommandFactory<? extends Command>> mapCommandFactories = new HashMap<>();
@@ -28,6 +28,7 @@ public class WordFactoryImpl implements WordFactory {
 
 	@Override
 	public Command createCommand(String token) {
+		ensure(token != null, "token cannot be null!");
 		if (isCommand(token)) {
 			return mapCommandFactories.get(token).create();
 		}
@@ -42,6 +43,7 @@ public class WordFactoryImpl implements WordFactory {
 
 	@Override
 	public boolean isCommand(String token) {
+		ensure(token != null, "token cannot be null!");
 		return mapCommandFactories.containsKey(token);
 	}
 }
