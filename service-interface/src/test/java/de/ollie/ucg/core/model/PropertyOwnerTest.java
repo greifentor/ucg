@@ -102,4 +102,47 @@ class PropertyOwnerTest {
 			assertTrue(unitUnderTest.hasPropertyWithValue(NAME, VALUE));
 		}
 	}
+
+	@Nested
+	class hasPropertyWithName_String {
+
+		@Test
+		void throwsAnException_passingANullValue_asName() {
+			assertThrows(IllegalArgumentException.class, () -> unitUnderTest.hasPropertyWithName(null));
+		}
+
+		@Test
+		void returnsFalse_whenOwner_hasNoProperties_nullList() {
+			// Prepare
+			when(unitUnderTest.getProperties()).thenReturn(null);
+			// Run & Check
+			assertFalse(unitUnderTest.hasPropertyWithName(NAME));
+		}
+
+		@Test
+		void returnsFalse_whenOwner_hasNoProperties_emptyList() {
+			// Prepare
+			when(unitUnderTest.getProperties()).thenReturn(List.of());
+			// Run & Check
+			assertFalse(unitUnderTest.hasPropertyWithName(NAME));
+		}
+
+		@Test
+		void returnsFalse_whenOwner_hasNoProperties_withMatchingName() {
+			// Prepare
+			when(property.getName()).thenReturn(NAME + 1);
+			when(unitUnderTest.getProperties()).thenReturn(List.of(property));
+			// Run & Check
+			assertFalse(unitUnderTest.hasPropertyWithName(NAME));
+		}
+
+		@Test
+		void returnsTrue_whenOwner_hasAtLeastOneProperties_withMatchingName() {
+			// Prepare
+			when(property.getName()).thenReturn(NAME);
+			when(unitUnderTest.getProperties()).thenReturn(List.of(property));
+			// Run & Check
+			assertTrue(unitUnderTest.hasPropertyWithName(NAME));
+		}
+	}
 }

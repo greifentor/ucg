@@ -7,6 +7,6 @@ import java.util.Stack;
 class StackFactory {
 
 	Stack<Object> create() {
-		return null;
+		return new Stack<>();
 	}
 }

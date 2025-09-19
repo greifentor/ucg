@@ -95,6 +95,27 @@ class ClassModelWrapperTest {
 	}
 
 	@Nested
+	class getAttributes {
+
+		@Test
+		void returnsAnEmptyList_whenClassModelHasNoAttributes() {
+			// Prepare
+			when(classModel.getAttributes()).thenReturn(List.of());
+			// Run & Check
+			assertTrue(unitUnderTest.getAttributes().isEmpty());
+		}
+
+		@Test
+		void returnsAListWithAttributeWrappers_whenClassModelHasAttributes() {
+			// Prepare
+			List<AttributeModelWrapper> expected = List.of(new AttributeModelWrapper(attributeModel0, model));
+			when(classModel.getAttributes()).thenReturn(List.of(attributeModel0));
+			// Run & Check
+			assertEquals(expected, unitUnderTest.getAttributes());
+		}
+	}
+
+	@Nested
 	class getAttributeTypeNameByPropertyName_String {
 
 		@Test

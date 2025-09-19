@@ -6,6 +6,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Generated;
 import lombok.Getter;
 
+@Generated
 @Getter
 @EqualsAndHashCode(callSuper = false)
 public class GenerationFailedException extends RuntimeException {
