@@ -16,6 +16,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 @ExtendWith(MockitoExtension.class)
 class AttributeModelWrapperTest {
 
+	private static final String ATTRIBUTE_NAME = "attribute-name";
+
 	@Mock
 	private AttributeModel attributeModel;
 
@@ -24,6 +26,18 @@ class AttributeModelWrapperTest {
 
 	@InjectMocks
 	private AttributeModelWrapper unitUnderTest;
+
+	@Nested
+	class getName {
+
+		@Test
+		void returnsAttributeName() {
+			// Prepare
+			when(attributeModel.getName()).thenReturn(ATTRIBUTE_NAME);
+			// Run & Check
+			assertEquals(ATTRIBUTE_NAME, unitUnderTest.getName());
+		}
+	}
 
 	@Nested
 	class getNameSeparated_String {
