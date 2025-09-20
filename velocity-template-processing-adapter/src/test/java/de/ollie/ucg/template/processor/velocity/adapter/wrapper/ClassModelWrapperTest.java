@@ -26,9 +26,12 @@ import org.mockito.junit.jupiter.MockitoExtension;
 class ClassModelWrapperTest {
 
 	private static final String ATTRIBUTE_NAME = "attribute-name";
+	private static final String ATTRIBUTE_NAME_CAMEL_CASE = "Attribute-name";
 	private static final String CLASS_NAME = "class-name";
 	private static final String PROPERTY_NAME = "property-name";
+	private static final String PROPERTY_VALUE = "property-value";
 	private static final String TYPE_NAME = "type-name";
+	private static final String TYPE_NAME_CAMEL_CASE = "Type-name";
 
 	@Mock
 	private AttributeModel attributeModel0;
@@ -41,6 +44,9 @@ class ClassModelWrapperTest {
 
 	@Mock
 	private Model model;
+
+	@Mock
+	private Property property;
 
 	@Mock
 	private TypeModel typeModel;
@@ -151,6 +157,48 @@ class ClassModelWrapperTest {
 			when(typeModel.getName()).thenReturn(TYPE_NAME);
 			// Run & Check
 			assertEquals(TYPE_NAME, unitUnderTest.getAttributeTypeNameByPropertyName(PROPERTY_NAME));
+		}
+	}
+
+	@Nested
+	class getAttributeTypeNameByPropertyNameCamelCase_String {
+
+		@Test
+		void throwsAnException_passingANullValue_asName() {
+			assertThrows(
+				IllegalArgumentException.class,
+				() -> unitUnderTest.getAttributeTypeNameByPropertyNameCamelCase(null)
+			);
+		}
+
+		@Test
+		void throwsAnException_whenNoAttributesIsSet() {
+			// Prepare
+			GenerationFailedException expected = new GenerationFailedException(
+				CLASS_NAME,
+				ATTRIBUTE_NAME,
+				Type.NO_ATTRIBUTE_WITH_PROPERTY,
+				List.of(new Property().setName("property").setValue(ATTRIBUTE_NAME))
+			);
+			when(classModel.getAttributes()).thenReturn(List.of(attributeModel0));
+			when(attributeModel0.hasProperty(PROPERTY_NAME)).thenReturn(false);
+			when(classModel.getName()).thenReturn(CLASS_NAME);
+			// Run & Check
+			assertThrows(
+				GenerationFailedException.class,
+				() -> unitUnderTest.getAttributeTypeNameByPropertyNameCamelCase(PROPERTY_NAME)
+			);
+		}
+
+		@Test
+		void returnsTrue_whenAnAttributeWithPassedNameIsSet_forAtLeastOneAttribute() {
+			// Prepare
+			when(attributeModel0.getType()).thenReturn(typeModel);
+			when(attributeModel0.hasProperty(PROPERTY_NAME)).thenReturn(true);
+			when(classModel.getAttributes()).thenReturn(List.of(attributeModel0));
+			when(typeModel.getName()).thenReturn(TYPE_NAME);
+			// Run & Check
+			assertEquals(TYPE_NAME_CAMEL_CASE, unitUnderTest.getAttributeTypeNameByPropertyNameCamelCase(PROPERTY_NAME));
 		}
 	}
 
@@ -312,6 +360,258 @@ class ClassModelWrapperTest {
 			when(classModel.getAttributes()).thenReturn(List.of(attributeModel0, attributeModel1));
 			// Run & Check
 			assertTrue(unitUnderTest.isPropertyWithNameInAttributesPresent(PROPERTY_NAME));
+		}
+	}
+
+	@Nested
+	class getAttributeNameByTypePropertyName_String {
+
+		@Test
+		void throwsAnException_passingANullValue_asName() {
+			assertThrows(IllegalArgumentException.class, () -> unitUnderTest.getAttributeNameByTypePropertyName(null));
+		}
+
+		@Test
+		void throwsAnException_whenNoAttributesIsSet() {
+			// Prepare
+			GenerationFailedException expected = new GenerationFailedException(
+				CLASS_NAME,
+				ATTRIBUTE_NAME,
+				Type.NO_ATTRIBUTE_WITH_PROPERTY,
+				List.of(new Property().setName("property").setValue(ATTRIBUTE_NAME))
+			);
+			when(classModel.getAttributes()).thenReturn(List.of(attributeModel0));
+			when(attributeModel0.hasProperty(PROPERTY_NAME)).thenReturn(false);
+			when(classModel.getName()).thenReturn(CLASS_NAME);
+			// Run & Check
+			assertThrows(
+				GenerationFailedException.class,
+				() -> unitUnderTest.getAttributeNameByTypePropertyName(PROPERTY_NAME)
+			);
+		}
+
+		@Test
+		void returnsTrue_whenAnAttributeWithPassedNameIsSet_forAtLeastOneAttribute() {
+			// Prepare
+			when(attributeModel0.getName()).thenReturn(ATTRIBUTE_NAME);
+			when(attributeModel0.hasProperty(PROPERTY_NAME)).thenReturn(true);
+			when(classModel.getAttributes()).thenReturn(List.of(attributeModel0));
+			// Run & Check
+			assertEquals(ATTRIBUTE_NAME, unitUnderTest.getAttributeNameByTypePropertyName(PROPERTY_NAME));
+		}
+	}
+
+	@Nested
+	class getAttributeNameByTypePropertyNameCamelCase_String {
+
+		@Test
+		void throwsAnException_passingANullValue_asName() {
+			assertThrows(
+				IllegalArgumentException.class,
+				() -> unitUnderTest.getAttributeNameByTypePropertyNameCamelCase(null)
+			);
+		}
+
+		@Test
+		void throwsAnException_whenNoAttributesIsSet() {
+			// Prepare
+			GenerationFailedException expected = new GenerationFailedException(
+				CLASS_NAME,
+				ATTRIBUTE_NAME,
+				Type.NO_ATTRIBUTE_WITH_PROPERTY,
+				List.of(new Property().setName("property").setValue(ATTRIBUTE_NAME))
+			);
+			when(classModel.getAttributes()).thenReturn(List.of(attributeModel0));
+			when(attributeModel0.hasProperty(PROPERTY_NAME)).thenReturn(false);
+			when(classModel.getName()).thenReturn(CLASS_NAME);
+			// Run & Check
+			assertThrows(
+				GenerationFailedException.class,
+				() -> unitUnderTest.getAttributeNameByTypePropertyNameCamelCase(PROPERTY_NAME)
+			);
+		}
+
+		@Test
+		void returnsTrue_whenAnAttributeWithPassedNameIsSet_forAtLeastOneAttribute() {
+			// Prepare
+			when(attributeModel0.getName()).thenReturn(ATTRIBUTE_NAME);
+			when(attributeModel0.hasProperty(PROPERTY_NAME)).thenReturn(true);
+			when(classModel.getAttributes()).thenReturn(List.of(attributeModel0));
+			// Run & Check
+			assertEquals(ATTRIBUTE_NAME_CAMEL_CASE, unitUnderTest.getAttributeNameByTypePropertyNameCamelCase(PROPERTY_NAME));
+		}
+	}
+
+	@Nested
+	class getAttributesWithPropertySet_String {
+
+		@Test
+		void throwsAnException_passingANullValueAsName() {
+			assertThrows(IllegalArgumentException.class, () -> unitUnderTest.getAttributesWithPropertySet(null));
+		}
+
+		@Test
+		void returnsAnEmptyList_withClassModel_hasNoAttributes() {
+			// Prepare
+			when(classModel.getAttributes()).thenReturn(List.of());
+			// Run & Check
+			assertTrue(unitUnderTest.getAttributesWithPropertySet(PROPERTY_NAME).isEmpty());
+		}
+
+		@Test
+		void returnsAnEmptyList_withClassModel_hasAttributeWithNoProperties() {
+			// Prepare
+			when(attributeModel0.getProperties()).thenReturn(List.of());
+			when(classModel.getAttributes()).thenReturn(List.of(attributeModel0));
+			// Run & Check
+			assertTrue(unitUnderTest.getAttributesWithPropertySet(PROPERTY_NAME).isEmpty());
+		}
+
+		@Test
+		void returnsAnEmptyList_withClassModel_hasAttributeWithNoMatchingProperty() {
+			// Prepare
+			when(attributeModel0.getProperties()).thenReturn(List.of(property));
+			when(attributeModel0.hasProperty(PROPERTY_NAME)).thenReturn(false);
+			when(classModel.getAttributes()).thenReturn(List.of(attributeModel0));
+			// Run & Check
+			assertTrue(unitUnderTest.getAttributesWithPropertySet(PROPERTY_NAME).isEmpty());
+		}
+
+		@Test
+		void returnsAListWithMatchingAttributeModelWrapper_classModel_hasAttributeWithMatchingProperties() {
+			// Prepare
+			List<AttributeModelWrapper> expected = List.of(new AttributeModelWrapper(attributeModel0, model));
+			when(attributeModel0.getProperties()).thenReturn(List.of(property));
+			when(attributeModel0.hasProperty(PROPERTY_NAME)).thenReturn(true);
+			when(classModel.getAttributes()).thenReturn(List.of(attributeModel0));
+			// Run & Check
+			assertEquals(expected, unitUnderTest.getAttributesWithPropertySet(PROPERTY_NAME));
+		}
+	}
+
+	@Nested
+	class getAttributesWithPropertySetSortedByPropertyValue_String {
+
+		@Test
+		void throwsAnException_passingANullValueAsName() {
+			assertThrows(
+				IllegalArgumentException.class,
+				() -> unitUnderTest.getAttributesWithPropertySetSortedByPropertyValue(null)
+			);
+		}
+
+		@Test
+		void returnsAnEmptyList_withClassModel_hasNoAttributes() {
+			// Prepare
+			when(classModel.getAttributes()).thenReturn(List.of());
+			// Run & Check
+			assertTrue(unitUnderTest.getAttributesWithPropertySetSortedByPropertyValue(PROPERTY_NAME).isEmpty());
+		}
+
+		@Test
+		void returnsAnEmptyList_withClassModel_hasAttributeWithNoProperties() {
+			// Prepare
+			when(attributeModel0.getProperties()).thenReturn(List.of());
+			when(classModel.getAttributes()).thenReturn(List.of(attributeModel0));
+			// Run & Check
+			assertTrue(unitUnderTest.getAttributesWithPropertySetSortedByPropertyValue(PROPERTY_NAME).isEmpty());
+		}
+
+		@Test
+		void returnsAnEmptyList_withClassModel_hasAttributeWithNoMatchingProperty() {
+			// Prepare
+			when(attributeModel0.getProperties()).thenReturn(List.of(property));
+			when(attributeModel0.hasProperty(PROPERTY_NAME)).thenReturn(false);
+			when(classModel.getAttributes()).thenReturn(List.of(attributeModel0));
+			// Run & Check
+			assertTrue(unitUnderTest.getAttributesWithPropertySetSortedByPropertyValue(PROPERTY_NAME).isEmpty());
+		}
+
+		@Test
+		void returnsAListWithMatchingAttributeModelWrapper_classModel_hasAttributeWithMatchingProperties() {
+			// Prepare
+			List<AttributeModelWrapper> expected = List.of(
+				new AttributeModelWrapper(attributeModel0, model),
+				new AttributeModelWrapper(attributeModel1, model)
+			);
+			when(attributeModel0.getPropertyValue(PROPERTY_NAME)).thenReturn("0");
+			when(attributeModel0.getProperties()).thenReturn(List.of(property));
+			when(attributeModel0.hasProperty(PROPERTY_NAME)).thenReturn(true);
+			when(attributeModel1.getPropertyValue(PROPERTY_NAME)).thenReturn("1");
+			when(attributeModel1.getProperties()).thenReturn(List.of(property));
+			when(attributeModel1.hasProperty(PROPERTY_NAME)).thenReturn(true);
+			when(classModel.getAttributes()).thenReturn(List.of(attributeModel1, attributeModel0));
+			// Run & Check
+			assertEquals(expected, unitUnderTest.getAttributesWithPropertySetSortedByPropertyValue(PROPERTY_NAME));
+		}
+	}
+
+	@Nested
+	class getPropertiesWithName_String {
+
+		@Test
+		void throwsAnException_passingANullValue_asName() {
+			assertThrows(IllegalArgumentException.class, () -> unitUnderTest.getPropertiesWithName(null));
+		}
+
+		@Test
+		void returnsAnEmptyList_whenClassModel_hasANullPointer_asPropertyList() {
+			// Prepare
+			when(classModel.getProperties()).thenReturn(null);
+			// Run & Check
+			assertTrue(unitUnderTest.getPropertiesWithName(PROPERTY_NAME).isEmpty());
+		}
+
+		@Test
+		void returnsAnEmptyList_whenClassModel_hasAnEmptyList_asPropertyList() {
+			// Prepare
+			when(classModel.getProperties()).thenReturn(List.of());
+			// Run & Check
+			assertTrue(unitUnderTest.getPropertiesWithName(PROPERTY_NAME).isEmpty());
+		}
+
+		@Test
+		void returnsAnEmptyList_whenClassModel_hasAList_withNoMatchingProperty() {
+			// Prepare
+			when(classModel.getProperties()).thenReturn(List.of(property));
+			when(property.getName()).thenReturn(PROPERTY_NAME + 1);
+			// Run & Check
+			assertTrue(unitUnderTest.getPropertiesWithName(PROPERTY_NAME).isEmpty());
+		}
+
+		@Test
+		void returnsTheListWithMatchingPropertyWrapper_whenClassModel_hasAList_withMatchingProperty() {
+			// Prepare
+			List<PropertyWrapper> expected = List.of(new PropertyWrapper(PROPERTY_NAME, PROPERTY_VALUE));
+			when(classModel.getProperties()).thenReturn(List.of(property));
+			when(property.getName()).thenReturn(PROPERTY_NAME);
+			when(property.getValue()).thenReturn(PROPERTY_VALUE);
+			// Run & Check
+			assertEquals(expected, unitUnderTest.getPropertiesWithName(PROPERTY_NAME));
+		}
+	}
+
+	@Nested
+	class toCamelCase_String {
+
+		@Test
+		void throwsAnException_passingANullValue_asString() {
+			assertThrows(NullPointerException.class, () -> unitUnderTest.toCamelCase(null));
+		}
+
+		@Test
+		void returnsAnEmptyString_passingAnEmptyString() {
+			assertEquals("", unitUnderTest.toCamelCase(""));
+		}
+
+		@Test
+		void returnsThePassedString_passingACamelCaseString() {
+			assertEquals(TYPE_NAME_CAMEL_CASE, unitUnderTest.toCamelCase(TYPE_NAME_CAMEL_CASE));
+		}
+
+		@Test
+		void returnsACamelCaseString_passingANonCamelCaseString() {
+			assertEquals(TYPE_NAME_CAMEL_CASE, unitUnderTest.toCamelCase(TYPE_NAME));
 		}
 	}
 }

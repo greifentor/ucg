@@ -89,7 +89,7 @@ public class ClassModelWrapper {
 					getName(),
 					null,
 					Type.NO_ATTRIBUTE_WITH_PROPERTY,
-					List.of(new Property().setName("property").setValue("id"))
+					List.of(new Property().setName("property").setValue(name))
 				)
 			);
 	}
