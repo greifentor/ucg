@@ -20,3 +20,8 @@ An universal code generator.
 ## Build
 
 Just type `mvn clean install` in project folder.
+
+
+## How to Use
+
+* TBD
