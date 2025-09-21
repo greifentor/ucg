@@ -134,18 +134,19 @@ class ClassModelWrapperTest {
 			// Prepare
 			GenerationFailedException expected = new GenerationFailedException(
 				CLASS_NAME,
-				ATTRIBUTE_NAME,
+				null,
 				Type.NO_ATTRIBUTE_WITH_PROPERTY,
-				List.of(new Property().setName("property").setValue(ATTRIBUTE_NAME))
+				List.of(new Property().setName("property").setValue(PROPERTY_NAME))
 			);
 			when(classModel.getAttributes()).thenReturn(List.of(attributeModel0));
 			when(attributeModel0.hasProperty(PROPERTY_NAME)).thenReturn(false);
 			when(classModel.getName()).thenReturn(CLASS_NAME);
 			// Run & Check
-			assertThrows(
+			Exception thrown = assertThrows(
 				GenerationFailedException.class,
 				() -> unitUnderTest.getAttributeTypeNameByPropertyName(PROPERTY_NAME)
 			);
+			assertEquals(expected, thrown);
 		}
 
 		@Test
@@ -612,6 +613,46 @@ class ClassModelWrapperTest {
 		@Test
 		void returnsACamelCaseString_passingANonCamelCaseString() {
 			assertEquals(TYPE_NAME_CAMEL_CASE, unitUnderTest.toCamelCase(TYPE_NAME));
+		}
+	}
+
+	@Nested
+	class getAttributeNameWithPropertySeparated_String {
+
+		@Test
+		void throwsAnException_passingANullValue_asName() {
+			assertThrows(IllegalArgumentException.class, () -> unitUnderTest.getAttributeNameWithPropertySeparated(null));
+		}
+
+		@Test
+		void throwsAnException_whenNoAttributesIsSet() {
+			// Prepare
+			GenerationFailedException expected = new GenerationFailedException(
+				CLASS_NAME,
+				null,
+				Type.NO_ATTRIBUTE_WITH_PROPERTY,
+				List.of(new Property().setName("property").setValue(PROPERTY_NAME))
+			);
+			when(classModel.getAttributes()).thenReturn(List.of(attributeModel0));
+			when(attributeModel0.hasProperty(PROPERTY_NAME)).thenReturn(false);
+			when(classModel.getName()).thenReturn(CLASS_NAME);
+			// Run & Check
+			Exception thrown = assertThrows(
+				GenerationFailedException.class,
+				() -> unitUnderTest.getAttributeNameWithPropertySeparated(PROPERTY_NAME)
+			);
+			assertEquals(expected, thrown);
+		}
+
+		@Test
+		void returnsTrue_whenAnAttributeWithPassedNameIsSet_forAtLeastOneAttribute() {
+			// Prepare
+			when(attributeModel0.getType()).thenReturn(typeModel);
+			when(attributeModel0.hasProperty(PROPERTY_NAME)).thenReturn(true);
+			when(classModel.getAttributes()).thenReturn(List.of(attributeModel0));
+			when(typeModel.getName()).thenReturn(TYPE_NAME);
+			// Run & Check
+			assertEquals(TYPE_NAME, unitUnderTest.getAttributeNameWithPropertySeparated(PROPERTY_NAME));
 		}
 	}
 }

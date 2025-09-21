@@ -5,10 +5,12 @@ import java.util.List;
 import lombok.EqualsAndHashCode;
 import lombok.Generated;
 import lombok.Getter;
+import lombok.ToString;
 
 @Generated
 @Getter
 @EqualsAndHashCode(callSuper = false)
+@ToString
 public class GenerationFailedException extends RuntimeException {
 
 	@Generated
