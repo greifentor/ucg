@@ -1,6 +1,6 @@
 # ucg
 
-An universal code generator.
+As universal code generator.
 
 
 ## What Does It Do?
