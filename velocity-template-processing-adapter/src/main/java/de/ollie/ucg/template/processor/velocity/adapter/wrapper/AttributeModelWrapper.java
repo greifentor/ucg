@@ -24,7 +24,11 @@ public class AttributeModelWrapper {
 	}
 
 	public String getNameSeparated(String separator) {
-		return NameSeparator.INSTANCE.getNameSeparated(attributeModel.getName(), separator);
+		return NameSeparator.INSTANCE.getNameSeparated(getName(), separator);
+	}
+
+	public String getCamelCaseNameSeparated(String separator) {
+		return NameSeparator.INSTANCE.getNameSeparated(getNameCamelCase(), separator);
 	}
 
 	public String getTypeName() {

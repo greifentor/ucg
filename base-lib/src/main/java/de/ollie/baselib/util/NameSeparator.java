@@ -18,7 +18,7 @@ public class NameSeparator {
 		ensure(separator != null, MSG_SEPARATOR_IS_NULL);
 		String s = "" + (name.length() > 0 ? name.charAt(0) : "");
 		for (int i = 1; i < name.length(); i++) {
-			s += (((name.charAt(i) >= 'A') && (name.charAt(i) <= 'Z')) ? "_" : "") + name.charAt(i);
+			s += (((name.charAt(i) >= 'A') && (name.charAt(i) <= 'Z')) ? separator : "") + name.charAt(i);
 		}
 		return s;
 	}

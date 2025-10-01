@@ -11,6 +11,7 @@ import de.ollie.ucg.core.model.Model;
 import de.ollie.ucg.core.model.Property;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Predicate;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
@@ -27,6 +28,22 @@ public class ClassModelWrapper {
 
 	public String getName() {
 		return classModel.getName();
+	}
+
+	public String getNameCamelCase() {
+		return toCamelCase(classModel.getName());
+	}
+
+	public String getCamelCaseNameSeparated(String separator) {
+		return NameSeparator.INSTANCE.getNameSeparated(getNameCamelCase(), separator);
+	}
+
+	public String getNameAsAttribute() {
+		return toAttributeName(classModel.getName());
+	}
+
+	public String toAttributeName(String s) {
+		return s.length() < 2 ? s.toLowerCase() : s.substring(0, 1).toLowerCase() + s.substring(1);
 	}
 
 	public List<AttributeModelWrapper> getAttributes() {
@@ -131,10 +148,22 @@ public class ClassModelWrapper {
 	}
 
 	public List<AttributeModelWrapper> getAttributesWithPropertySetSortedByPropertyValue(String name) {
+		return getAttributesWithPropertySetSortedByPropertyValue(name, a -> true);
+	}
+
+	public List<AttributeModelWrapper> getAttributesWithPropertySetSortedByPropertyValueReferencesOnly(String name) {
+		return getAttributesWithPropertySetSortedByPropertyValue(name, AttributeModel::isReference);
+	}
+
+	public List<AttributeModelWrapper> getAttributesWithPropertySetSortedByPropertyValue(
+		String name,
+		Predicate<AttributeModel> gate
+	) {
 		ensure(name != null, MSG_NAME_IS_NULL);
 		return classModel
 			.getAttributes()
 			.stream()
+			.filter(gate::test)
 			.filter(a -> !a.getProperties().isEmpty())
 			.filter(a -> a.hasProperty(name))
 			.sorted((a0, a1) -> a0.getPropertyValue(name).compareTo(a1.getPropertyValue(name)))

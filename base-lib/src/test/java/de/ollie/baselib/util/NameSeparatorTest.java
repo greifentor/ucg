@@ -6,6 +6,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 @ExtendWith(MockitoExtension.class)
@@ -48,12 +50,13 @@ class NameSeparatorTest {
 			assertEquals(expected, NameSeparator.INSTANCE.getNameSeparated("Leadinguppercaseonly", "_"));
 		}
 
-		@Test
-		void returnsAnNameString_withASeparator_beforeEachUpperCaseLetter_exceptFirstLetter() {
+		@ParameterizedTest
+		@CsvSource({ "_", "-", "%" })
+		void returnsAnNameString_withASeparator_beforeEachUpperCaseLetter_exceptFirstLetter(String separator) {
 			// Prepare
-			String expected = "A_Camel_Case_Name";
+			String expected = "A_Camel_Case_Name".replace("_", separator);
 			// Run & Check
-			assertEquals(expected, NameSeparator.INSTANCE.getNameSeparated("ACamelCaseName", "_"));
+			assertEquals(expected, NameSeparator.INSTANCE.getNameSeparated("ACamelCaseName", separator));
 		}
 	}
 }
