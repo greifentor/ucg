@@ -24,4 +24,5 @@ Just type `mvn clean install` in project folder.
 
 ## How to Use
 
-* TBD :)
+* [General Options](service/README.md)
+* [Velocity Templates](velocity-template-processing-adapter/README.md)
