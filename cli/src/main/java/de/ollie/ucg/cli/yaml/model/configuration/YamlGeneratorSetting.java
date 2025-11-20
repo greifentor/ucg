@@ -27,6 +27,9 @@ public class YamlGeneratorSetting {
 	@JsonProperty("generate-when")
 	private String generateWhen;
 
+	@JsonProperty("layer")
+	private String layer;
+
 	@JsonProperty("properties")
 	private List<YamlProperty> properties = new ArrayList<>();
 

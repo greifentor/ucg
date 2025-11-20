@@ -31,7 +31,10 @@ public class CodeGeneratorServiceImpl implements CodeGeneratorService {
 		for (GeneratorSetting cs : configuration.getGeneratorSettings()) {
 			if (cs.getGeneratorType() == GeneratorType.CLASS) {
 				for (ClassModel classModel : model.getClasses()) {
-					if (!generatorExpressionEvaluationService.suppressGeneratorForClassModel(classModel, cs)) {
+					if (
+						!generatorExpressionEvaluationService.suppressGeneratorForClassModel(classModel, cs) &&
+						!isLayerToIgnore(classModel, cs)
+					) {
 						GenerationResult generationResult = templateProcessorPort.process(configuration, cs, model, classModel);
 						observer.classCodeGenerated(generationResult, cs, configuration);
 					}
@@ -39,5 +42,12 @@ public class CodeGeneratorServiceImpl implements CodeGeneratorService {
 			}
 		}
 		return report;
+	}
+
+	private boolean isLayerToIgnore(ClassModel classModel, GeneratorSetting generatorSetting) {
+		return classModel
+			.findPropertyValue("ignore-layers")
+			.map(v -> v.contains(generatorSetting.getLayer()))
+			.orElse(false);
 	}
 }

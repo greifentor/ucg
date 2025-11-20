@@ -9,12 +9,19 @@ import jakarta.persistence.Enumerated;
 #if (${Class.hasAReferenceAttribute()})
 import jakarta.persistence.FetchType;
 #end
+#if (${Class.hasAnAttributeWithPropertyAndValue("key-generation", "sequence")})
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+#end
 #if (${Class.isPropertyWithNameInAttributesPresent("id")})
 import jakarta.persistence.Id;
 #end
 #if (${Class.hasAReferenceAttribute()})
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+#end
+#if (${Class.hasAnAttributeWithPropertyAndValue("key-generation", "sequence")})
+import jakarta.persistence.SequenceGenerator;
 #end
 import jakarta.persistence.Table;
 import lombok.Data;
@@ -40,6 +47,10 @@ public class ${ClassName}Dbo {
 #foreach($Attribute in $Attributes)
 	#if (${Attribute.hasPropertyWithValue("id", "true")})
 	@Id
+	#end
+	#if (${Attribute.hasPropertyWithValue("key-generation", "sequence")})
+	@SequenceGenerator(allocationSize = 1, name = "${ClassName}Sequence", sequenceName = "pbv_${Class.getNameSeparated("_").toLowerCase()}_id_seq")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "${ClassName}Sequence")
 	#end
 	#if (${Attribute.isReference()})
 	@JoinColumn(name = "${Attribute.getNameSeparated("_").toUpperCase()}", referencedColumnName = "${Attribute.getTypeClassType().getAttributeNameByTypePropertyName("id").toUpperCase()}", nullable =#if (${Attribute.hasPropertyWithValue("nullable", "false")}) false#else true#end)

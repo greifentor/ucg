@@ -210,6 +210,10 @@ public class ClassModelWrapper {
 		return classModel.getAttributes().stream().anyMatch(a -> a.getType().getName().equals(typeName));
 	}
 
+	public boolean hasAnAttributeWithPropertyAndValue(String propertyName, String propertyValue) {
+		return classModel.getAttributes().stream().anyMatch(p -> p.hasPropertyWithValue(propertyName, propertyValue));
+	}
+
 	public boolean isPropertyWithNameInAttributesPresent(String name) {
 		ensure(name != null, MSG_NAME_IS_NULL);
 		return classModel.getAttributes().isEmpty()

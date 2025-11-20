@@ -18,6 +18,7 @@ import de.ollie.ucg.core.service.CodeGeneratorService.CodeGeneratorServiceObserv
 import de.ollie.ucg.core.service.GeneratorExpressionEvaluationService;
 import de.ollie.ucg.core.service.port.TemplateProcessorPort;
 import java.util.List;
+import java.util.Optional;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -108,12 +109,13 @@ class CodeGeneratorServiceImplTest {
 		@Test
 		void skipsGenerationWhen_GeneratorExpressionEvaluationService_isToGenerate_returnsFalse() {
 			// Prepare
+			String layer = "layer";
 			when(generatorSetting.getGeneratorType()).thenReturn(GeneratorType.CLASS);
+			when(generatorSetting.getLayer()).thenReturn(layer);
 			when(model.getClasses()).thenReturn(List.of(classModel));
-			when(generatorExpressionEvaluationService.suppressGeneratorForClassModel(classModel, generatorSetting))
-				.thenReturn(true);
 			when(generatorConfiguration.getGeneratorSettings()).thenReturn(List.of(generatorSetting));
 			when(reportFactory.create()).thenReturn(report);
+			when(classModel.findPropertyValue("ignore-layers")).thenReturn(Optional.of(layer));
 			// Run
 			unitUnderTest.generate(model, generatorConfiguration, observer);
 			// Check
