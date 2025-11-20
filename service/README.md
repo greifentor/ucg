@@ -4,7 +4,7 @@
 
 ### Generators
 
-#### layer (Optional)
+#### `layer` (Optional)
 
 **Values:**
 * Identifier of a layer
@@ -21,6 +21,6 @@ User the same identifiers to take influence of the generation process, e. g. to 
 #### `ignore-layers`
 
 **Values:**
-* Name of a comma separated list of layer identifiers.
+* A comma separated list of layer identifiers.
 
 Sets all the layers which the generation process for the class is suppress for.
