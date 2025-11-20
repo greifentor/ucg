@@ -31,6 +31,7 @@ class YamlGeneratorConfigurationToGeneratorConfigurationMapper {
 		return new GeneratorSetting()
 			.setGenerateWhen(yamlSetting.getGenerateWhen())
 			.setGeneratorType(getGeneratorType(yamlSetting.getType()))
+			.setLayer(yamlSetting.getLayer())
 			.setPackageName(yamlSetting.getPackageName())
 			.setProperties(getProperties(yamlSetting.getProperties()))
 			.setResourceLoaderClass(yamlSetting.getResourceClassLoader())

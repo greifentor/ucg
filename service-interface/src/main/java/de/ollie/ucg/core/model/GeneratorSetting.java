@@ -22,6 +22,7 @@ public class GeneratorSetting {
 
 	private GeneratorType generatorType;
 	private String generateWhen;
+	private String layer;
 	private String packageName;
 	private List<Property> properties = new ArrayList<>();
 	private String resourceLoaderClass;

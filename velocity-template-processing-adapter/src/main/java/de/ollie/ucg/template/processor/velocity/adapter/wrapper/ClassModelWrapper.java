@@ -2,11 +2,6 @@ package de.ollie.ucg.template.processor.velocity.adapter.wrapper;
 
 import static de.ollie.baselib.util.Check.ensure;
 
-import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.Optional;
-import java.util.function.Predicate;
-
 import de.ollie.baselib.util.NameSeparator;
 import de.ollie.ucg.core.exception.GenerationFailedException;
 import de.ollie.ucg.core.exception.GenerationFailedException.Type;
@@ -14,6 +9,10 @@ import de.ollie.ucg.core.model.AttributeModel;
 import de.ollie.ucg.core.model.ClassModel;
 import de.ollie.ucg.core.model.Model;
 import de.ollie.ucg.core.model.Property;
+import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Optional;
+import java.util.function.Predicate;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
@@ -82,7 +81,8 @@ public class ClassModelWrapper {
 	}
 
 	public AttributeModel getAttributeWithProperty(String name) {
-		return findAttributeWithProperty(name).orElseThrow(() -> new NoSuchElementException("class has no attribute with property:" + name));
+		return findAttributeWithProperty(name)
+			.orElseThrow(() -> new NoSuchElementException("class has no attribute with property:" + name));
 	}
 
 	public String getAttributeTypeNameByPropertyNameCamelCase(String name) {
@@ -208,6 +208,10 @@ public class ClassModelWrapper {
 	public boolean hasAnAttributeWithTypeName(String typeName) {
 		ensure(typeName != null, "type name cannot be null!");
 		return classModel.getAttributes().stream().anyMatch(a -> a.getType().getName().equals(typeName));
+	}
+
+	public boolean hasAnAttributeWithPropertyAndValue(String propertyName, String propertyValue) {
+		return classModel.getAttributes().stream().anyMatch(p -> p.hasPropertyWithValue(propertyName, propertyValue));
 	}
 
 	public boolean isPropertyWithNameInAttributesPresent(String name) {
