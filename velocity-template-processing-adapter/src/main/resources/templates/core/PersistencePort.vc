@@ -1,0 +1,32 @@
+package ${PackageName};
+
+import ${Properties.get("core-model-package")}.${ClassName};
+#foreach($Attribute in $Attributes)
+#if (${Attribute.isReference()})
+import ${Properties.get("core-model-package")}.${Attribute.getTypeName()};
+#end
+#if (${Attribute.isTypeEnum()})
+import ${Properties.get("core-model-package")}.${Attribute.getTypeName()};
+#end
+#end
+import jakarta.inject.Named;
+import java.util.List;
+import java.util.Optional;
+import lombok.Generated;
+
+#foreach($Import in $Imports)
+import ${Import};
+#end
+
+/**
+ * ${GeneratedCodeMarker}
+ *
+ * Remove this comment to suspend class from generation process.
+ */
+@Generated
+@Named
+public interface ${ClassName}PersistencePort {
+
+	Optional<${ClassName}> findById(${ClassName}Id id);
+
+}
