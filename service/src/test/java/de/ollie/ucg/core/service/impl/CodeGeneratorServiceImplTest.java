@@ -8,6 +8,7 @@ import static org.mockito.Mockito.verifyNoInteractions;
 import static org.mockito.Mockito.when;
 
 import de.ollie.ucg.core.model.ClassModel;
+import de.ollie.ucg.core.model.EnumModel;
 import de.ollie.ucg.core.model.GenerationResult;
 import de.ollie.ucg.core.model.GeneratorConfiguration;
 import de.ollie.ucg.core.model.GeneratorSetting;
@@ -30,9 +31,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 class CodeGeneratorServiceImplTest {
 
 	@Mock
-	private ClassModel classModel;
-
-	@Mock
 	private CodeGeneratorServiceObserver observer;
 
 	@Mock
@@ -48,9 +46,6 @@ class CodeGeneratorServiceImplTest {
 	private GeneratorSetting generatorSetting;
 
 	@Mock
-	private Model model;
-
-	@Mock
 	private Report report;
 
 	@Mock
@@ -64,6 +59,15 @@ class CodeGeneratorServiceImplTest {
 
 	@Nested
 	class generate_Model {
+
+		@Mock
+		private ClassModel classModel;
+
+		@Mock
+		private EnumModel enumModel;
+
+		@Mock
+		private Model model;
 
 		@Test
 		void throwsAnException_passingANullValueAsModel() {
@@ -92,7 +96,7 @@ class CodeGeneratorServiceImplTest {
 		}
 
 		@Test
-		void callsTheFileSystemPortCorrectly() {
+		void callsTheFileSystemPortCorrectly_forClasses() {
 			// Prepare
 			when(generatorSetting.getGeneratorType()).thenReturn(GeneratorType.CLASS);
 			when(model.getClasses()).thenReturn(List.of(classModel));
@@ -103,7 +107,7 @@ class CodeGeneratorServiceImplTest {
 			// Run
 			unitUnderTest.generate(model, generatorConfiguration, observer);
 			// Check
-			verify(observer, times(1)).classCodeGenerated(generationResult, generatorSetting, generatorConfiguration);
+			verify(observer, times(1)).codeGenerated(generationResult, generatorSetting, generatorConfiguration);
 		}
 
 		@Test
@@ -120,6 +124,21 @@ class CodeGeneratorServiceImplTest {
 			unitUnderTest.generate(model, generatorConfiguration, observer);
 			// Check
 			verifyNoInteractions(observer, templateProcessingPort);
+		}
+
+		@Test
+		void callsTheFileSystemPortCorrectly_forEnums() {
+			// Prepare
+			when(generatorSetting.getGeneratorType()).thenReturn(GeneratorType.ENUM);
+			when(generatorConfiguration.getGeneratorSettings()).thenReturn(List.of(generatorSetting));
+			when(model.getEnums()).thenReturn(List.of(enumModel));
+			when(reportFactory.create()).thenReturn(report);
+			when(templateProcessingPort.process(generatorConfiguration, generatorSetting, model, enumModel))
+				.thenReturn(generationResult);
+			// Run
+			unitUnderTest.generate(model, generatorConfiguration, observer);
+			// Check
+			verify(observer, times(1)).codeGenerated(generationResult, generatorSetting, generatorConfiguration);
 		}
 	}
 }

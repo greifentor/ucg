@@ -1,6 +1,7 @@
 package de.ollie.ucg;
 
 import de.ollie.ucg.core.model.ClassModel;
+import de.ollie.ucg.core.model.EnumModel;
 import de.ollie.ucg.core.model.GenerationResult;
 import de.ollie.ucg.core.model.GeneratorConfiguration;
 import de.ollie.ucg.core.model.GeneratorSetting;
@@ -17,6 +18,17 @@ class TestTemplateProcessorPort implements TemplateProcessorPort {
 		GeneratorSetting generatorSetting,
 		Model model,
 		ClassModel classModel
+	) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public GenerationResult process(
+		GeneratorConfiguration generatorConfiguration,
+		GeneratorSetting generatorSetting,
+		Model model,
+		EnumModel enumModel
 	) {
 		// TODO Auto-generated method stub
 		return null;

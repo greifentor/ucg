@@ -3,6 +3,7 @@ package de.ollie.ucg.core.service.impl;
 import static de.ollie.baselib.util.Check.ensure;
 
 import de.ollie.ucg.core.model.ClassModel;
+import de.ollie.ucg.core.model.EnumModel;
 import de.ollie.ucg.core.model.GenerationResult;
 import de.ollie.ucg.core.model.GeneratorConfiguration;
 import de.ollie.ucg.core.model.GeneratorSetting;
@@ -36,8 +37,13 @@ public class CodeGeneratorServiceImpl implements CodeGeneratorService {
 						!isLayerToIgnore(classModel, cs)
 					) {
 						GenerationResult generationResult = templateProcessorPort.process(configuration, cs, model, classModel);
-						observer.classCodeGenerated(generationResult, cs, configuration);
+						observer.codeGenerated(generationResult, cs, configuration);
 					}
+				}
+			} else if (cs.getGeneratorType() == GeneratorType.ENUM) {
+				for (EnumModel enumModel : model.getEnums()) {
+					GenerationResult generationResult = templateProcessorPort.process(configuration, cs, model, enumModel);
+					observer.codeGenerated(generationResult, cs, configuration);
 				}
 			}
 		}

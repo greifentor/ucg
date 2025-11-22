@@ -14,3 +14,8 @@ classes:
       - name: title
         type:
           name: String
+enums:
+  - name: BookType
+    identifiers:
+    - HARDCOVER
+    - SOFTCOVER

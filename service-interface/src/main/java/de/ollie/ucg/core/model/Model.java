@@ -13,6 +13,7 @@ import lombok.experimental.Accessors;
 public class Model {
 
 	private List<ClassModel> classes;
+	private List<EnumModel> enums;
 	private Map<String, Property> properties;
 
 	public Model updateReferences() {

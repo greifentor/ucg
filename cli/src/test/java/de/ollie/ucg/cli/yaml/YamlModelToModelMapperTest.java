@@ -5,11 +5,13 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import de.ollie.ucg.cli.yaml.model.YamlAttribute;
 import de.ollie.ucg.cli.yaml.model.YamlClassDefinition;
+import de.ollie.ucg.cli.yaml.model.YamlEnumDefinition;
 import de.ollie.ucg.cli.yaml.model.YamlModel;
 import de.ollie.ucg.cli.yaml.model.YamlProperty;
 import de.ollie.ucg.cli.yaml.model.YamlType;
 import de.ollie.ucg.core.model.AttributeModel;
 import de.ollie.ucg.core.model.ClassModel;
+import de.ollie.ucg.core.model.EnumModel;
 import de.ollie.ucg.core.model.Model;
 import de.ollie.ucg.core.model.Property;
 import de.ollie.ucg.core.model.TypeModel;
@@ -28,6 +30,9 @@ class YamlModelToModelMapperTest {
 	private static final String ATTRIBUTE_NAME_1 = "attribute-name-1";
 	private static final String ATTRIBUTE_TYPE_1 = "attribute-type-1";
 	private static final String CLASS_NAME = "class-name";
+	private static final String ENUM_NAME = "enum-name";
+	private static final String ENUM_01 = "enum-01";
+	private static final String ENUM_02 = "enum-02";
 	private static final String IMPORT = "import";
 
 	@InjectMocks
@@ -75,7 +80,8 @@ class YamlModelToModelMapperTest {
 							)
 							.setProperties(List.of())
 					)
-				);
+				)
+				.setEnums(List.of(new EnumModel().setIdentifiers(List.of(ENUM_01, ENUM_02)).setName(ENUM_NAME)));
 			YamlModel passed = new YamlModel(
 				List.of(
 					new YamlClassDefinition(
@@ -92,7 +98,8 @@ class YamlModelToModelMapperTest {
 						),
 						List.of()
 					)
-				)
+				),
+				List.of(new YamlEnumDefinition(ENUM_NAME, List.of(ENUM_01, ENUM_02)))
 			);
 			// Run
 			Model returned = unitUnderTest.map(passed);

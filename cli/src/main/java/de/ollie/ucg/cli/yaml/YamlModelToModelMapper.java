@@ -4,11 +4,13 @@ import static de.ollie.baselib.util.Check.ensure;
 
 import de.ollie.ucg.cli.yaml.model.YamlAttribute;
 import de.ollie.ucg.cli.yaml.model.YamlClassDefinition;
+import de.ollie.ucg.cli.yaml.model.YamlEnumDefinition;
 import de.ollie.ucg.cli.yaml.model.YamlModel;
 import de.ollie.ucg.cli.yaml.model.YamlProperty;
 import de.ollie.ucg.cli.yaml.model.YamlType;
 import de.ollie.ucg.core.model.AttributeModel;
 import de.ollie.ucg.core.model.ClassModel;
+import de.ollie.ucg.core.model.EnumModel;
 import de.ollie.ucg.core.model.Model;
 import de.ollie.ucg.core.model.Property;
 import de.ollie.ucg.core.model.TypeModel;
@@ -20,7 +22,7 @@ class YamlModelToModelMapper {
 
 	Model map(YamlModel yamlModel) {
 		ensure(yamlModel != null, "YAML model cannot be null!");
-		return new Model().setClasses(getClasses(yamlModel)).updateReferences();
+		return new Model().setClasses(getClasses(yamlModel)).setEnums(getEnums(yamlModel)).updateReferences();
 	}
 
 	private List<ClassModel> getClasses(YamlModel yamlModel) {
@@ -59,5 +61,13 @@ class YamlModelToModelMapper {
 
 	private Property getProperty(YamlProperty yamlProperty) {
 		return new Property(yamlProperty.getName(), yamlProperty.getValue());
+	}
+
+	private List<EnumModel> getEnums(YamlModel yamlModel) {
+		return yamlModel.getEnums() != null ? yamlModel.getEnums().stream().map(this::getEnumModel).toList() : List.of();
+	}
+
+	private EnumModel getEnumModel(YamlEnumDefinition enumDefinition) {
+		return new EnumModel().setName(enumDefinition.getName()).setIdentifiers(enumDefinition.getIdentifiers());
 	}
 }

@@ -1,6 +1,7 @@
 package de.ollie.ucg.template.processor.velocity.adapter;
 
 import de.ollie.ucg.core.model.ClassModel;
+import de.ollie.ucg.core.model.EnumModel;
 import de.ollie.ucg.core.model.GenerationResult;
 import de.ollie.ucg.core.model.GeneratorConfiguration;
 import de.ollie.ucg.core.model.GeneratorSetting;
@@ -11,6 +12,7 @@ import de.ollie.ucg.core.service.SettingMappingService;
 import de.ollie.ucg.core.service.port.TemplateProcessorPort;
 import de.ollie.ucg.template.processor.velocity.adapter.wrapper.AttributeModelWrapper;
 import de.ollie.ucg.template.processor.velocity.adapter.wrapper.ClassModelWrapper;
+import de.ollie.ucg.template.processor.velocity.adapter.wrapper.EnumModelWrapper;
 import de.ollie.ucg.template.processor.velocity.adapter.wrapper.ModelWrapper;
 import de.ollie.ucg.template.processor.velocity.adapter.wrapper.PropertyWrapper;
 import de.ollie.ucg.template.processor.velocity.adapter.wrapper.ReferenceWrapper;
@@ -60,6 +62,10 @@ public class VelocityTemplateProcessorAdapter implements TemplateProcessorPort {
 		context.put("Model", new ModelWrapper(model));
 		context.put("PackageName", settingMappingService.map(generatorSetting.getPackageName(), classModel.getName()));
 		context.put("Properties", generatorConfiguration.getPropertiesByNames());
+		return generateCode(generatorSetting, context).setUnitName(classModel.getName());
+	}
+
+	private GenerationResult generateCode(GeneratorSetting generatorSetting, VelocityContext context) {
 		String templatePathName = generatorSetting.getTemplatePath();
 		Velocity.init();
 		VelocityEngine velocityEngine = new VelocityEngine();
@@ -72,7 +78,7 @@ public class VelocityTemplateProcessorAdapter implements TemplateProcessorPort {
 		Template t = velocityEngine.getTemplate(generatorSetting.getTemplateFileName());
 		StringWriter writer = new StringWriter();
 		t.merge(context, writer);
-		return new GenerationResult().setCode(writer.toString()).setUnitName(classModel.getName());
+		return new GenerationResult().setCode(writer.toString());
 	}
 
 	private String toAttributeName(String s) {
@@ -109,5 +115,23 @@ public class VelocityTemplateProcessorAdapter implements TemplateProcessorPort {
 			)
 			.sorted()
 			.toList();
+	}
+
+	@Override
+	public GenerationResult process(
+		GeneratorConfiguration generatorConfiguration,
+		GeneratorSetting generatorSetting,
+		Model model,
+		EnumModel enumModel
+	) {
+		VelocityContext context = new VelocityContext();
+		context.put("Enum", new EnumModelWrapper(enumModel, model));
+		context.put("EnumName", enumModel.getName());
+		context.put("EnumIdentifiers", enumModel.getIdentifiers());
+		context.put("GeneratedCodeMarker", CodeGeneratorService.GENERATED_CODE_MARKER);
+		context.put("Model", new ModelWrapper(model));
+		context.put("PackageName", settingMappingService.map(generatorSetting.getPackageName(), enumModel.getName()));
+		context.put("Properties", generatorConfiguration.getPropertiesByNames());
+		return generateCode(generatorSetting, context).setUnitName(enumModel.getName());
 	}
 }

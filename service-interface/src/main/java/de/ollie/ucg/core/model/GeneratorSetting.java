@@ -17,6 +17,7 @@ public class GeneratorSetting {
 	@Generated
 	public enum GeneratorType {
 		CLASS,
+		ENUM,
 		MODEL,
 	}
 

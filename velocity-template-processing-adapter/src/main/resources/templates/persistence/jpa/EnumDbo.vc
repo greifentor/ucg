@@ -1,0 +1,22 @@
+package ${PackageName};
+
+import lombok.Data;
+import lombok.Generated;
+import lombok.experimental.Accessors;
+
+#foreach($Import in $Imports)
+import ${Import};
+#end
+
+/**
+ * ${GeneratedCodeMarker}
+ *
+ * Remove this comment to suspend class from generation process.
+ */
+@Generated
+public enum ${EnumName}Dbo {
+
+#foreach($Identifier in $EnumIdentifiers)
+	${Identifier},
+#end
+}

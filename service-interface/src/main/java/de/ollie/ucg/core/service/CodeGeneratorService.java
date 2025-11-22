@@ -10,7 +10,7 @@ public interface CodeGeneratorService {
 	public static final String GENERATED_CODE_MARKER = "GENERATED CODE - DO NOT TOUCH";
 
 	public interface CodeGeneratorServiceObserver {
-		void classCodeGenerated(
+		void codeGenerated(
 			GenerationResult generationResult,
 			GeneratorSetting generatorSetting,
 			GeneratorConfiguration configuration

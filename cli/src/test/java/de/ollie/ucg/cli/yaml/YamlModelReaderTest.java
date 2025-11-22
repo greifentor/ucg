@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import de.ollie.ucg.core.model.AttributeModel;
 import de.ollie.ucg.core.model.ClassModel;
+import de.ollie.ucg.core.model.EnumModel;
 import de.ollie.ucg.core.model.Model;
 import de.ollie.ucg.core.model.Property;
 import de.ollie.ucg.core.model.TypeModel;
@@ -47,7 +48,8 @@ class YamlModelReaderTest {
 							)
 							.setProperties(List.of())
 					)
-				);
+				)
+				.setEnums(List.of(new EnumModel().setName("BookType").setIdentifiers(List.of("HARDCOVER", "SOFTCOVER"))));
 			// Run
 			Model returned = unitUnderTest.read("src/test/resources/test-model.yml");
 			// Check

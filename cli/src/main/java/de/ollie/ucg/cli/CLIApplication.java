@@ -59,7 +59,7 @@ public class CLIApplication implements ApplicationRunner, CodeGeneratorServiceOb
 	}
 
 	@Override
-	public void classCodeGenerated(
+	public void codeGenerated(
 		GenerationResult generationResult,
 		GeneratorSetting generatorSetting,
 		GeneratorConfiguration configuration
