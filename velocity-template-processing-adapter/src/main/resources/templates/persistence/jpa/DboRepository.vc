@@ -4,6 +4,8 @@ import ${Properties.get("jpa-entity-package")}.${ClassName}Dbo;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import lombok.Generated;
+
 #foreach($Import in $Imports)
 import ${Import};
 #end
@@ -13,6 +15,7 @@ import ${Import};
  *
  * Remove this comment to suspend class from generation process.
  */
+@Generated
 @Repository
 public interface ${ClassName}DboRepository extends JpaRepository<${ClassName}Dbo, ${Class.getAttributeTypeNameByPropertyName("id")}> {
 }

@@ -3,6 +3,8 @@ package de.ollie.ucg.template.processor.velocity.adapter.wrapper;
 import de.ollie.baselib.util.NameSeparator;
 import de.ollie.ucg.core.model.AttributeModel;
 import de.ollie.ucg.core.model.Model;
+import de.ollie.ucg.core.model.Property;
+import java.util.List;
 import lombok.EqualsAndHashCode;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -37,6 +39,14 @@ public class AttributeModelWrapper {
 
 	public boolean isTypeEnum() {
 		return attributeModel.isEnumType();
+	}
+
+	public String getPropertyValue(String name) {
+		return attributeModel.getPropertyValue(name);
+	}
+
+	public List<Property> getProperties() {
+		return attributeModel.getProperties();
 	}
 
 	public ClassModelWrapper getTypeClassType() {
