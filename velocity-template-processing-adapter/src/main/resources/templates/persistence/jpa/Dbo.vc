@@ -49,7 +49,7 @@ public class ${ClassName}Dbo {
 	@Id
 	#end
 	#if (${Attribute.hasPropertyWithValue("key-generation", "sequence")})
-	@SequenceGenerator(allocationSize = 1, name = "${ClassName}Sequence", sequenceName = "pbv_${Class.getNameSeparated("_").toLowerCase()}_id_seq")
+	@SequenceGenerator(allocationSize = 1, name = "${ClassName}Sequence", sequenceName = "${Class.getNameSeparated("_").toLowerCase()}_id_seq")
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "${ClassName}Sequence")
 	#end
 	#if (${Attribute.isReference()})
