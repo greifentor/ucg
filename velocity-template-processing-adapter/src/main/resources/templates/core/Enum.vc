@@ -1,8 +1,6 @@
 package ${PackageName};
 
-import lombok.Data;
 import lombok.Generated;
-import lombok.experimental.Accessors;
 
 #foreach($Import in $Imports)
 import ${Import};
