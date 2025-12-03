@@ -25,6 +25,10 @@ public class AttributeModelWrapper {
 		return attributeModel.getName();
 	}
 
+	public String getDefaultValue() {
+		return attributeModel.getDefaultValue();
+	}
+
 	public String getNameSeparated(String separator) {
 		return NameSeparator.INSTANCE.getNameSeparated(getName(), separator);
 	}

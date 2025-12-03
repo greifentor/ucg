@@ -16,6 +16,9 @@ public class YamlAttribute {
 	private String name;
 	private YamlType type;
 
+	@JsonProperty("default-value")
+	private String defaultValue;
+
 	@JsonProperty("enum")
 	private boolean enumType;
 

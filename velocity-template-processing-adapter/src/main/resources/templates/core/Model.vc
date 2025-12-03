@@ -19,7 +19,7 @@ import ${Import};
 public class ${ClassName} {
 
 #foreach($Attribute in $Attributes)
-	private ${Attribute.getTypeName()} ${Attribute.getName()};
+	private ${Attribute.getTypeName()} ${Attribute.getName()}#if(${Attribute.getDefaultValue()}) = ${Attribute.getDefaultValue()}#end;
 #end
 
 }

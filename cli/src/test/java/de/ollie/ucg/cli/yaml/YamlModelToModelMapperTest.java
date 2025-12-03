@@ -30,6 +30,7 @@ class YamlModelToModelMapperTest {
 	private static final String ATTRIBUTE_NAME_1 = "attribute-name-1";
 	private static final String ATTRIBUTE_TYPE_1 = "attribute-type-1";
 	private static final String CLASS_NAME = "class-name";
+	private static final String DEFAULT_VALUE = "default-value";
 	private static final String ENUM_NAME = "enum-name";
 	private static final String ENUM_01 = "enum-01";
 	private static final String ENUM_02 = "enum-02";
@@ -75,7 +76,10 @@ class YamlModelToModelMapperTest {
 										.setProperties(List.of(new Property().setName("nullable").setValue("false")))
 										.setReference(true)
 										.setType(new TypeModel().setName(ATTRIBUTE_TYPE_0).addProperty("import", IMPORT)),
-									new AttributeModel().setName(ATTRIBUTE_NAME_1).setType(new TypeModel().setName(ATTRIBUTE_TYPE_1))
+									new AttributeModel()
+										.setDefaultValue(DEFAULT_VALUE)
+										.setName(ATTRIBUTE_NAME_1)
+										.setType(new TypeModel().setName(ATTRIBUTE_TYPE_1))
 								)
 							)
 							.setProperties(List.of())
@@ -90,11 +94,19 @@ class YamlModelToModelMapperTest {
 							new YamlAttribute(
 								ATTRIBUTE_NAME_0,
 								new YamlType(ATTRIBUTE_TYPE_0, List.of(new YamlProperty("import", IMPORT))),
+								null,
 								false,
 								List.of(new YamlProperty("nullable", "false")),
 								true
 							),
-							new YamlAttribute(ATTRIBUTE_NAME_1, new YamlType(ATTRIBUTE_TYPE_1, List.of()), false, List.of(), false)
+							new YamlAttribute(
+								ATTRIBUTE_NAME_1,
+								new YamlType(ATTRIBUTE_TYPE_1, List.of()),
+								DEFAULT_VALUE,
+								false,
+								List.of(),
+								false
+							)
 						),
 						List.of()
 					)

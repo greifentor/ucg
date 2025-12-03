@@ -17,6 +17,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 class AttributeModelWrapperTest {
 
 	private static final String ATTRIBUTE_NAME = "attribute-name";
+	private static final String DEFAULT_VALUE = "default-value";
 
 	@Mock
 	private AttributeModel attributeModel;
@@ -26,6 +27,18 @@ class AttributeModelWrapperTest {
 
 	@InjectMocks
 	private AttributeModelWrapper unitUnderTest;
+
+	@Nested
+	class getDefaultValue {
+
+		@Test
+		void returnsAttributesDefautlValue() {
+			// Prepare
+			when(attributeModel.getDefaultValue()).thenReturn(DEFAULT_VALUE);
+			// Run & Check
+			assertEquals(DEFAULT_VALUE, unitUnderTest.getDefaultValue());
+		}
+	}
 
 	@Nested
 	class getName {
