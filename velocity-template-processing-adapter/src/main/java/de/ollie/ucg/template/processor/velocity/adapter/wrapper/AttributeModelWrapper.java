@@ -59,6 +59,10 @@ public class AttributeModelWrapper {
 			: null;
 	}
 
+	public boolean hasProperty(String name) {
+		return attributeModel.hasProperty(name);
+	}
+
 	public boolean hasPropertyWithValue(String name, String value) {
 		return attributeModel.hasPropertyWithValue(name, value);
 	}

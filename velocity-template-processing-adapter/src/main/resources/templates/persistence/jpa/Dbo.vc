@@ -45,6 +45,12 @@ import ${Import};
 public class ${ClassName}Dbo {
 
 #foreach($Attribute in $Attributes)
+
+	#if (${Attribute.hasProperty("alternative-db-field-name")})
+		#set($fieldName = ${Attribute.getPropertyValue("alternative-db-field-name").toUpperCase()})
+	#else
+		#set($fieldName = ${Attribute.getNameSeparated("_").toUpperCase()})
+	#end
 	#if (${Attribute.hasPropertyWithValue("id", "true")})
 	@Id
 	#end
@@ -53,14 +59,14 @@ public class ${ClassName}Dbo {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "${ClassName}Sequence")
 	#end
 	#if (${Attribute.isReference()})
-	@JoinColumn(name = "${Attribute.getNameSeparated("_").toUpperCase()}", referencedColumnName = "${Attribute.getTypeClassType().getAttributeNameByTypePropertyName("id").toUpperCase()}", nullable =#if (${Attribute.hasPropertyWithValue("nullable", "false")}) false#else true#end)
+	@JoinColumn(name = "$fieldName", referencedColumnName = "${Attribute.getTypeClassType().getAttributeNameByTypePropertyName("id").toUpperCase()}", nullable =#if (${Attribute.hasPropertyWithValue("nullable", "false")}) false#else true#end)
 	@ManyToOne(fetch = FetchType.EAGER)
 	private ${Attribute.getTypeName()}Dbo ${Attribute.getName()};
 	#else
 	#if (${Attribute.isTypeEnum()})
 	@Enumerated(EnumType.STRING)
 	#end
-	@Column(name = "${Attribute.getNameSeparated("_").toUpperCase()}", nullable =#if (${Attribute.hasPropertyWithValue("nullable", "false")}) false#else true#end)
+	@Column(name = "$fieldName", nullable =#if (${Attribute.hasPropertyWithValue("nullable", "false")}) false#else true#end)
 	private ${Attribute.getTypeName()}#if (${Attribute.hasTypePropertyWithValue("project-type", "true")})Dbo#end ${Attribute.getName()};
 	#end
 #end

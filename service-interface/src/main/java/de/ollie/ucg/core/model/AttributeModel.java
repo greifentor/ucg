@@ -22,7 +22,7 @@ public class AttributeModel implements PropertyOwner {
 
 	public boolean hasProperty(String name) {
 		ensure(name != null, "name cannot be null!");
-		return properties.stream().anyMatch(a -> name.equals(a.getName()));
+		return properties.stream().anyMatch(p -> name.equals(p.getName()));
 	}
 
 	public String getPropertyValue(String name) {
