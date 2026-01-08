@@ -225,6 +225,10 @@ public class ClassModelWrapper {
 		return classModel.getAttributes().stream().flatMap(a -> a.getProperties().stream()).toList();
 	}
 
+	public boolean hasPropertyWithName(String name) {
+		return classModel.getProperties().stream().anyMatch(p -> p.getName().equals(name));
+	}
+
 	public List<Property> getAllPropertiesByName(String name) {
 		return classModel.getProperties().stream().filter(p -> p.getName().equals(name)).toList();
 	}

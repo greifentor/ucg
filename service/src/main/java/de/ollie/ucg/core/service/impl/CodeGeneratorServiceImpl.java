@@ -45,6 +45,9 @@ public class CodeGeneratorServiceImpl implements CodeGeneratorService {
 					GenerationResult generationResult = templateProcessorPort.process(configuration, cs, model, enumModel);
 					observer.codeGenerated(generationResult, cs, configuration);
 				}
+			} else if (cs.getGeneratorType() == GeneratorType.MODEL) {
+				GenerationResult generationResult = templateProcessorPort.process(configuration, cs, model);
+				observer.codeGenerated(generationResult, cs, configuration);
 			}
 		}
 		return report;

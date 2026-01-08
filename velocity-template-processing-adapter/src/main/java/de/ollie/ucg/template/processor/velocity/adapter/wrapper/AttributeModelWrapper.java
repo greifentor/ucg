@@ -5,6 +5,7 @@ import de.ollie.ucg.core.model.AttributeModel;
 import de.ollie.ucg.core.model.Model;
 import de.ollie.ucg.core.model.Property;
 import java.util.List;
+import java.util.Set;
 import lombok.EqualsAndHashCode;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -43,6 +44,21 @@ public class AttributeModelWrapper {
 
 	public boolean isTypeEnum() {
 		return attributeModel.isEnumType();
+	}
+
+	private static final Set<String> SIMPLE_TYPE_NAMES = Set.of(
+		"boolean",
+		"byte",
+		"char",
+		"double",
+		"float",
+		"int",
+		"long",
+		"short"
+	);
+
+	public boolean isSimpleType() {
+		return SIMPLE_TYPE_NAMES.contains(getTypeName());
 	}
 
 	public String getPropertyValue(String name) {

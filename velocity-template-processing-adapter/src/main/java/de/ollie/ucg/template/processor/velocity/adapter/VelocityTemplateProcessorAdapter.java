@@ -59,10 +59,14 @@ public class VelocityTemplateProcessorAdapter implements TemplateProcessorPort {
 		context.put("GeneratedCodeMarker", CodeGeneratorService.GENERATED_CODE_MARKER);
 		context.put("Imports", getImports(classModel));
 		context.put("References", getReferences(classModel));
-		context.put("Model", new ModelWrapper(model));
+		context.put("Model", createModelWrapper(model));
 		context.put("PackageName", settingMappingService.map(generatorSetting.getPackageName(), classModel.getName()));
 		context.put("Properties", generatorConfiguration.getPropertiesByNames());
 		return generateCode(generatorSetting, context).setUnitName(classModel.getName());
+	}
+
+	private ModelWrapper createModelWrapper(Model model) {
+		return new ModelWrapper(model, model.getClasses().stream().map(c -> new ClassModelWrapper(c, model)).toList());
 	}
 
 	private GenerationResult generateCode(GeneratorSetting generatorSetting, VelocityContext context) {
@@ -129,9 +133,23 @@ public class VelocityTemplateProcessorAdapter implements TemplateProcessorPort {
 		context.put("EnumName", enumModel.getName());
 		context.put("EnumIdentifiers", enumModel.getIdentifiers());
 		context.put("GeneratedCodeMarker", CodeGeneratorService.GENERATED_CODE_MARKER);
-		context.put("Model", new ModelWrapper(model));
+		context.put("Model", createModelWrapper(model));
 		context.put("PackageName", settingMappingService.map(generatorSetting.getPackageName(), enumModel.getName()));
 		context.put("Properties", generatorConfiguration.getPropertiesByNames());
 		return generateCode(generatorSetting, context).setUnitName(enumModel.getName());
+	}
+
+	@Override
+	public GenerationResult process(
+		GeneratorConfiguration generatorConfiguration,
+		GeneratorSetting generatorSetting,
+		Model model
+	) {
+		VelocityContext context = new VelocityContext();
+		context.put("GeneratedCodeMarker", CodeGeneratorService.GENERATED_CODE_MARKER);
+		context.put("Model", createModelWrapper(model));
+		context.put("PackageName", settingMappingService.map(generatorSetting.getPackageName(), "NONAME"));
+		context.put("Properties", generatorConfiguration.getPropertiesByNames());
+		return generateCode(generatorSetting, context).setUnitName("NONAME");
 	}
 }

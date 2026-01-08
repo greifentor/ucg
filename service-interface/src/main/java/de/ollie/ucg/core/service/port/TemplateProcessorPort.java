@@ -20,4 +20,9 @@ public interface TemplateProcessorPort {
 		Model model,
 		EnumModel enumModel
 	);
+	GenerationResult process(
+		GeneratorConfiguration generatorConfiguration,
+		GeneratorSetting generatorSetting,
+		Model model
+	);
 }

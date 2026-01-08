@@ -33,4 +33,14 @@ class TestTemplateProcessorPort implements TemplateProcessorPort {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	@Override
+	public GenerationResult process(
+		GeneratorConfiguration generatorConfiguration,
+		GeneratorSetting generatorSetting,
+		Model model
+	) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
