@@ -6,7 +6,6 @@ import de.ollie.ucg.core.model.GenerationResult;
 import de.ollie.ucg.core.model.GeneratorConfiguration;
 import de.ollie.ucg.core.model.GeneratorSetting;
 import de.ollie.ucg.core.model.Model;
-import de.ollie.ucg.core.model.Property;
 import de.ollie.ucg.core.service.CodeGeneratorService;
 import de.ollie.ucg.core.service.SettingMappingService;
 import de.ollie.ucg.core.service.port.TemplateProcessorPort;
@@ -52,12 +51,13 @@ public class VelocityTemplateProcessorAdapter implements TemplateProcessorPort {
 		ClassModel classModel
 	) {
 		VelocityContext context = new VelocityContext();
+		ClassModelWrapper classModelWrapper = new ClassModelWrapper(classModel, model);
 		context.put("Attributes", getAttributeWrappers(classModel, model));
-		context.put("Class", new ClassModelWrapper(classModel, model));
+		context.put("Class", classModelWrapper);
 		context.put("ClassName", classModel.getName());
 		context.put("ClassNameAsAttribute", toAttributeName(classModel.getName()));
 		context.put("GeneratedCodeMarker", CodeGeneratorService.GENERATED_CODE_MARKER);
-		context.put("Imports", getImports(classModel));
+		context.put("Imports", getImports(classModelWrapper));
 		context.put("References", getReferences(classModel));
 		context.put("Model", createModelWrapper(model));
 		context.put("PackageName", settingMappingService.map(generatorSetting.getPackageName(), classModel.getName()));
@@ -93,16 +93,8 @@ public class VelocityTemplateProcessorAdapter implements TemplateProcessorPort {
 		return classModel.getAttributes().stream().map(a -> new AttributeModelWrapper(a, model)).toList();
 	}
 
-	private List<String> getImports(ClassModel classModel) {
-		return classModel
-			.getAttributes()
-			.stream()
-			.flatMap(a -> a.getType().getProperties().stream())
-			.filter(p -> "import".equalsIgnoreCase(p.getName()))
-			.map(Property::getValue)
-			.map(Object::toString)
-			.sorted()
-			.toList();
+	private List<String> getImports(ClassModelWrapper classModelWrapper) {
+		return classModelWrapper.getUniqueTypePropertyValuesByName("import");
 	}
 
 	private List<ReferenceWrapper> getReferences(ClassModel classModel) {

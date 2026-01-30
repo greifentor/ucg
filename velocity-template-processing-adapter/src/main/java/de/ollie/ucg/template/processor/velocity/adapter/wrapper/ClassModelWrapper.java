@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
@@ -195,6 +196,21 @@ public class ClassModelWrapper {
 
 	public String getNameSeparated(String separator) {
 		return NameSeparator.INSTANCE.getNameSeparated(classModel.getName(), separator);
+	}
+
+	public List<String> getUniqueTypePropertyValuesByName(String typePropertyName) {
+		ensure(typePropertyName != null, "type property name cannot be null!");
+		return classModel
+			.getAttributes()
+			.stream()
+			.flatMap(a -> a.getType().getProperties().stream())
+			.filter(p -> typePropertyName.equalsIgnoreCase(p.getName()))
+			.map(Property::getValue)
+			.map(Object::toString)
+			.collect(Collectors.toSet())
+			.stream()
+			.sorted()
+			.toList();
 	}
 
 	public boolean hasAReferenceAttribute() {

@@ -290,6 +290,15 @@ class ClassModelWrapperTest {
 	}
 
 	@Nested
+	class getUniqueTypePropertyValuesByName_String {
+
+		@Test
+		void throwsAnException_passingANullValue_asTypePropertyName() {
+			assertThrows(IllegalArgumentException.class, () -> unitUnderTest.getUniqueTypePropertyValuesByName(null));
+		}
+	}
+
+	@Nested
 	class hasAnAttributeWithTypeName_String {
 
 		@Test
