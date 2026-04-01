@@ -42,6 +42,13 @@ public class AttributeModelWrapper {
 		return attributeModel.getType().getName();
 	}
 
+	public String getTypeNameAsAttribute() {
+		String typeName = attributeModel.getType().getName();
+		return typeName.length() < 2
+			? typeName.toLowerCase()
+			: typeName.substring(0, 1).toLowerCase() + typeName.substring(1);
+	}
+
 	public boolean isTypeEnum() {
 		return attributeModel.isEnumType();
 	}
