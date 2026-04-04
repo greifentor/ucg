@@ -1,0 +1,18 @@
+default-target-path: tmp
+properties:
+  - name: general-property-name
+    value: general-property-value
+generators:
+  - type: CLASS
+    package: de.library.core.service.model
+    generate-when: an upn expression
+    layer: layer-name
+    path: velocity-template-processing-adapter/src/main/resources/templates
+    template: Model.vc
+    target-file-name: ${UnitName}Dbo
+    properties:
+      - name: target-path
+        value: tmp0
+# Settings to read from class path
+#    resource-class-loader: org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader
+#    template: templates/Model.vc

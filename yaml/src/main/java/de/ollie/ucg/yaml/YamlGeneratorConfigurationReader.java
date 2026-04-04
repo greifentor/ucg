@@ -1,11 +1,11 @@
-package de.ollie.ucg.cli.yaml;
+package de.ollie.ucg.yaml;
 
 import com.fasterxml.jackson.core.exc.StreamReadException;
 import com.fasterxml.jackson.databind.DatabindException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
-import de.ollie.ucg.cli.yaml.model.configuration.YamlGeneratorConfigurationWrapper;
 import de.ollie.ucg.core.model.GeneratorConfiguration;
+import de.ollie.ucg.yaml.model.configuration.YamlGeneratorConfigurationWrapper;
 import jakarta.inject.Named;
 import java.io.File;
 import java.io.IOException;

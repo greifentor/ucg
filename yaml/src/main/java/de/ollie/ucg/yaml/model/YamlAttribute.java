@@ -1,4 +1,4 @@
-package de.ollie.ucg.cli.yaml.model;
+package de.ollie.ucg.yaml.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.List;

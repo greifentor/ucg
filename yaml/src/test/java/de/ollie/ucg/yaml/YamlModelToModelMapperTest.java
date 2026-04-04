@@ -1,20 +1,21 @@
-package de.ollie.ucg.cli.yaml;
+package de.ollie.ucg.yaml;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import de.ollie.ucg.cli.yaml.model.YamlAttribute;
-import de.ollie.ucg.cli.yaml.model.YamlClassDefinition;
-import de.ollie.ucg.cli.yaml.model.YamlEnumDefinition;
-import de.ollie.ucg.cli.yaml.model.YamlModel;
-import de.ollie.ucg.cli.yaml.model.YamlProperty;
-import de.ollie.ucg.cli.yaml.model.YamlType;
 import de.ollie.ucg.core.model.AttributeModel;
 import de.ollie.ucg.core.model.ClassModel;
 import de.ollie.ucg.core.model.EnumModel;
 import de.ollie.ucg.core.model.Model;
 import de.ollie.ucg.core.model.Property;
 import de.ollie.ucg.core.model.TypeModel;
+import de.ollie.ucg.yaml.YamlModelToModelMapper;
+import de.ollie.ucg.yaml.model.YamlAttribute;
+import de.ollie.ucg.yaml.model.YamlClassDefinition;
+import de.ollie.ucg.yaml.model.YamlEnumDefinition;
+import de.ollie.ucg.yaml.model.YamlModel;
+import de.ollie.ucg.yaml.model.YamlProperty;
+import de.ollie.ucg.yaml.model.YamlType;
 import java.util.List;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -35,6 +36,9 @@ class YamlModelToModelMapperTest {
 	private static final String ENUM_01 = "enum-01";
 	private static final String ENUM_02 = "enum-02";
 	private static final String IMPORT = "import";
+	private static final String TITLE = "title";
+	private static final String TITLE_PROPERTY_NAME = "title-property-name";
+	private static final String TITLE_PROPERTY_VALUE = "title-property-value";
 
 	@InjectMocks
 	private YamlModelToModelMapper unitUnderTest;
@@ -85,8 +89,11 @@ class YamlModelToModelMapperTest {
 							.setProperties(List.of())
 					)
 				)
-				.setEnums(List.of(new EnumModel().setIdentifiers(List.of(ENUM_01, ENUM_02)).setName(ENUM_NAME)));
+				.setEnums(List.of(new EnumModel().setIdentifiers(List.of(ENUM_01, ENUM_02)).setName(ENUM_NAME)))
+				.setProperties(List.of(new Property(TITLE_PROPERTY_NAME, TITLE_PROPERTY_VALUE)))
+				.setTitle(TITLE);
 			YamlModel passed = new YamlModel(
+				TITLE,
 				List.of(
 					new YamlClassDefinition(
 						CLASS_NAME,
@@ -111,7 +118,8 @@ class YamlModelToModelMapperTest {
 						List.of()
 					)
 				),
-				List.of(new YamlEnumDefinition(ENUM_NAME, List.of(ENUM_01, ENUM_02)))
+				List.of(new YamlEnumDefinition(ENUM_NAME, List.of(ENUM_01, ENUM_02))),
+				List.of(new YamlProperty(TITLE_PROPERTY_NAME, TITLE_PROPERTY_VALUE))
 			);
 			// Run
 			Model returned = unitUnderTest.map(passed);

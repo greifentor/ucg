@@ -1,19 +1,19 @@
-package de.ollie.ucg.cli.yaml;
+package de.ollie.ucg.yaml;
 
 import static de.ollie.baselib.util.Check.ensure;
 
-import de.ollie.ucg.cli.yaml.model.YamlAttribute;
-import de.ollie.ucg.cli.yaml.model.YamlClassDefinition;
-import de.ollie.ucg.cli.yaml.model.YamlEnumDefinition;
-import de.ollie.ucg.cli.yaml.model.YamlModel;
-import de.ollie.ucg.cli.yaml.model.YamlProperty;
-import de.ollie.ucg.cli.yaml.model.YamlType;
 import de.ollie.ucg.core.model.AttributeModel;
 import de.ollie.ucg.core.model.ClassModel;
 import de.ollie.ucg.core.model.EnumModel;
 import de.ollie.ucg.core.model.Model;
 import de.ollie.ucg.core.model.Property;
 import de.ollie.ucg.core.model.TypeModel;
+import de.ollie.ucg.yaml.model.YamlAttribute;
+import de.ollie.ucg.yaml.model.YamlClassDefinition;
+import de.ollie.ucg.yaml.model.YamlEnumDefinition;
+import de.ollie.ucg.yaml.model.YamlModel;
+import de.ollie.ucg.yaml.model.YamlProperty;
+import de.ollie.ucg.yaml.model.YamlType;
 import jakarta.inject.Named;
 import java.util.List;
 
@@ -22,7 +22,12 @@ class YamlModelToModelMapper {
 
 	Model map(YamlModel yamlModel) {
 		ensure(yamlModel != null, "YAML model cannot be null!");
-		return new Model().setClasses(getClasses(yamlModel)).setEnums(getEnums(yamlModel)).updateReferences();
+		return new Model()
+			.setClasses(getClasses(yamlModel))
+			.setEnums(getEnums(yamlModel))
+			.setProperties(getProperties(yamlModel.getProperties()))
+			.setTitle(yamlModel.getTitle())
+			.updateReferences();
 	}
 
 	private List<ClassModel> getClasses(YamlModel yamlModel) {

@@ -1,4 +1,4 @@
-package de.ollie.ucg.cli.yaml;
+package de.ollie.ucg.yaml;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 

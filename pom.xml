@@ -81,6 +81,7 @@
 		<module>service</module>
 		<module>service-interface</module>
 		<module>velocity-template-processing-adapter</module>
+		<module>yaml</module>
 	</modules>
 	<dependencies>
 		<dependency>

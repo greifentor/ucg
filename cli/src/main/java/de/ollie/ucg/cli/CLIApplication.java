@@ -1,7 +1,5 @@
 package de.ollie.ucg.cli;
 
-import de.ollie.ucg.cli.yaml.YamlGeneratorConfigurationReader;
-import de.ollie.ucg.cli.yaml.YamlModelReader;
 import de.ollie.ucg.core.model.GenerationResult;
 import de.ollie.ucg.core.model.GeneratorConfiguration;
 import de.ollie.ucg.core.model.GeneratorSetting;
@@ -9,6 +7,8 @@ import de.ollie.ucg.core.model.Model;
 import de.ollie.ucg.core.service.CodeGeneratorService;
 import de.ollie.ucg.core.service.CodeGeneratorService.CodeGeneratorServiceObserver;
 import de.ollie.ucg.core.service.SettingMappingService;
+import de.ollie.ucg.yaml.YamlGeneratorConfigurationReader;
+import de.ollie.ucg.yaml.YamlModelReader;
 import jakarta.inject.Inject;
 import java.io.File;
 import java.io.IOException;

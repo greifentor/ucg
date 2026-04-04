@@ -1,5 +1,6 @@
 package de.ollie.ucg.core.model;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,7 +15,8 @@ public class Model {
 
 	private List<ClassModel> classes;
 	private List<EnumModel> enums;
-	private Map<String, Property> properties;
+	private List<Property> properties = new ArrayList<>();
+	private String title;
 
 	public Model updateReferences() {
 		Map<String, ClassModel> m = new HashMap<>();

@@ -1,16 +1,18 @@
-package de.ollie.ucg.cli.yaml;
+package de.ollie.ucg.yaml;
 
 import com.fasterxml.jackson.core.exc.StreamReadException;
 import com.fasterxml.jackson.databind.DatabindException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
-import de.ollie.ucg.cli.yaml.model.YamlModel;
 import de.ollie.ucg.core.model.Model;
+import de.ollie.ucg.yaml.model.YamlModel;
 import jakarta.inject.Named;
 import java.io.File;
 import java.io.IOException;
+import lombok.Generated;
 import lombok.RequiredArgsConstructor;
 
+@Generated
 @Named
 @RequiredArgsConstructor
 public class YamlModelReader {

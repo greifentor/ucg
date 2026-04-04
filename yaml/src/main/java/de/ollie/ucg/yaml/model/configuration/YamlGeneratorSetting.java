@@ -1,9 +1,9 @@
-package de.ollie.ucg.cli.yaml.model.configuration;
+package de.ollie.ucg.yaml.model.configuration;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import de.ollie.ucg.cli.yaml.model.YamlProperty;
+import de.ollie.ucg.yaml.model.YamlProperty;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.AllArgsConstructor;

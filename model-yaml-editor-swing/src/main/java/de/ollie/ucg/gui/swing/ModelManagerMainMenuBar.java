@@ -5,7 +5,10 @@ import java.awt.event.ActionListener;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JSeparator;
+import lombok.Generated;
 
+@Generated
 class ModelManagerMainMenuBar extends JMenuBar {
 
 	interface MainMenuObserver {
@@ -13,10 +16,11 @@ class ModelManagerMainMenuBar extends JMenuBar {
 	}
 
 	enum MainMenuItem {
+		FILE_OPEN,
 		FILE_QUIT,
 	}
 
-	private final MainMenuObserver observer;
+	private final transient MainMenuObserver observer;
 
 	ModelManagerMainMenuBar(MainMenuObserver observer) {
 		this.observer = observer;
@@ -24,7 +28,13 @@ class ModelManagerMainMenuBar extends JMenuBar {
 	}
 
 	private void createFileMenu() {
+		addFileMenu();
+	}
+
+	private void addFileMenu() {
 		JMenu menu = new JMenu("File");
+		menu.add(createMenuItem("Open ...", e -> fireEventToObserver(e, MainMenuItem.FILE_OPEN)));
+		menu.add(new JSeparator());
 		menu.add(createMenuItem("Quit", e -> fireEventToObserver(e, MainMenuItem.FILE_QUIT)));
 		add(menu);
 	}

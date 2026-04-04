@@ -1,4 +1,4 @@
-package de.ollie.ucg.cli.yaml.model;
+package de.ollie.ucg.yaml.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.List;
@@ -11,10 +11,10 @@ import lombok.NoArgsConstructor;
 @Data
 @Generated
 @NoArgsConstructor
-public class YamlType {
+public class YamlEnumDefinition {
 
 	private String name;
 
-	@JsonProperty("properties")
-	private List<YamlProperty> properties;
+	@JsonProperty("identifiers")
+	private List<String> identifiers;
 }

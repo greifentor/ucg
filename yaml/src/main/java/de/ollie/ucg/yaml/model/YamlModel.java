@@ -1,4 +1,4 @@
-package de.ollie.ucg.cli.yaml.model;
+package de.ollie.ucg.yaml.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -15,9 +15,14 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class YamlModel {
 
+	private String title;
+
 	@JsonProperty("classes")
 	private List<YamlClassDefinition> classes;
 
 	@JsonProperty("enums")
 	private List<YamlEnumDefinition> enums;
+
+	@JsonProperty("properties")
+	private List<YamlProperty> properties;
 }

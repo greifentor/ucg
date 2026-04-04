@@ -1,15 +1,16 @@
-package de.ollie.ucg.cli.yaml;
+package de.ollie.ucg.yaml;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import de.ollie.ucg.cli.yaml.model.YamlProperty;
-import de.ollie.ucg.cli.yaml.model.configuration.YamlGeneratorConfigurationWrapper;
-import de.ollie.ucg.cli.yaml.model.configuration.YamlGeneratorSetting;
 import de.ollie.ucg.core.model.GeneratorConfiguration;
 import de.ollie.ucg.core.model.GeneratorSetting;
 import de.ollie.ucg.core.model.GeneratorSetting.GeneratorType;
 import de.ollie.ucg.core.model.Property;
+import de.ollie.ucg.yaml.YamlGeneratorConfigurationToGeneratorConfigurationMapper;
+import de.ollie.ucg.yaml.model.YamlProperty;
+import de.ollie.ucg.yaml.model.configuration.YamlGeneratorConfigurationWrapper;
+import de.ollie.ucg.yaml.model.configuration.YamlGeneratorSetting;
 import java.util.List;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;

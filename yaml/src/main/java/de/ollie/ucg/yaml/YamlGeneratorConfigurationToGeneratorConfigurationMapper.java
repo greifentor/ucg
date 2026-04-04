@@ -1,14 +1,14 @@
-package de.ollie.ucg.cli.yaml;
+package de.ollie.ucg.yaml;
 
 import static de.ollie.baselib.util.Check.ensure;
 
-import de.ollie.ucg.cli.yaml.model.YamlProperty;
-import de.ollie.ucg.cli.yaml.model.configuration.YamlGeneratorConfigurationWrapper;
-import de.ollie.ucg.cli.yaml.model.configuration.YamlGeneratorSetting;
 import de.ollie.ucg.core.model.GeneratorConfiguration;
 import de.ollie.ucg.core.model.GeneratorSetting;
 import de.ollie.ucg.core.model.GeneratorSetting.GeneratorType;
 import de.ollie.ucg.core.model.Property;
+import de.ollie.ucg.yaml.model.YamlProperty;
+import de.ollie.ucg.yaml.model.configuration.YamlGeneratorConfigurationWrapper;
+import de.ollie.ucg.yaml.model.configuration.YamlGeneratorSetting;
 import jakarta.inject.Named;
 import java.util.List;
 

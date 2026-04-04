@@ -1,0 +1,21 @@
+classes:
+  - name: Book
+    attributes:
+      - name: id
+        enum: true
+        properties:
+          - name: nullable
+            value: false
+        type:
+          name: UUID
+          properties:
+            - name: import
+              value: java.util.UUID
+      - name: title
+        type:
+          name: String
+enums:
+  - name: BookType
+    identifiers:
+    - HARDCOVER
+    - SOFTCOVER

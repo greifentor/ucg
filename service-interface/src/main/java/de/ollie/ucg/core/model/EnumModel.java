@@ -11,7 +11,7 @@ import lombok.experimental.Accessors;
 @Data
 @Generated
 @ToString
-public class EnumModel {
+public class EnumModel implements NameOwner {
 
 	private String name;
 	private List<String> identifiers = new ArrayList<>();
