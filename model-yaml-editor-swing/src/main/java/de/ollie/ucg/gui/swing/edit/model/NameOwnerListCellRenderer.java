@@ -6,7 +6,9 @@ import java.awt.Component;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.ListCellRenderer;
+import lombok.Generated;
 
+@Generated
 class NameOwnerListCellRenderer<T extends NameOwner> implements ListCellRenderer<T> {
 
 	@Override
