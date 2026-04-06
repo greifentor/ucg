@@ -8,6 +8,7 @@ import de.ollie.ucg.core.model.EnumModel;
 import java.awt.BorderLayout;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import lombok.Generated;
 
@@ -25,6 +26,7 @@ class EnumDetailsPanel extends JPanel {
 	EnumDetailsPanel init() {
 		setLayout(new BorderLayout(HGAP, VGAP));
 		add(createHeaderPanel(), BorderLayout.NORTH);
+		add(createContentPanel(), BorderLayout.CENTER);
 		return this;
 	}
 
@@ -34,6 +36,12 @@ class EnumDetailsPanel extends JPanel {
 		textFieldName.setText(enumModel.getName());
 		p.add(new ColumnPanel<String>("Name:"), BorderLayout.WEST);
 		p.add(new ColumnPanel<JComponent>(textFieldName), BorderLayout.CENTER);
+		return p;
+	}
+
+	private JPanel createContentPanel() {
+		JPanel p = new JPanel(new BorderLayout(HGAP, VGAP));
+		p.add(new JScrollPane(new EnumIdentifierTable(enumModel.getIdentifiers())), BorderLayout.CENTER);
 		return p;
 	}
 
