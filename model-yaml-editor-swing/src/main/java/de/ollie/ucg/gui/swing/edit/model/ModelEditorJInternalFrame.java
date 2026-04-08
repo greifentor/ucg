@@ -67,10 +67,10 @@ public class ModelEditorJInternalFrame extends JInternalFrame implements FocusLi
 		tp.add("Enums", ep);
 		tp.addChangeListener(e -> {
 			Component c = ((JTabbedPane) e.getSource()).getSelectedComponent();
-			if (c instanceof ClassesPanel) {
-				((ClassesPanel) c).transferContentToModel();
-			} else if (c instanceof EnumsPanel) {
-				((EnumsPanel) c).transferContentToModel();
+			if (c instanceof ClassesPanel classPanel) {
+				classPanel.transferContentToModel();
+			} else if (c instanceof EnumsPanel enumPanel) {
+				enumPanel.transferContentToModel();
 			}
 		});
 		return tp;

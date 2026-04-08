@@ -40,8 +40,8 @@ class EnumDetailsPanel extends JPanel {
 	}
 
 	private JPanel createContentPanel() {
-		JPanel p = new JPanel(new BorderLayout(HGAP, VGAP));
-		p.add(new JScrollPane(new EnumIdentifierTable(enumModel.getIdentifiers())), BorderLayout.CENTER);
+		HeaderLabelPanel p = new HeaderLabelPanel("Identifiers:");
+		p.addContent(new JScrollPane(new EnumIdentifierTable(enumModel.getIdentifiers())), BorderLayout.CENTER);
 		return p;
 	}
 

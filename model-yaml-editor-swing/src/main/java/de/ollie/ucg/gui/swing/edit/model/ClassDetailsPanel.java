@@ -25,6 +25,7 @@ class ClassDetailsPanel extends JPanel {
 	ClassDetailsPanel init() {
 		setLayout(new BorderLayout(HGAP, VGAP));
 		add(createHeaderPanel(), BorderLayout.NORTH);
+		add(new PropertiesPanel(classModel.getProperties()).init(), BorderLayout.CENTER);
 		return this;
 	}
 

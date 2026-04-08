@@ -22,7 +22,7 @@ class ClassesPanel extends JSplitPane implements SelectedItemObserver<ClassModel
 	}
 
 	ClassesPanel init() {
-		setLeftComponent(new NamedOwnerList<ClassModel>(model.getClasses(), this));
+		setLeftComponent(new NamedOwnerList<ClassModel>(model.getClasses(), this, null));
 		setRightComponent(new JLabel(""));
 		return this;
 	}

@@ -21,6 +21,11 @@ class EnumIdentifierTable extends JTable implements MouseListener, PopupMenuObse
 		}
 
 		@Override
+		public String getColumnName(int col) {
+			return "Identifier Name";
+		}
+
+		@Override
 		public int getRowCount() {
 			return identifiers.size();
 		}
