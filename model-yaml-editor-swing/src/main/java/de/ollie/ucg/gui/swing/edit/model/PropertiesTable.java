@@ -4,6 +4,7 @@ import de.ollie.ucg.core.model.Property;
 import de.ollie.ucg.gui.swing.edit.model.PropertiesTablePopupMenu.PopupMenuObserver;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import javax.swing.JTable;
@@ -13,14 +14,14 @@ import lombok.Generated;
 @Generated
 class PropertiesTable extends JTable implements MouseListener, PopupMenuObserver {
 
-	static final String NEW_PROPERTY_NAME = "NEW_NAME";
+	static final String NEW_PROPERTY_NAME = "NEW_PROPERTY";
 
 	private static class PropertiesIdentifierTableModel extends AbstractTableModel {
 
 		private final List<Property> properties;
 
 		PropertiesIdentifierTableModel(List<Property> properties) {
-			this.properties = properties;
+			this.properties = new ArrayList<>(properties);
 		}
 
 		@Override
@@ -40,7 +41,7 @@ class PropertiesTable extends JTable implements MouseListener, PopupMenuObserver
 
 		@Override
 		public int getColumnCount() {
-			return 1;
+			return 2;
 		}
 
 		@Override
@@ -74,17 +75,29 @@ class PropertiesTable extends JTable implements MouseListener, PopupMenuObserver
 		public Class<?> getColumnClass(int columnIndex) {
 			return String.class;
 		}
-	}
 
-	private final List<Property> properties;
+		public void addElement(Property property) {
+			properties.add(property);
+			fireTableDataChanged();
+		}
+
+		public void removeByIndex(int index) {
+			properties.remove(index);
+			fireTableDataChanged();
+		}
+
+		public List<Property> getElements() {
+			return properties;
+		}
+	}
 
 	private final PropertiesIdentifierTableModel tableModel;
 
 	PropertiesTable(List<Property> properties) {
-		this.properties = properties;
 		tableModel = new PropertiesIdentifierTableModel(properties);
 		setModel(tableModel);
 		addMouseListener(this);
+		getTableHeader().addMouseListener(this);
 	}
 
 	@Override
@@ -118,13 +131,13 @@ class PropertiesTable extends JTable implements MouseListener, PopupMenuObserver
 		// NOP
 	}
 
+	public List<Property> getElements() {
+		return tableModel.getElements();
+	}
+
 	@Override
 	public void onDelete() {
-		getSelectedIdentifierIndex()
-			.ifPresent(selectedRow -> {
-				properties.remove(selectedRow.intValue());
-				tableModel.fireTableDataChanged();
-			});
+		getSelectedIdentifierIndex().ifPresent(selectedRow -> tableModel.removeByIndex(selectedRow.intValue()));
 	}
 
 	private Optional<Integer> getSelectedIdentifierIndex() {
@@ -133,7 +146,6 @@ class PropertiesTable extends JTable implements MouseListener, PopupMenuObserver
 
 	@Override
 	public void onNew() {
-		properties.add(new Property().setName(NEW_PROPERTY_NAME).setValue("NEW_VALUE"));
-		tableModel.fireTableDataChanged();
+		tableModel.addElement(new Property().setName(NEW_PROPERTY_NAME).setValue("NEW_VALUE"));
 	}
 }

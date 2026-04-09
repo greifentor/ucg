@@ -6,6 +6,7 @@ import static de.ollie.ucg.gui.swing.UcgGuiConstants.TEXTFIELD_WIDTH;
 
 import de.ollie.ucg.core.model.ClassModel;
 import java.awt.BorderLayout;
+import java.util.ArrayList;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
@@ -17,15 +18,17 @@ class ClassDetailsPanel extends JPanel {
 	private final ClassModel classModel;
 
 	private JTextField textFieldName;
+	private PropertiesPanel propertiesPanel;
 
 	ClassDetailsPanel(ClassModel classModel) {
 		this.classModel = classModel;
 	}
 
 	ClassDetailsPanel init() {
+		propertiesPanel = new PropertiesPanel(classModel.getProperties());
 		setLayout(new BorderLayout(HGAP, VGAP));
 		add(createHeaderPanel(), BorderLayout.NORTH);
-		add(new PropertiesPanel(classModel.getProperties()).init(), BorderLayout.CENTER);
+		add(propertiesPanel.init(), BorderLayout.CENTER);
 		return this;
 	}
 
@@ -40,5 +43,6 @@ class ClassDetailsPanel extends JPanel {
 
 	void transferContentToModel() {
 		classModel.setName(textFieldName.getText());
+		classModel.setProperties(new ArrayList<>(propertiesPanel.getElements()));
 	}
 }

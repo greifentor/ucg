@@ -67,6 +67,7 @@ class EnumIdentifierTable extends JTable implements MouseListener, PopupMenuObse
 		tableModel = new EnumIdentifierTableModel(identifiers);
 		setModel(tableModel);
 		addMouseListener(this);
+		getTableHeader().addMouseListener(this);
 	}
 
 	@Override

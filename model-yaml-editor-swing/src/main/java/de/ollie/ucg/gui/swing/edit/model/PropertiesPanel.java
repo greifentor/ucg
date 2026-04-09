@@ -17,12 +17,16 @@ public class PropertiesPanel extends JPanel {
 
 	private final List<Property> properties;
 
+	private PropertiesTable table;
+
 	PropertiesPanel init() {
 		setLayout(new BorderLayout(HGAP, VGAP));
-		add(
-			new HeaderLabelPanel("Properties:")
-				.addContent(new JScrollPane(new PropertiesTable(properties)), BorderLayout.CENTER)
-		);
+		table = new PropertiesTable(properties);
+		add(new HeaderLabelPanel("Properties:").addContent(new JScrollPane(table), BorderLayout.CENTER));
 		return this;
+	}
+
+	public List<Property> getElements() {
+		return table.getElements();
 	}
 }
