@@ -1,5 +1,6 @@
 package de.ollie.ucg.gui.swing.edit.model;
 
+import de.ollie.baselib.swing.Constants;
 import de.ollie.ucg.gui.swing.edit.model.EnumIdentifierEntryListPopupMenu.PopupMenuObserver;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -66,6 +67,7 @@ class EnumIdentifierTable extends JTable implements MouseListener, PopupMenuObse
 		this.identifiers = identifiers;
 		tableModel = new EnumIdentifierTableModel(identifiers);
 		setModel(tableModel);
+		setBorder(Constants.createEmptyBorder());
 		addMouseListener(this);
 		getTableHeader().addMouseListener(this);
 	}

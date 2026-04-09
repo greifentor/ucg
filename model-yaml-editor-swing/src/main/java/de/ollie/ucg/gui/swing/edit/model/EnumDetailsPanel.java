@@ -4,6 +4,7 @@ import static de.ollie.baselib.swing.Constants.HGAP;
 import static de.ollie.baselib.swing.Constants.VGAP;
 import static de.ollie.ucg.gui.swing.UcgGuiConstants.TEXTFIELD_WIDTH;
 
+import de.ollie.baselib.swing.Constants;
 import de.ollie.ucg.core.model.EnumModel;
 import java.awt.BorderLayout;
 import javax.swing.JComponent;
@@ -25,6 +26,7 @@ class EnumDetailsPanel extends JPanel {
 
 	EnumDetailsPanel init() {
 		setLayout(new BorderLayout(HGAP, VGAP));
+		setBorder(Constants.createEmptyBorder());
 		add(createHeaderPanel(), BorderLayout.NORTH);
 		add(createContentPanel(), BorderLayout.CENTER);
 		return this;

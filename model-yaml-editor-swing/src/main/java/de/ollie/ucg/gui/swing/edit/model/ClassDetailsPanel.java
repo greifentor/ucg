@@ -4,6 +4,7 @@ import static de.ollie.baselib.swing.Constants.HGAP;
 import static de.ollie.baselib.swing.Constants.VGAP;
 import static de.ollie.ucg.gui.swing.UcgGuiConstants.TEXTFIELD_WIDTH;
 
+import de.ollie.baselib.swing.Constants;
 import de.ollie.ucg.core.model.ClassModel;
 import java.awt.BorderLayout;
 import java.util.ArrayList;
@@ -27,6 +28,7 @@ class ClassDetailsPanel extends JPanel {
 	ClassDetailsPanel init() {
 		propertiesPanel = new PropertiesPanel(classModel.getProperties());
 		setLayout(new BorderLayout(HGAP, VGAP));
+		setBorder(Constants.createEmptyBorder());
 		add(createHeaderPanel(), BorderLayout.NORTH);
 		add(propertiesPanel.init(), BorderLayout.CENTER);
 		return this;

@@ -3,6 +3,7 @@ package de.ollie.ucg.gui.swing.edit.model;
 import static de.ollie.baselib.swing.Constants.HGAP;
 import static de.ollie.baselib.swing.Constants.VGAP;
 
+import de.ollie.baselib.swing.Constants;
 import de.ollie.ucg.core.model.Model;
 import java.awt.BorderLayout;
 import java.awt.Component;
@@ -32,6 +33,7 @@ public class ModelEditorJInternalFrame extends JInternalFrame implements FocusLi
 		desktopPane.add(this);
 		setTitle(getFrameTitle());
 		setContentPane(createMainPanel());
+		setBorder(Constants.createEmptyBorder());
 		setBounds(desktopPane.getBounds());
 		setVisible(true);
 	}
@@ -50,6 +52,7 @@ public class ModelEditorJInternalFrame extends JInternalFrame implements FocusLi
 
 	private JPanel createHeaderDataPanel() {
 		JPanel p = new JPanel(new BorderLayout(HGAP, VGAP));
+		p.setBorder(Constants.createEmptyBorder());
 		textFieldTitle = new JTextField(getTitle());
 		textFieldTitle.addFocusListener(this);
 		textFieldTitle.addKeyListener(this);

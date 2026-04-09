@@ -1,5 +1,6 @@
 package de.ollie.ucg.gui.swing.edit.model;
 
+import de.ollie.baselib.swing.Constants;
 import de.ollie.ucg.core.model.NameOwner;
 import de.ollie.ucg.gui.swing.edit.model.NamedOwnerListPopupMenu.PopupMenuObserver;
 import java.awt.Dimension;
@@ -31,6 +32,7 @@ public class NamedOwnerList<T extends NameOwner> extends JList<T> implements Lis
 		listModel = new DefaultListModel<>();
 		listModel.addAll(list);
 		setModel(listModel);
+		setBorder(Constants.createEmptyBorder());
 		setCellRenderer(new NameOwnerListCellRenderer<NameOwner>());
 		setPreferredSize(new Dimension(200, 200));
 		addListSelectionListener(this);

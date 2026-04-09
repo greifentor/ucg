@@ -1,6 +1,8 @@
 package de.ollie.baselib.swing;
 
 import java.awt.Color;
+import javax.swing.border.Border;
+import javax.swing.border.EmptyBorder;
 
 public class Constants {
 
@@ -11,4 +13,8 @@ public class Constants {
 	public static final Color COLOR_LIST_SELECTED_FOREGROUND = Color.WHITE;
 	public static final Color COLOR_LIST_BACKGROUND = Color.WHITE;
 	public static final Color COLOR_LIST_FOREGROUND = Color.DARK_GRAY;
+
+	public static Border createEmptyBorder() {
+		return new EmptyBorder(HGAP, VGAP, HGAP, VGAP);
+	}
 }
