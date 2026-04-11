@@ -64,8 +64,8 @@ public class ModelEditorJInternalFrame extends JInternalFrame implements FocusLi
 
 	private JTabbedPane createDetailsTabPanel() {
 		JTabbedPane tp = new JTabbedPane();
-		ClassesPanel cp = new ClassesPanel(model).init();
-		EnumsPanel ep = new EnumsPanel(model).init();
+		var cp = new ClassesPanel(model).init();
+		var ep = new EnumsPanel(model).init();
 		tp.add("Classes", cp);
 		tp.add("Enums", ep);
 		tp.addChangeListener(e -> {

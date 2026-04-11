@@ -14,7 +14,7 @@ import javax.swing.JTextField;
 import lombok.Generated;
 
 @Generated
-class ClassDetailsPanel extends JPanel {
+class ClassDetailsPanel extends AbstractDetailsPanel {
 
 	private final ClassModel classModel;
 
@@ -25,6 +25,7 @@ class ClassDetailsPanel extends JPanel {
 		this.classModel = classModel;
 	}
 
+	@Override
 	ClassDetailsPanel init() {
 		propertiesPanel = new PropertiesPanel(classModel.getProperties());
 		setLayout(new BorderLayout(HGAP, VGAP));
@@ -43,6 +44,7 @@ class ClassDetailsPanel extends JPanel {
 		return p;
 	}
 
+	@Override
 	void transferContentToModel() {
 		classModel.setName(textFieldName.getText());
 		classModel.setProperties(new ArrayList<>(propertiesPanel.getElements()));

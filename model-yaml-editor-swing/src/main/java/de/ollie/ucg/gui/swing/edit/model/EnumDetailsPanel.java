@@ -14,7 +14,7 @@ import javax.swing.JTextField;
 import lombok.Generated;
 
 @Generated
-class EnumDetailsPanel extends JPanel {
+class EnumDetailsPanel extends AbstractDetailsPanel {
 
 	private final EnumModel enumModel;
 
@@ -24,6 +24,7 @@ class EnumDetailsPanel extends JPanel {
 		this.enumModel = enumModel;
 	}
 
+	@Override
 	EnumDetailsPanel init() {
 		setLayout(new BorderLayout(HGAP, VGAP));
 		setBorder(Constants.createEmptyBorder());
@@ -47,6 +48,7 @@ class EnumDetailsPanel extends JPanel {
 		return p;
 	}
 
+	@Override
 	void transferContentToModel() {
 		enumModel.setName(textFieldName.getText());
 	}
