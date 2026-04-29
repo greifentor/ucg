@@ -24,6 +24,10 @@ public class GeneratorExpressionEvaluationServiceImpl implements GeneratorExpres
 			Stack<Object> stack = upnEvaluationPort.evaluate(generatorSetting.getGenerateWhen(), classModel);
 			return !stack.isEmpty() && !Boolean.TRUE.equals(stack.pop());
 		}
+		if (generatorSetting.getSuppressWhen() != null) {
+			Stack<Object> stack = upnEvaluationPort.evaluate(generatorSetting.getSuppressWhen(), classModel);
+			return !stack.isEmpty() && Boolean.TRUE.equals(stack.pop());
+		}
 		return false;
 	}
 }

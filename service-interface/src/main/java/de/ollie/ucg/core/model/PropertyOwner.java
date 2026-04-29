@@ -17,6 +17,24 @@ public interface PropertyOwner {
 				.anyMatch(p -> (value != null) && (value.equals(p.getValue())));
 	}
 
+	default boolean hasPropertyWithValueStartsWith(String name, String value) {
+		ensure(name != null, "name cannot be null!");
+		return (getProperties() == null) || getProperties().isEmpty()
+			? false
+			: getProperties()
+				.stream()
+				.map(p -> {
+					System.out.println(name + " == " + p.getName());
+					return p;
+				})
+				.filter(p -> name.equals(p.getName()))
+				.map(p -> {
+					System.out.println(value + " == " + p.getValue());
+					return p;
+				})
+				.anyMatch(p -> (value != null) && (value.startsWith(p.getValue())));
+	}
+
 	default boolean hasPropertyWithName(String name) {
 		ensure(name != null, "name cannot be null!");
 		return (getProperties() == null) || getProperties().isEmpty()

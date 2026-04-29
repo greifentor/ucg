@@ -35,6 +35,7 @@ class YamlGeneratorConfigurationToGeneratorConfigurationMapper {
 			.setPackageName(yamlSetting.getPackageName())
 			.setProperties(getProperties(yamlSetting.getProperties()))
 			.setResourceLoaderClass(yamlSetting.getResourceClassLoader())
+			.setSuppressWhen(yamlSetting.getSuppressWhen())
 			.setTargetFileName(yamlSetting.getTargetFileName())
 			.setTemplateFileName(yamlSetting.getTemplate())
 			.setTemplatePath(yamlSetting.getPath());

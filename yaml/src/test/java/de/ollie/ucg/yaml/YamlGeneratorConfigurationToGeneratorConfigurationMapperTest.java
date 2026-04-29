@@ -7,7 +7,6 @@ import de.ollie.ucg.core.model.GeneratorConfiguration;
 import de.ollie.ucg.core.model.GeneratorSetting;
 import de.ollie.ucg.core.model.GeneratorSetting.GeneratorType;
 import de.ollie.ucg.core.model.Property;
-import de.ollie.ucg.yaml.YamlGeneratorConfigurationToGeneratorConfigurationMapper;
 import de.ollie.ucg.yaml.model.YamlProperty;
 import de.ollie.ucg.yaml.model.configuration.YamlGeneratorConfigurationWrapper;
 import de.ollie.ucg.yaml.model.configuration.YamlGeneratorSetting;
@@ -30,6 +29,7 @@ class YamlGeneratorConfigurationToGeneratorConfigurationMapperTest {
 	private static final String PATH = "path";
 	private static final String PROPERTY_NAME = "property-name";
 	private static final String PROPERTY_VALUE = "property-value";
+	private static final String SUPPRESS_WHEN = "suppress-when";
 	private static final String TARGET_FILE_NAME = "targetFileName";
 	private static final String TEMPLATE = "template";
 	private static final String TYPE = "CLASS";
@@ -58,6 +58,7 @@ class YamlGeneratorConfigurationToGeneratorConfigurationMapperTest {
 							.setPackageName(PACKAGE_NAME)
 							.setPath(PATH)
 							.setProperties(List.of(new YamlProperty(PROPERTY_NAME, PROPERTY_VALUE)))
+							.setSuppressWhen(SUPPRESS_WHEN)
 							.setTargetFileName(DEFAULT_TARGET_PATH)
 							.setTemplate(TEMPLATE)
 							.setType(TYPE)
@@ -75,6 +76,7 @@ class YamlGeneratorConfigurationToGeneratorConfigurationMapperTest {
 							.setPackageName(PACKAGE_NAME)
 							.setProperties(List.of(new Property().setName(PROPERTY_NAME).setValue(PROPERTY_VALUE)))
 							.setResourceLoaderClass("org.apache.velocity.runtime.resource.loader.FileResourceLoader")
+							.setSuppressWhen(SUPPRESS_WHEN)
 							.setTargetFileName(DEFAULT_TARGET_PATH)
 							.setTemplateFileName(TEMPLATE)
 							.setTemplatePath(PATH)

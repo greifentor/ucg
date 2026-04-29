@@ -230,6 +230,13 @@ public class ClassModelWrapper {
 		return classModel.getAttributes().stream().anyMatch(p -> p.hasPropertyWithValue(propertyName, propertyValue));
 	}
 
+	public boolean hasAnAttributeWithPropertyAndValueStartsWith(String propertyName, String propertyValue) {
+		return classModel
+			.getAttributes()
+			.stream()
+			.anyMatch(p -> p.hasPropertyWithValueStartsWith(propertyName, propertyValue));
+	}
+
 	public boolean isPropertyWithNameInAttributesPresent(String name) {
 		ensure(name != null, MSG_NAME_IS_NULL);
 		return classModel.getAttributes().isEmpty()

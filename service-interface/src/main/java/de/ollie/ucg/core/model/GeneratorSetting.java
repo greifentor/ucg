@@ -28,6 +28,7 @@ public class GeneratorSetting {
 	private List<Property> properties = new ArrayList<>();
 	private String resourceLoaderClass;
 	private String subProjectName;
+	private String suppressWhen;
 	private String targetFileName;
 	private String templateFileName;
 	private String templatePath;

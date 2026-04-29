@@ -7,21 +7,37 @@
 	<parent>
 		<groupId>de.ollie</groupId>
 		<artifactId>ucg</artifactId>
-		<version>0.4.0</version>
+		<version>0.3.0</version>
 	</parent>
 
-	<artifactId>ucg-base-lib</artifactId>
+	<artifactId>ucg-yaml</artifactId>
 	<packaging>jar</packaging>
 
-	<name>UCG (Base-Lib)</name>
-	<description>The base library of the application.</description>
+	<name>UCG (YAML)</name>
+	<description>A YAML support for the application.</description>
 
 	<properties>
 		<plugin.prettier.goal>write</plugin.prettier.goal>
 	</properties>
 
 	<dependencies>
+		<!-- ucg-->
+		<dependency>
+			<groupId>de.ollie</groupId>
+			<artifactId>ucg-base-lib</artifactId>
+			<version>0.3.0</version>
+		</dependency>
+		<dependency>
+			<groupId>de.ollie</groupId>
+			<artifactId>ucg-service-interface</artifactId>
+			<version>0.3.0</version>
+		</dependency>
 		<!-- Spring -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter</artifactId>
+			<version>3.3.3</version>
+		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-context</artifactId>
@@ -34,11 +50,11 @@
 			<groupId>jakarta.annotation</groupId>
 			<artifactId>jakarta.annotation-api</artifactId>
 		</dependency>
-		<!-- Apache -->
+		<!-- Others -->
 		<dependency>
-			<groupId>org.apache.commons</groupId>
-			<artifactId>commons-text</artifactId>
-			<version>1.10.0</version>
+			<groupId>com.fasterxml.jackson.dataformat</groupId>
+			<artifactId>jackson-dataformat-yaml</artifactId>
+			<version>2.15.0</version>
 		</dependency>
 		<!-- Testing -->
 		<dependency>
@@ -111,6 +127,10 @@
 						</goals>
 					</execution>
 				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
 			</plugin>
 			<plugin>
 				<groupId>com.hubspot.maven.plugins</groupId>
